@@ -5,28 +5,28 @@ using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float baseSpeed = 5;
+    [SerializeField] private float _baseSpeed = 7f;
 
-    private CharacterController controller;
-    private InputAction moveAction;
+    private CharacterController _controller;
+    private InputAction _moveAction;
 
-    private float movementSpeed;
+    private float _movementSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        moveAction = InputSystem.actions.FindAction("Move");
+        _controller = GetComponent<CharacterController>();
+        _moveAction = InputSystem.actions.FindAction("Move");
 
-        movementSpeed = baseSpeed;
+        _movementSpeed = _baseSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = moveAction.ReadValue<Vector2>();
-        Vector3 velocity = movementSpeed * new Vector3(direction.x, 0, direction.y * (float) Math.Sqrt(2));
+        Vector2 direction = _moveAction.ReadValue<Vector2>();
+        Vector3 velocity = _movementSpeed * new Vector3(direction.x, 0f, direction.y * (float) Math.Sqrt(2));
 
-        controller.Move(velocity * Time.deltaTime);
+        _controller.Move(velocity * Time.deltaTime);
     }
 }

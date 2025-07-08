@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7312534071076215377}
   - component: {fileID: 8486220538393808039}
   - component: {fileID: 1974021863684657538}
+  - component: {fileID: 7069022695784984624}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -86,3 +87,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7069022695784984624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359510805536089165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcfe8c06fd7a004e9f4b015e9a2b9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
