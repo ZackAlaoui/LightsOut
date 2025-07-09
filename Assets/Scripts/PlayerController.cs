@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector2 direction = _moveAction.ReadValue<Vector2>();
-        Vector3 velocity = _movementSpeed * new Vector3(direction.x, 0f, direction.y * (float) Math.Sqrt(2));
+        Vector3 velocity = _movementSpeed * new Vector3(direction.x, 0f, direction.y);
 
         _controller.Move(velocity * Time.deltaTime);
     }
