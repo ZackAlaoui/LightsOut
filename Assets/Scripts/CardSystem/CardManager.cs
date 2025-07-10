@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CardManager : MonoBehaviour
 {
     public static CardManager Instance;
 
-    public List<Card> allCards = new();  // Your card pool
-    public List<Card> playerHand = new();  // The current 5 cards
+    public List<Card> allCards = new();
+    public List<Card> playerHand = new();
 
     public int startingHandSize = 5;
 
@@ -28,9 +27,8 @@ public class CardManager : MonoBehaviour
     {
         playerHand.Clear();
 
-        // Example logic: randomly draw 5 from common/uncommon pool
         List<Card> commons = allCards.FindAll(card =>
-            card.usageType == CardUsageType.Cooldown || card.usageType == CardUsageType.SingleUse); // Filter if needed
+            card.usageType == CardUsageType.Cooldown || card.usageType == CardUsageType.SingleUse);
 
         for (int i = 0; i < startingHandSize; i++)
         {
@@ -48,64 +46,203 @@ public class CardManager : MonoBehaviour
             playerHand[cardIndex].ActivateCard();
 
             if (playerHand[cardIndex].usageType == CardUsageType.SingleUse)
-                playerHand.RemoveAt(cardIndex); // One-time use
+                playerHand.RemoveAt(cardIndex);
         }
     }
 
-    public void PokerHand()
+    public void EvaluatePokerHand()
     {
         Dictionary<CardSuit, int> suitCounts = new();
-
         foreach (Card card in playerHand)
         {
             if (!suitCounts.ContainsKey(card.suit))
                 suitCounts[card.suit] = 0;
-
             suitCounts[card.suit]++;
         }
 
-        foreach (var entry in suitCounts)
+        // Check Flush
+        foreach (var suit in suitCounts)
         {
-            int count = entry.Value;
-            CardSuit suit = entry.Key;
-
-            switch (count)
+            if (suit.Value == 5)
             {
-                case 2:
-                    Debug.Log($"Pair of {suit}: Granting minor buff.");
-                    ApplySuitBuff(suit, "pair");
-                    break;
-                case 3:
-                    Debug.Log($"Three of a Kind {suit}: Granting moderate buff.");
-                    ApplySuitBuff(suit, "three");
-                    break;
-                case 4:
-                    Debug.Log($"Four of a Kind {suit}: Granting major buff.");
-                    ApplySuitBuff(suit, "four");
-                    break;
-                case 5:
-                    Debug.Log($"Five of a Kind {suit}: Ultimate Buff!");
-                    ApplySuitBuff(suit, "five");
-                    break;
-
+                Debug.Log($"Flush of {suit.Key}: Ultimate buff!");
+                ApplySuitBuff(suit.Key, "flush");
+                return;
             }
+        }
+
+        int pairs = 0;
+        bool hasThree = false;
+        CardSuit firstPairSuit = CardSuit.Brains;
+        CardSuit secondPairSuit = CardSuit.Bones;
+        CardSuit threeSuit = CardSuit.Blood;
+
+        foreach (var suit in suitCounts)
+        {
+            if (suit.Value == 2)
+            {
+                if (pairs == 0)
+                    firstPairSuit = suit.Key;
+                else
+                    secondPairSuit = suit.Key;
+                pairs++;
+            }
+            else if (suit.Value == 3)
+            {
+                hasThree = true;
+                threeSuit = suit.Key;
+            }
+            else if (suit.Value == 4)
+            {
+                Debug.Log($"Four of a Kind ({suit.Key}): Major buff!");
+                ApplySuitBuff(suit.Key, "four");
+                return;
+            }
+        }
+
+        if (pairs == 2)
+        {
+            Debug.Log($"Two Pair: {firstPairSuit} and {secondPairSuit}");
+            ApplyTwoPairBuff(firstPairSuit, secondPairSuit);
+            return;
+        }
+
+        if (hasThree && pairs >= 1)
+        {
+            Debug.Log($"Full House: {threeSuit} + {firstPairSuit}");
+            ApplyFullHouseBuff(threeSuit, firstPairSuit);
+            return;
+        }
+
+        if (pairs == 1)
+        {
+            Debug.Log("One Pair: General minor buff.");
+            ApplyGeneralBuff();
         }
     }
 
     private void ApplySuitBuff(CardSuit suit, string comboType)
     {
-        switch (suit)
+        switch (comboType)
         {
-            case CardSuit.Brains:
+            case "flush":
+                Debug.Log($"Flush of {suit}: Increased damage, speed, cooldown, AND flashlight.");
+                switch (suit)
+                {
+                    case CardSuit.Brains:
+                        //Add something here
+                        break;
+                    case CardSuit.Bones:
+                        //Add something here
+                        break;
+                    case CardSuit.Blood:
+                        //Add something here
+                        break;
+                    case CardSuit.RottenFlesh:
+                        //Add something here
+                        break;
+                }
                 break;
-            case CardSuit.Bones:
-                break;
-            case CardSuit.Blood:
-                break;
-            case CardSuit.RottenFlesh:
+
+            case "four":
+                Debug.Log($"Four of a Kind {suit}: Large bonus to effect specific to {suit}");
+                switch (suit)
+                {
+                    case CardSuit.Brains:
+                        //Add something here
+                        break;
+                    case CardSuit.Bones:
+                        //Add something here
+                        break;
+                    case CardSuit.Blood:
+                        //Add something here
+                        break;
+                    case CardSuit.RottenFlesh:
+                        //Add something here
+                        break;
+                }
                 break;
         }
+    }
 
-        Debug.Log($"Applied {comboType} buff for {suit}.");
+    private void ApplyTwoPairBuff(CardSuit suit1, CardSuit suit2)
+    {
+        Debug.Log($"Applying two pair bonus for {suit1} and {suit2}");
+
+        if ((suit1 == CardSuit.Bones && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Bones && suit1 == CardSuit.RottenFlesh))
+        {
+            //Add something for this combo
+        }
+        else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Blood && suit1 == CardSuit.Brains))
+        {
+            //Add something for this combo
+        }
+        else if ((suit1 == CardSuit.Bones && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Bones && suit1 == CardSuit.Brains))
+        {
+            //Add something for this combo
+        }
+        else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Blood && suit1 == CardSuit.RottenFlesh))
+        {
+            //Add something for this combo
+        }
+    }
+
+    private void ApplyFullHouseBuff(CardSuit threeSuit, CardSuit pairSuit)
+    {
+        Debug.Log($"Applying full house buff for {threeSuit} (3) and {pairSuit} (2)");
+
+        if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Bones)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.RottenFlesh)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.RottenFlesh)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Blood)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.RottenFlesh)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Brains)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Blood)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Brains)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Bones)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Brains)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Blood)
+        {
+            //Add something for this combo
+        }
+        else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Bones)
+        {
+            //Add something for this combo
+        }
+    }
+
+    private void ApplyGeneralBuff()
+    {
+        Debug.Log("General Buff: +10% movement speed and +5% weapon damage.");
     }
 }
