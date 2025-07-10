@@ -7,20 +7,21 @@ using System;
 
 namespace Game.Enemy
 {
-    public class ZombieController : EnemyController
+    public class ZombieController : EnemyController, /*IWanderer,*/ IPursuer
     {
-        private IState _wanderState;
-        private IState _chaseState;
-        private IState _investigateState;
+        // public WanderState WanderState { get; private set; }
+        public PursueState PursueState { get; private set; }
 
-		// Start is called once before the first execution of Update after the MonoBehaviour is created
-		void Start()
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            // _wanderState = new WanderState();
-            _chaseState = new ChaseState(this.Agent, GameObject.Find("Player"));
-            // _investigateState = new InvestigateState();
+            GameObject player = GameObject.Find("Player");
 
-            State = _chaseState;
+            // WanderState = new WanderState();
+            PursueState = new PursueState(this, player);
+
+            State = PursueState;
+            State.Enter();
         }
 
         // Update is called once per frame

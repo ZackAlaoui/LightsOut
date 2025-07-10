@@ -11,7 +11,7 @@ namespace Game.Enemy
         public void Update();
         public void Exit();
     }
-        
+
     public class EnemyController : MonoBehaviour
     {
         public NavMeshAgent Agent { get; private set; }
@@ -19,7 +19,7 @@ namespace Game.Enemy
 
         protected IState State { get; set; }
 
-        protected void ChangeState(IState newState)
+        public void ChangeState(IState newState)
         {
             State.Exit();
             State = newState;
