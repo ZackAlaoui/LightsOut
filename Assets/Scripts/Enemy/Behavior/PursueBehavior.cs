@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using Game.Enemy.Trigger;
+using static Game.Enemy.Behavior.BehaviorTreeNode;
 
 namespace Game.Enemy.Behavior
 {
@@ -56,7 +57,7 @@ namespace Game.Enemy.Behavior
 				}
 				else if (_fsm.Agent.remainingDistance <= _fsm.Agent.stoppingDistance)
 				{
-					_behavior.Status = BehaviorTreeNode.Status.Success;
+					_behavior.Status = Status.Success;
 				}
 			}
 
@@ -76,6 +77,8 @@ namespace Game.Enemy.Behavior
 
 			public PursueMachine(PursueBehavior behavior, NavMeshAgent agent, GameObject target, ChaseRadiusTrigger chaseTrigger) : base("Pursue")
 			{
+				IsTargetInRange = false;
+
 				Agent = agent;
 				Target = target;
 				ChaseTrigger = chaseTrigger;
@@ -83,28 +86,37 @@ namespace Game.Enemy.Behavior
 				ChaseState = new ChaseState(this);
 				InvestigateState = new InvestigateState(behavior, this);
 				State = ChaseState;
+				State.Enter();
 
-				chaseTrigger.OnChaseRadiusUpdate += (bool isTriggered) => IsTargetInRange = isTriggered;
+				chaseTrigger.OnChaseRadiusUpdate += (bool isTriggered) =>
+				{
+					IsTargetInRange = isTriggered;
+					Debug.Log("Target In Range?: " + IsTargetInRange);
+				};
 			}
 		}
 
-		public BehaviorTreeNode.Status Status { get; set; }
+		public Status Status { get; set; }
 
 		private readonly PursueMachine _fsm;
 
 		public PursueBehavior(NavMeshAgent agent, GameObject target, ChaseRadiusTrigger chaseTrigger)
 		{
-			Status = BehaviorTreeNode.Status.Running;
+			Status = Status.Failure;
 
 			_fsm = new PursueMachine(this, agent, target, chaseTrigger);
 		}
 
-		public BehaviorTreeNode.Status Process()
+		public Status Process()
 		{
-			_fsm.Update();
+			if (_fsm.IsTargetInRange) Status = Status.Running;
+			if (Status == Status.Running) _fsm.Update();
 			return Status;
 		}
 
-		public void Reset() { }
+		public void Reset()
+		{
+			Status = Status.Failure;
+		}
 	}
 }

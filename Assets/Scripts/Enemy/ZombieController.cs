@@ -6,9 +6,9 @@ namespace Game.Enemy
 {
     public class ZombieController : EnemyController
     {
-        [SerializeField] private float _wanderRadius = 5;
-        [SerializeField] private float _minWaitTime = 3;
-        [SerializeField] private float _maxWaitTime = 7;
+        [SerializeField] private float _wanderRadius = 5f;
+        [SerializeField] private float _minIdleTime = 3f;
+        [SerializeField] private float _maxIdleTime = 7f;
         [SerializeField] private ChaseRadiusTrigger _chaseTrigger;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,7 +19,12 @@ namespace Game.Enemy
             GameObject player = GameObject.Find("Player");
 
             BehaviorTree = new BehaviorTree("Zombie");
-            BehaviorTree.AddChild(new BehaviorTreeLeaf("Pursue", new PursueBehavior(Agent, player, _chaseTrigger)));
+            BehaviorTreeSelector selector = new("Pursue OR Wander");
+            BehaviorTreeLeaf pursue = new("Pursue", new PursueBehavior(Agent, player, _chaseTrigger));
+            BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(Agent, _wanderRadius, _minIdleTime, _maxIdleTime));
+            selector.AddChild(pursue);
+            selector.AddChild(wander);
+            BehaviorTree.AddChild(selector);
         }
 
         // Update is called once per frame

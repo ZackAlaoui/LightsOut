@@ -43,14 +43,36 @@ namespace Game.Enemy.Behavior
 		}
 	}
 
-	public class BehaviorTreeNode
+	public class BehaviorTreeSelector : BehaviorTreeNode
+	{
+		public BehaviorTreeSelector(string name) : base(name) { }
+
+		public override Status Process()
+		{
+			foreach (BehaviorTreeNode child in children)
+			{
+				switch (child.Process())
+				{
+					case Status.Running:
+						return Status.Running;
+					case Status.Success:
+						Reset();
+						return Status.Success;
+				}
+			}
+
+			Reset();
+			return Status.Failure;
+		}
+	}
+
+	public abstract class BehaviorTreeNode
 	{
 		public enum Status { Success, Failure, Running }
 
 		public string Name { get; }
 
 		public readonly List<BehaviorTreeNode> children = new();
-		protected int currentChild;
 
 		public BehaviorTreeNode(string name = "BehaviorTreeNode")
 		{
@@ -62,14 +84,10 @@ namespace Game.Enemy.Behavior
 			children.Add(child);
 		}
 
-		public virtual Status Process()
-		{
-			return children[currentChild].Process();
-		}
+		public abstract Status Process();
 
 		public virtual void Reset()
 		{
-			currentChild = 0;
 			foreach (BehaviorTreeNode child in children)
 			{
 				child.Reset();

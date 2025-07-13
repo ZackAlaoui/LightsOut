@@ -101,7 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcfe8c06fd7a004e9f4b015e9a2b9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chaseTrigger: {fileID: 0}
+  _wanderRadius: 5
+  _minIdleTime: 3
+  _maxIdleTime: 7
+  _chaseTrigger: {fileID: 2713384953739344734}
 --- !u!195 &4535822758467189049
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -132,6 +135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7312534071076215377}
     m_Modifications:
+    - target: {fileID: 3999099967721551134, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
+      propertyPath: m_Radius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5889547718682513042, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -181,6 +188,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
+--- !u!114 &2713384953739344734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 821746087159451222, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
+  m_PrefabInstance: {fileID: 3368847050542232840}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18ac99c118144a41bdc2b752b53c2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9186055681889385370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5889547718682513042, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
