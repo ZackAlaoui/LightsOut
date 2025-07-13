@@ -24,7 +24,6 @@ namespace Game.Enemy.Behavior
 			public void Enter()
 			{
 				_selectedIdleTime = Random.Range(_minIdleTime, _maxIdleTime);
-				Debug.Log("Waiting " + _selectedIdleTime + " seconds");
 				_currentIdleTime = 0;
 			}
 

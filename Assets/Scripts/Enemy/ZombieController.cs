@@ -18,13 +18,13 @@ namespace Game.Enemy
 
             GameObject player = GameObject.Find("Player");
 
-            BehaviorTree = new BehaviorTree("Zombie");
-            BehaviorTreeSelector selector = new("Pursue OR Wander");
+            BehaviorTree = new("Zombie");
+            BehaviorTreeSelector pursueOrWander = new("Pursue OR Wander");
             BehaviorTreeLeaf pursue = new("Pursue", new PursueBehavior(Agent, player, _chaseTrigger));
             BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(Agent, _wanderRadius, _minIdleTime, _maxIdleTime));
-            selector.AddChild(pursue);
-            selector.AddChild(wander);
-            BehaviorTree.AddChild(selector);
+            pursueOrWander.AddChild(pursue);
+            pursueOrWander.AddChild(wander);
+            BehaviorTree.AddChild(pursueOrWander);
         }
 
         // Update is called once per frame
