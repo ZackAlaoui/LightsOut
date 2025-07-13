@@ -17,7 +17,6 @@ namespace Game.Enemy.Trigger {
         {
             if (other.gameObject == Target)
             {
-                Debug.Log("Enter");
                 OnChaseRadiusUpdate(true);
             }
         }
@@ -26,7 +25,6 @@ namespace Game.Enemy.Trigger {
 		{
             if (other.gameObject == Target)
             {
-                Debug.Log("Exit");
                 OnChaseRadiusUpdate(false);
             }
 		}
