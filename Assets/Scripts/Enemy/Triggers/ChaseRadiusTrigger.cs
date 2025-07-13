@@ -1,22 +1,24 @@
+using System;
 using UnityEngine;
 
 namespace Game.Enemy.Trigger {
     public class ChaseRadiusTrigger : MonoBehaviour
     {
         public GameObject Target { get; set; }
-        private IPursuer _enemy;
+
+        public event Action<bool> OnChaseRadiusUpdate;
 
         void Awake()
         {
             Target = GameObject.Find("Player");
-            _enemy = GetComponentInParent<IPursuer>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject == Target)
             {
-                _enemy.PursueState.IsTargetInRange = true;
+                Debug.Log("Enter");
+                OnChaseRadiusUpdate(true);
             }
         }
 
@@ -24,7 +26,8 @@ namespace Game.Enemy.Trigger {
 		{
             if (other.gameObject == Target)
             {
-                _enemy.PursueState.IsTargetInRange = false;
+                Debug.Log("Exit");
+                OnChaseRadiusUpdate(false);
             }
 		}
 	}

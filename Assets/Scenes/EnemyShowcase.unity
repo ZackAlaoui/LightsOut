@@ -1350,6 +1350,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7069022695784984624, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+      propertyPath: _chaseTrigger
+      value: 
+      objectReference: {fileID: 7546671939453951101}
+    - target: {fileID: 7069022695784984624, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+      propertyPath: _chaseRadiusTrigger
+      value: 
+      objectReference: {fileID: 7546671939453951101}
     - target: {fileID: 7312534071076215377, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -1399,6 +1407,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+--- !u!114 &7546671939453951101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2713384953739344734, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+  m_PrefabInstance: {fileID: 7546671939453951100}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18ac99c118144a41bdc2b752b53c2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
