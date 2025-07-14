@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1841388615910187207}
   - component: {fileID: 8860570723046581588}
   - component: {fileID: 6987474204218358340}
-  - component: {fileID: 4109395032610870067}
   - component: {fileID: 6605598374479424594}
   - component: {fileID: 4194246769399821896}
   m_Layer: 0
@@ -65,7 +64,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 12
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3792ab464df56244f8ce4f0ffad2fe6f, type: 2}
@@ -90,29 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4109395032610870067
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764709206535737763}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &6605598374479424594
 NavMeshAgent:
   m_ObjectHideFlags: 0

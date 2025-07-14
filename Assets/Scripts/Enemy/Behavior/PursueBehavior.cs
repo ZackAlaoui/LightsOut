@@ -88,11 +88,7 @@ namespace Game.Enemy.Behavior
 				State = ChaseState;
 				State.Enter();
 
-				chaseTrigger.OnChaseRadiusUpdate += (bool isTriggered) =>
-				{
-					IsTargetInRange = isTriggered;
-					Debug.Log("Target In Range?: " + IsTargetInRange);
-				};
+				chaseTrigger.OnChaseRadiusUpdate += (bool isTriggered) => IsTargetInRange = isTriggered;
 			}
 		}
 
