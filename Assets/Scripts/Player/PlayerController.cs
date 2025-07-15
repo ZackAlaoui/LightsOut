@@ -79,7 +79,7 @@ namespace Game.Player
             bool hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
             if (hit)
             {
-                _model.transform.LookAt(cameraRay.GetPoint(distanceFromCamera));
+                Flashlight.transform.LookAt(cameraRay.GetPoint(distanceFromCamera));
             }
 
             if (Flashlight.IsEnabled == false)
