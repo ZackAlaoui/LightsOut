@@ -23,6 +23,8 @@ namespace Game.Player
                 _health = Math.Clamp(value, 0, _baseMaxHealth * MaxHealthModifier);
             }
         }
+        [SerializeField] private float _healingDelay = 3f;
+        private float _timeInLight = 0f;
         [SerializeField] private Slider _healthBarSlider;
 
         public FlashlightManager Flashlight { get; private set; }
@@ -82,11 +84,13 @@ namespace Game.Player
 
             if (Flashlight.IsEnabled == false)
             {
+                _timeInLight = 0f;
                 Health -= Time.deltaTime;
             }
             else
             {
-                Health += Time.deltaTime;
+                _timeInLight += Time.deltaTime;
+                if (_timeInLight >= _healingDelay) Health += Time.deltaTime;
             }
         }
     }

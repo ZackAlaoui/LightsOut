@@ -1056,7 +1056,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseMovementSpeed: 7
   _model: {fileID: 0}
-  _baseMaxHealth: 10
+  _baseMaxHealth: 5
+  _healingDelay: 3
   _healthBarSlider: {fileID: 2618771559832211134}
 --- !u!1 &5981260210514178809
 GameObject:
