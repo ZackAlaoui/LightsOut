@@ -10,6 +10,8 @@ public class CardManager : MonoBehaviour
 
     public int startingHandSize = 5;
 
+    private Dictionary<string, float> activeBuffs = new();
+
     private void Awake()
     {
         if (Instance == null)
@@ -130,16 +132,20 @@ public class CardManager : MonoBehaviour
                 switch (suit)
                 {
                     case CardSuit.Brains:
-                        //Add something here
+                        AddBuff("UltimateCooldownReduction", 20f);
+                        AddBuff("StrongerLightBeam", 20f);  // Smarter = faster leveling
                         break;
                     case CardSuit.Bones:
-                        //Add something here
+                        AddBuff("ArmorUp", 20f);
+                        AddBuff("KnockbackResistance", 20f);
                         break;
                     case CardSuit.Blood:
-                        //Add something here
+                        AddBuff("Lifesteal", 20f);
+                        AddBuff("BleedOnHit", 20f);
                         break;
                     case CardSuit.RottenFlesh:
-                        //Add something here
+                        AddBuff("ToxicAura", 20f);
+                        AddBuff("InfectionSpread", 20f);
                         break;
                 }
                 break;
@@ -149,21 +155,26 @@ public class CardManager : MonoBehaviour
                 switch (suit)
                 {
                     case CardSuit.Brains:
-                        //Add something here
+                        AddBuff("CooldownReduction", 15f);
+                        AddBuff("EnergyRegen", 15f);
                         break;
                     case CardSuit.Bones:
-                        //Add something here
+                        AddBuff("HealthRegen", 15f);
+                        AddBuff("ShieldBoost", 15f);
                         break;
                     case CardSuit.Blood:
-                        //Add something here
+                        AddBuff("AttackSpeed", 15f);
+                        AddBuff("DamageBoost", 15f);
                         break;
                     case CardSuit.RottenFlesh:
-                        //Add something here
+                        AddBuff("PoisonOnHit", 15f);
+                        AddBuff("RotShield", 15f); // absorbs damage and poisons attackers
                         break;
                 }
                 break;
         }
     }
+
 
     private void ApplyTwoPairBuff(CardSuit suit1, CardSuit suit2)
     {
@@ -171,21 +182,26 @@ public class CardManager : MonoBehaviour
 
         if ((suit1 == CardSuit.Bones && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Bones && suit1 == CardSuit.RottenFlesh))
         {
-            //Add something for this combo
+            AddBuff("PoisonResistance", 12f);   // Rot synergy
+            AddBuff("ArmorBoost", 12f);         // Tanky support
         }
         else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Blood && suit1 == CardSuit.Brains))
         {
-            //Add something for this combo
+            AddBuff("CooldownReduction", 12f);  // Tactical offense
+            AddBuff("DamageBoost", 10f);
         }
         else if ((suit1 == CardSuit.Bones && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Bones && suit1 == CardSuit.Brains))
         {
-            //Add something for this combo
+            AddBuff("CooldownReduction", 10f);  // Defensive utility
+            AddBuff("HealthRegen", 10f);
         }
         else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Blood && suit1 == CardSuit.RottenFlesh))
         {
-            //Add something for this combo
+            AddBuff("PoisonOnHit", 12f);        // Damage-over-time
+            AddBuff("MovementSpeedBoost", 10f); // Chase-down synergy
         }
     }
+
 
     private void ApplyFullHouseBuff(CardSuit threeSuit, CardSuit pairSuit)
     {
@@ -193,56 +209,97 @@ public class CardManager : MonoBehaviour
 
         if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Bones)
         {
-            //Add something for this combo
+            AddBuff("CooldownReduction", 20f);     // Faster ability use
+            AddBuff("ArmorBoost", 20f);             // Defensive synergy
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.RottenFlesh)
         {
-            //Add something for this combo
+            AddBuff("Lifesteal", 20f);              // Aggressive + decay synergy
+            AddBuff("PoisonOnHit", 20f);            // Adds DoT to attacks
         }
         else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.RottenFlesh)
         {
-            //Add something for this combo
+            AddBuff("TrapSense", 25f);              // Maybe increases flashlight radius or visibility
+            AddBuff("DecayAura", 20f);              // Nearby enemies take passive damage
         }
         else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Blood)
         {
-            //Add something for this combo
+            AddBuff("CriticalChanceUp", 20f);       // Tactical aggression synergy
+            AddBuff("CooldownReduction", 20f);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.RottenFlesh)
         {
-            //Add something for this combo
+            AddBuff("HealthRegen", 20f);            // Tanky sustain synergy
+            AddBuff("PoisonResistance", 20f);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Brains)
         {
-            //Add something for this combo
+            AddBuff("ShieldBoost", 25f);            // More defensive synergy
+            AddBuff("CooldownReduction", 15f);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Blood)
         {
-            //Add something for this combo
+            AddBuff("BerserkerMode", 20f);          // Boost dmg when under 50% health
+            AddBuff("ArmorBoost", 20f);
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Brains)
         {
-            //Add something for this combo
+            AddBuff("Executioner", 20f);            // Bonus damage to low-health enemies
+            AddBuff("CooldownReduction", 15f);
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Bones)
         {
-            //Add something for this combo
+            AddBuff("DamageBoost", 20f);
+            AddBuff("StaggerResistance", 20f);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Brains)
         {
-            //Add something for this combo
+            AddBuff("ConfuseEnemies", 15f);         // Chance for enemies to attack each other
+            AddBuff("TrapSense", 15f);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Blood)
         {
-            //Add something for this combo
+            AddBuff("PoisonOnHit", 25f);
+            AddBuff("DamageBoost", 15f);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Bones)
         {
-            //Add something for this combo
+            AddBuff("DecayAura", 20f);
+            AddBuff("ArmorBoost", 15f);
         }
     }
+
 
     private void ApplyGeneralBuff()
     {
         Debug.Log("General Buff: +10% movement speed and +5% weapon damage.");
+    }
+
+    public void AddBuff(string buffName, float duration)
+    {
+        if (activeBuffs.ContainsKey(buffName))
+            activeBuffs[buffName] = Mathf.Max(activeBuffs[buffName], duration);
+        else
+            activeBuffs.Add(buffName, duration);
+
+        Debug.Log($"Buff Applied: {buffName} for {duration} seconds.");
+    }
+
+    private void Update()
+    {
+        List<string> expired = new();
+
+        foreach (var buff in activeBuffs.Keys)
+        {
+            activeBuffs[buff] -= Time.deltaTime;
+            if (activeBuffs[buff] <= 0)
+                expired.Add(buff);
+        }
+
+        foreach (var buff in expired)
+        {
+            activeBuffs.Remove(buff);
+            Debug.Log($"Buff expired: {buff}");
+        }
     }
 }
