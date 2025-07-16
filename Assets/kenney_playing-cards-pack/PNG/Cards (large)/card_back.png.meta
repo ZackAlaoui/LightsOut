@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream:Assets/kenney_playing-cards-pack/PNG/Cards (large)/card_back.png.meta
 guid: f785b56f65525124f90a61e92638fbf6
+=======
+guid: 381d03818284c3844b55eca61775dcb9
+>>>>>>> Stashed changes:Assets/[AR] Post-Apocalyptic - Starter Pack/0. Welcome.png.meta
+=======
+guid: f785b56f65525124f90a61e92638fbf6
+>>>>>>> Stashed changes
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -69,7 +69,11 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
+<<<<<<< Updated upstream
   m_LastAgentTypeID: -1372625422
+=======
+  m_LastAgentTypeID: -334000983
+>>>>>>> Stashed changes
   m_Settings:
   - serializedVersion: 3
     agentTypeID: 0
@@ -87,6 +91,7 @@ NavMeshProjectSettings:
     buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
+<<<<<<< Updated upstream
     debug:
       m_Flags: 0
   - serializedVersion: 3
@@ -105,6 +110,8 @@ NavMeshProjectSettings:
     buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
+=======
+>>>>>>> Stashed changes
     debug:
       m_Flags: 0
   m_SettingNames:
