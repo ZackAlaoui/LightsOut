@@ -42,15 +42,16 @@ namespace Game.Enemy
         }
 
         // Update is called once per frame
-        void Update()
+        protected override void Update()
         {
+            base.Update();
             BehaviorTree.Process();
         }
 
-        public void OnDrawGizmosSelected()
+		public void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, _wanderRadius);
-		}
+        }
 	}
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8360589692886563182}
   - component: {fileID: 7918849305106564339}
   - component: {fileID: 4225414008233098204}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackRangeRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8513902745702726253}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 5815379698235441498}
   - component: {fileID: 6674441776442094771}
   - component: {fileID: 78744229094381592}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackReachRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}

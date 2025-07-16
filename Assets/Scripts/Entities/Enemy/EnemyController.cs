@@ -1,18 +1,43 @@
-using Game.Enemy.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using Game.Enemy.Behavior;
+using Game.Entity;
+using System;
 
 namespace Game.Enemy
 {
-    abstract public class EnemyController : MonoBehaviour
+    abstract public class EnemyController : MonoBehaviour, IDamageable
     {
         public NavMeshAgent Agent { get; private set; }
 
+        [SerializeField] protected float _maxHealth = 10;
+        protected float _health;
+        public float Health
+        {
+            get => _health;
+            set
+            {
+                _health = Math.Clamp(value, 0, _maxHealth);
+            }
+        }
+
         protected BehaviorTree BehaviorTree { get; set; }
+
+        public virtual void Damage(MonoBehaviour source, float damage)
+        {
+            Health -= damage;
+        }
 
         protected virtual void Awake()
         {
             Agent = GetComponent<NavMeshAgent>();
+
+            _health = _maxHealth;
+        }
+
+        protected virtual void Update()
+        {
+            if (Health <= 0) Destroy(this.gameObject);
         }
     }
 }
