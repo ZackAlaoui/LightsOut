@@ -119,6 +119,135 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &137063661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137063663}
+  - component: {fileID: 137063662}
+  m_Layer: 0
+  m_Name: DrawCard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &137063662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137063661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd6a35a4643b824a8b1f358385b9eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardSlots:
+  - cardImage: {fileID: 0}
+    cardButton: {fileID: 0}
+    canvasGroup: {fileID: 0}
+    rectTransform: {fileID: 0}
+    glowEffect: {fileID: 0}
+    shadowEffect: {fileID: 0}
+    borderEffect: {fileID: 0}
+    highlightEffect: {fileID: 0}
+    isHovered: 0
+    isSelected: 0
+    originalScale: {x: 0, y: 0, z: 0}
+    originalPosition: {x: 0, y: 0, z: 0}
+    originalShadowDistance: 0
+  - cardImage: {fileID: 0}
+    cardButton: {fileID: 0}
+    canvasGroup: {fileID: 0}
+    rectTransform: {fileID: 0}
+    glowEffect: {fileID: 0}
+    shadowEffect: {fileID: 0}
+    borderEffect: {fileID: 0}
+    highlightEffect: {fileID: 0}
+    isHovered: 0
+    isSelected: 0
+    originalScale: {x: 0, y: 0, z: 0}
+    originalPosition: {x: 0, y: 0, z: 0}
+    originalShadowDistance: 0
+  - cardImage: {fileID: 0}
+    cardButton: {fileID: 0}
+    canvasGroup: {fileID: 0}
+    rectTransform: {fileID: 0}
+    glowEffect: {fileID: 0}
+    shadowEffect: {fileID: 0}
+    borderEffect: {fileID: 0}
+    highlightEffect: {fileID: 0}
+    isHovered: 0
+    isSelected: 0
+    originalScale: {x: 0, y: 0, z: 0}
+    originalPosition: {x: 0, y: 0, z: 0}
+    originalShadowDistance: 0
+  drawButton: {fileID: 0}
+  cardBackSprite: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  backgroundSprite: {fileID: 0}
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.15, a: 1}
+  backgroundOverlayColor: {r: 0, g: 0, b: 0, a: 0.3}
+  hoverScale: 1.05
+  selectionScale: 1.1
+  hoverLiftHeight: 20
+  animationSpeed: 0.15
+  selectionGlowColor: {r: 1, g: 0.8, b: 0.2, a: 0.7}
+  hoverGlowColor: {r: 0.3, g: 0.7, b: 1, a: 0.4}
+  selectionBorderColor: {r: 1, g: 0.8, b: 0.2, a: 1}
+  glowIntensity: 1
+  borderThickness: 2
+  primaryButtonColor: {r: 0.2, g: 0.6, b: 0.9, a: 1}
+  primaryButtonHoverColor: {r: 0.3, g: 0.7, b: 1, a: 1}
+  primaryButtonPressedColor: {r: 0.15, g: 0.5, b: 0.8, a: 1}
+  primaryButtonText: Draw New Hand
+  primaryButtonCornerRadius: 15
+  buttonWidth: 200
+  buttonHeight: 50
+  secondaryButtonColor: {r: 0.9, g: 0.4, b: 0.2, a: 1}
+  secondaryButtonHoverColor: {r: 1, g: 0.5, b: 0.3, a: 1}
+  secondaryButtonPressedColor: {r: 0.8, g: 0.3, b: 0.1, a: 1}
+  secondaryButtonText: Draw Selected Card
+  secondaryButtonCornerRadius: 15
+  cardSpacing: 120
+  buttonSpacing: 20
+  cardShadowDistance: 8
+  buttonShadowDistance: 4
+  cardScale: 1.25
+  drawCardButton: {fileID: 0}
+  maxCardsInHand: 5
+  hotbarContainer: {fileID: 0}
+  hotbarHeight: 120
+  hotbarCardScale: 0.8
+  hotbarCardSpacing: 15
+  hotbarBackgroundColor: {r: 0.1, g: 0.1, b: 0.15, a: 0.9}
+  hotbarBorderColor: {r: 0.3, g: 0.3, b: 0.4, a: 0.8}
+  playerHand: []
+  selectedHotbarCardIndex: -1
+  isSwapMode: 0
+  cardsBasePath: Assets/2D Cards Game Art Pack/Sprites/Standard 52 Cards/Rect Cards
+  loadedCardsCount: 0
+--- !u!4 &137063663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137063661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 571.5287, y: 268.93698, z: -71.36576}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391422443
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 391422445}
   - component: {fileID: 391422444}
+  - component: {fileID: 391422446}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -216,6 +346,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &391422446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391422443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &609670630
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +467,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 609670633}
   - {fileID: 391422445}
+  - {fileID: 137063663}
