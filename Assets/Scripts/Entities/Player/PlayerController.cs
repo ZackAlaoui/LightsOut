@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Game.Entity;
 
 namespace Game.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         [SerializeField] private float _baseMovementSpeed = 7f;
         private float _movementSpeed;
@@ -33,6 +34,11 @@ namespace Game.Player
         private InputAction _moveAction;
         private InputAction _lookAction;
         private InputAction _toggleFlashlightAction;
+
+        public void Damage(MonoBehaviour source, float damage)
+        {
+            Flashlight.RemainingBatteryLife -= damage;
+        }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
