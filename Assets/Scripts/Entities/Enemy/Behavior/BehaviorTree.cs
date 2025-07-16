@@ -43,6 +43,23 @@ namespace Game.Enemy.Behavior
 		}
 	}
 
+	public class BehaviorTreeRepeater : BehaviorTreeNode
+	{
+		public BehaviorTreeRepeater(string name) : base(name) { }
+
+		public override Status Process()
+		{
+			Status status = Status.Success;
+			foreach (BehaviorTreeNode child in children)
+			{
+				if (child.Process() != Status.Success) status = Status.Running;
+			}
+			if (status == Status.Success) Reset();
+
+			return Status.Running;
+		}
+	}
+
 	public class BehaviorTreeSelector : BehaviorTreeNode
 	{
 		public BehaviorTreeSelector(string name) : base(name) { }

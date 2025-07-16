@@ -10,7 +10,7 @@ namespace Game.Enemy.Trigger {
 
         void Awake()
         {
-            Target = GameObject.Find("Player");
+            Target = GameObject.FindWithTag("Player");
         }
 
         private void OnTriggerEnter(Collider other)

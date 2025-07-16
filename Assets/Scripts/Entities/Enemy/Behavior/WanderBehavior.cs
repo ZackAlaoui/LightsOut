@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using static Game.Enemy.Behavior.BehaviorTreeNode;
 
 namespace Game.Enemy.Behavior
 {
@@ -7,7 +8,7 @@ namespace Game.Enemy.Behavior
 	{
 		private class IdleState : IState
 		{
-			private WanderMachine _fsm;
+			private readonly WanderMachine _fsm;
 
 			private readonly float _minIdleTime;
 			private readonly float _maxIdleTime;
@@ -38,7 +39,7 @@ namespace Game.Enemy.Behavior
 
 		private class MoveState : IState
 		{
-			private WanderMachine _fsm;
+			private readonly WanderMachine _fsm;
 
 			private Vector3 _origin;
 			private readonly float _radius;
@@ -85,68 +86,31 @@ namespace Game.Enemy.Behavior
 			{
 				Agent = agent;
 
-				IdleState = new IdleState(this, minIdleTime, maxIdleTime);
-				MoveState = new MoveState(this, radius);
+				IdleState = new(this, minIdleTime, maxIdleTime);
+				MoveState = new(this, radius);
 
 				State = IdleState;
 				State.Enter();
 			}
 		}
 
-		public BehaviorTreeNode.Status Status { get; set; }
+		public Status Status { get; set; }
 
 		private readonly WanderMachine _fsm;
 
 		public WanderBehavior(NavMeshAgent agent, float radius, float minIdleTime, float maxIdleTime)
 		{
-			Status = BehaviorTreeNode.Status.Running;
+			Status = Status.Running;
 
-			_fsm = new WanderMachine(agent, radius, minIdleTime, maxIdleTime);
+			_fsm = new(agent, radius, minIdleTime, maxIdleTime);
 		}
 
-		public BehaviorTreeNode.Status Process()
+		public Status Process()
 		{
 			_fsm.Update();
 			return Status;
 		}
 
 		public void Reset() { }
-
-        // // Start is called once before the first execution of Update after the MonoBehaviour is created
-		// void Start()
-		// {
-		//     SetRandomDestination();
-		// }
-
-		// // Update is called once per frame
-		// void Update()
-		// {
-		//     if (HasArrived())
-		//     {
-		//         SetRandomDestination();
-		//     }
-		// }
-
-		// bool HasArrived()
-		// {
-		//     return controller.Agent.remainingDistance <= controller.Agent.stoppingDistance;
-		// }
-
-		// // TODO Modify to use set base point (set when aggro lost) rather than current position
-		// // TODO Modify to restrict travel distance on NavMesh to wander distance
-		// void SetRandomDestination()
-		// {
-		//     Vector3 offset = Random.insideUnitSphere * _wanderRadius;
-		//     offset.y = 0;
-
-		//     Vector3 target = transform.position + offset;
-		//     NavMeshHit hit;
-		//     if (NavMesh.SamplePosition(target, out hit, 2f, 1))
-		//     {
-		//         target = hit.position;
-		//     }
-
-		//     controller.Agent.SetDestination(target);
-		// }
 	}
 }
