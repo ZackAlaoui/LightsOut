@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Game.Entity;
+using UnityEngine.SceneManagement;
 
 namespace Game.Player
 {
@@ -12,6 +13,9 @@ namespace Game.Player
         private float _movementSpeed;
 
         [SerializeField] private GameObject _model;
+
+        [SerializeField] private float _baseDamage = 5;
+        public float DamageMultiplier { get; set; }
 
         [SerializeField] private float _baseMaxHealth = 5f;
         public float MaxHealthModifier { get; set; }
@@ -33,15 +37,28 @@ namespace Game.Player
         private CharacterController _controller;
         private InputAction _moveAction;
         private InputAction _lookAction;
+        private InputAction _fireAction;
         private InputAction _toggleFlashlightAction;
+
+        private Vector3 _aimingAt;
 
         public void Damage(MonoBehaviour source, float damage)
         {
             Flashlight.RemainingBatteryLife -= damage;
         }
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Fire()
+        {
+            Debug.Log(_aimingAt);
+            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, 100f, ~4)) // evil bit-level hacking
+            {
+                IDamageable target = hit.collider.GetComponent<IDamageable>();
+                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
+            }
+        }
+
+		// Start is called once before the first execution of Update after the MonoBehaviour is created
+		void Start()
         {
             if (_model == null) _model = transform.Find("Model").gameObject;
 
@@ -50,10 +67,15 @@ namespace Game.Player
             _controller = GetComponent<CharacterController>();
             _moveAction = InputSystem.actions.FindAction("Move");
             _lookAction = InputSystem.actions.FindAction("Look");
+            _fireAction = InputSystem.actions.FindAction("Fire");
             _toggleFlashlightAction = InputSystem.actions.FindAction("Toggle Flashlight");
 
-            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
+            _aimingAt = transform.position + Vector3.forward;
 
+            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
+            _fireAction.performed += (InputAction.CallbackContext context) => { Debug.Log("Click"); Fire(); };
+
+            DamageMultiplier = 1;
             MaxHealthModifier = 1;
 
             _movementSpeed = _baseMovementSpeed;
@@ -63,7 +85,7 @@ namespace Game.Player
         // Update is called once per frame
         void Update()
         {
-            if (Health <= 0) Destroy(this.gameObject);
+            if (Health <= 0) SceneManager.LoadScene("MainMenu");
 
             if (Health < _baseMaxHealth * MaxHealthModifier)
             {
@@ -85,7 +107,8 @@ namespace Game.Player
             bool hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
             if (hit)
             {
-                Flashlight.transform.LookAt(cameraRay.GetPoint(distanceFromCamera));
+                _aimingAt = cameraRay.GetPoint(distanceFromCamera);
+                Flashlight.transform.LookAt(_aimingAt);
             }
 
             if (Flashlight.IsEnabled == false)

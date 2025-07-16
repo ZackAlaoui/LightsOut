@@ -38,8 +38,9 @@ namespace Game.Enemy
 			BehaviorTree.AddChild(repeater);
 		}
 
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			BehaviorTree.Process();
 		}
 
