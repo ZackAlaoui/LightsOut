@@ -10,7 +10,7 @@ namespace Game.Player
     public class PlayerController : MonoBehaviour, IDamageable
     {
         [SerializeField] private float _baseMovementSpeed = 7f;
-        private float _movementSpeed;
+        public float MovementSpeedMultiplier { get; set; }
 
         [SerializeField] private GameObject _model;
 
@@ -18,14 +18,14 @@ namespace Game.Player
         public float DamageMultiplier { get; set; }
 
         [SerializeField] private float _baseMaxHealth = 5f;
-        public float MaxHealthModifier { get; set; }
+        public float MaxHealthMultiplier { get; set; }
         private float _health;
         public float Health
         {
             get => _health;
             set
             {
-                _health = Math.Clamp(value, 0, _baseMaxHealth * MaxHealthModifier);
+                _health = Math.Clamp(value, 0, _baseMaxHealth * MaxHealthMultiplier);
             }
         }
         [SerializeField] private float _healingDelay = 3f;
@@ -81,10 +81,10 @@ namespace Game.Player
             _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
             _fireAction.performed += (InputAction.CallbackContext context) => Fire();
 
+            MovementSpeedMultiplier = 1;
             DamageMultiplier = 1;
-            MaxHealthModifier = 1;
+            MaxHealthMultiplier = 1;
 
-            _movementSpeed = _baseMovementSpeed;
             Health = _baseMaxHealth;
         }
 
@@ -93,7 +93,7 @@ namespace Game.Player
         {
             if (Health <= 0) SceneManager.LoadScene("MainMenu");
 
-            if (Health < _baseMaxHealth * MaxHealthModifier)
+            if (Health < _baseMaxHealth * MaxHealthMultiplier)
             {
                 _healthBarSlider.gameObject.SetActive(true);
                 _healthBarSlider.value = Health;
@@ -104,7 +104,7 @@ namespace Game.Player
             }
 
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
-            Vector3 velocity = _movementSpeed * new Vector3(moveDirection.x, 0f, moveDirection.y);
+            Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
             _controller.Move(velocity * Time.deltaTime);
 
             Plane lookPlane = new(Vector3.up, transform.position);
