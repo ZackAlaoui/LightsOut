@@ -8466,6 +8466,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6444032686077465496, guid: 576005981520ba442922256faf4f5174, type: 3}
+      propertyPath: m_fontSize
+      value: 44.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444032686077465496, guid: 576005981520ba442922256faf4f5174, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 7105366179570336527, guid: 576005981520ba442922256faf4f5174, type: 3}
       propertyPath: m_Camera
       value: 
