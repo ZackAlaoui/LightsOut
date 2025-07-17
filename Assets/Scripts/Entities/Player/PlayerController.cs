@@ -47,11 +47,17 @@ namespace Game.Player
             Flashlight.RemainingBatteryLife -= damage;
         }
 
+        [SerializeField] private LineRenderer line; // TEMPORARY
         private void Fire()
         {
-            Debug.Log(_aimingAt);
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, 100f, ~4)) // evil bit-level hacking
+            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
+            line.startWidth = line.endWidth = 0.05f;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
+
+            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
             {
+                line.SetPosition(1, hit.point);
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
                 if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
             }
@@ -73,7 +79,7 @@ namespace Game.Player
             _aimingAt = transform.position + Vector3.forward;
 
             _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
-            _fireAction.performed += (InputAction.CallbackContext context) => { Debug.Log("Click"); Fire(); };
+            _fireAction.performed += (InputAction.CallbackContext context) => Fire();
 
             DamageMultiplier = 1;
             MaxHealthModifier = 1;
@@ -121,6 +127,8 @@ namespace Game.Player
                 _timeInLight += Time.deltaTime;
                 if (_timeInLight >= _healingDelay) Health += Time.deltaTime;
             }
+
+            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
         }
     }
 }
