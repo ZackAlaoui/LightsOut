@@ -94,19 +94,24 @@ namespace Game.Enemy.Behavior
 
 		public Status Status { get; set; }
 
+		private readonly EnemyController _enemy;
 		private readonly PursueMachine _fsm;
 
-		public PursueBehavior(NavMeshAgent agent, GameObject target, ChaseRadiusTrigger chaseTrigger)
+		public PursueBehavior(EnemyController enemy, NavMeshAgent agent, GameObject target, ChaseRadiusTrigger chaseTrigger)
 		{
 			Status = Status.Failure;
 
+			_enemy = enemy;
 			_fsm = new PursueMachine(this, agent, target, chaseTrigger);
 		}
 
 		public Status Process()
 		{
 			if (_fsm.IsTargetInRange) Status = Status.Running;
-			if (Status == Status.Running) _fsm.Update();
+			if (Status == Status.Running) {
+				_enemy.CanBeDamaged = true;
+				_fsm.Update();
+			}
 			return Status;
 		}
 

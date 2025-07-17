@@ -20,12 +20,13 @@ namespace Game.Enemy
                 _health = Math.Clamp(value, 0, _maxHealth);
             }
         }
+        public bool CanBeDamaged { get; set; }
 
         protected BehaviorTree BehaviorTree { get; set; }
 
         public virtual void Damage(MonoBehaviour source, float damage)
         {
-            Health -= damage;
+            if (CanBeDamaged) Health -= damage;
         }
 
         protected virtual void Awake()
@@ -33,6 +34,7 @@ namespace Game.Enemy
             Agent = GetComponent<NavMeshAgent>();
 
             _health = _maxHealth;
+            CanBeDamaged = false;
         }
 
         protected virtual void Update()

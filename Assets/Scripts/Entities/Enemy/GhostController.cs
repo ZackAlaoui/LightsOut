@@ -21,6 +21,8 @@ namespace Game.Enemy
 
 		void Start()
 		{
+            if (_attackRangeTrigger == null) _attackRangeTrigger = transform.Find("AttackRangeTrigger").GetComponent<AttackRangeTrigger>();
+            if (_attackReachTrigger == null) _attackReachTrigger = transform.Find("AttackReachTrigger").GetComponent<AttackReachTrigger>();
 			if (_chaseTrigger == null) _chaseTrigger = transform.Find("ChaseRadius").GetComponent<ChaseRadiusTrigger>();
 
 			GameObject player = GameObject.Find("Player");
@@ -29,8 +31,8 @@ namespace Game.Enemy
 			BehaviorTreeRepeater repeater = new("Repeat");
 			BehaviorTreeSelector attackOrPursueOrWander = new("Attack OR Pursue OR Wander");
 			BehaviorTreeLeaf attack = new("Attack", new AttackBehavior(this, player.GetComponent<PlayerController>(), _attackRangeTrigger, _attackReachTrigger, _attackDamage, _attackDuration, _attackCooldown));
-			BehaviorTreeLeaf pursue = new("Pursue", new PursueBehavior(Agent, player, _chaseTrigger));
-			BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(Agent, _wanderRadius, _minIdleTime, _maxIdleTime));
+			BehaviorTreeLeaf pursue = new("Pursue", new PursueBehavior(this, Agent, player, _chaseTrigger));
+			BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(this, Agent, _wanderRadius, _minIdleTime, _maxIdleTime));
 			attackOrPursueOrWander.AddChild(attack);
 			attackOrPursueOrWander.AddChild(pursue);
 			attackOrPursueOrWander.AddChild(wander);
