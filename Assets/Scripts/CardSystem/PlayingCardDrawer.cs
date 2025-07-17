@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,6 +108,14 @@ public class PlayingCardDrawer : MonoBehaviour
     public Button drawCardButton;
     public int maxCardsInHand = 5;
     
+    [Header("Back Button")]
+    public Button backButton;
+    public Color backButtonColor = new Color(0.6f, 0.2f, 0.2f, 1f);
+    public Color backButtonHoverColor = new Color(0.8f, 0.3f, 0.3f, 1f);
+    public Color backButtonPressedColor = new Color(0.5f, 0.15f, 0.15f, 1f);
+    public string backButtonText = "Back to Menu";
+    public float backButtonCornerRadius = 15f;
+    
     [Header("Hotbar System")]
     public GameObject hotbarContainer;
     public float hotbarHeight = 120f;
@@ -121,6 +130,11 @@ public class PlayingCardDrawer : MonoBehaviour
     [Header("Auto-Load Settings")]
     [Tooltip("Path to the Standard Cards folder")]
     public string cardsBasePath = "Assets/2D Cards Game Art Pack/Sprites/Standard 52 Cards/Rect Cards";
+    
+    [Header("Manual Card Assignment (for builds)")]
+    [Tooltip("Assign card sprites manually for builds")]
+    public Sprite[] manualCardSprites = new Sprite[52];
+    public Sprite manualCardBackSprite;
     
     [Header("Debug Info")]
     [SerializeField] private int loadedCardsCount = 0;
@@ -151,6 +165,12 @@ public class PlayingCardDrawer : MonoBehaviour
         {
             drawCardButton.onClick.AddListener(() => StartCoroutine(DrawSingleCard()));
             SetupModernButton(drawCardButton, secondaryButtonColor, secondaryButtonHoverColor, secondaryButtonPressedColor);
+        }
+        
+        if (backButton != null)
+        {
+            backButton.onClick.AddListener(GoToSampleScene);
+            SetupModernButton(backButton, backButtonColor, backButtonHoverColor, backButtonPressedColor);
         }
             
         StartCoroutine(DrawCardsWithAnimation()); // Draw initial cards
@@ -423,6 +443,14 @@ public class PlayingCardDrawer : MonoBehaviour
             drawCardButton = CreateModernButton(buttonContainer.transform, secondaryButtonText, secondaryButtonColor,
                 secondaryButtonHoverColor, secondaryButtonPressedColor, secondaryButtonCornerRadius,
                 new Vector2(0, -30), new Vector2(buttonWidth, buttonHeight));
+        }
+        
+        // Create back button
+        if (backButton == null)
+        {
+            backButton = CreateModernButton(buttonContainer.transform, backButtonText, backButtonColor,
+                backButtonHoverColor, backButtonPressedColor, backButtonCornerRadius,
+                new Vector2(0, -90), new Vector2(buttonWidth, buttonHeight));
         }
     }
     
@@ -733,22 +761,204 @@ public class PlayingCardDrawer : MonoBehaviour
     {
         allCards.Clear();
         
-#if UNITY_EDITOR
-        LoadCardsFromAssetDatabase();
-#else
-        Debug.LogWarning("Auto-loading only works in editor. Please assign sprites manually for builds.");
-#endif
+        // Try manual assignments first
+        if (LoadFromManualAssignments())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from manual assignments!");
+            return;
+        }
+        
+        // Try loading from the same path structure
+        if (LoadCardsFromSamePath())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from path structure!");
+            return;
+        }
+        
+        // Fallback to Resources
+        LoadCardsFromResources();
         
         loadedCardsCount = allCards.Count;
         Debug.Log($"Loaded {allCards.Count} cards successfully!");
     }
     
-#if UNITY_EDITOR
-    private void LoadCardsFromAssetDatabase()
+    private void LoadCardsFromResources()
+    {
+        // First try to load from manual assignments
+        if (LoadFromManualAssignments())
+        {
+            return;
+        }
+        
+        // Try to load cards from Resources folder
+        string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
+        string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
+        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+        
+        for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
+        {
+            for (int value = 1; value <= 13; value++)
+            {
+                // Convert value to proper card name
+                string valueName = value switch
+                {
+                    1 => "A",
+                    11 => "J",
+                    12 => "Q",
+                    13 => "K",
+                    _ => value.ToString()
+                };
+                
+                string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}";
+                string resourcePath = $"Cards/{cardFileName}";
+                
+                Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
+                
+                if (cardSprite != null)
+                {
+                    PlayingCard card = new PlayingCard
+                    {
+                        value = value,
+                        suit = cardSuits[suitIndex],
+                        cardSprite = cardSprite
+                    };
+                    allCards.Add(card);
+                    Debug.Log($"Loaded: {card.GetCardName()} from Resources/{resourcePath}");
+                }
+                else
+                {
+                    Debug.LogWarning($"Could not load card sprite from Resources: {resourcePath}");
+                }
+            }
+        }
+        
+        // Load card back sprite from Resources
+        if (cardBackSprite == null)
+        {
+            cardBackSprite = Resources.Load<Sprite>("Cards/card_back");
+            if (cardBackSprite != null)
+            {
+                Debug.Log("Loaded card back from Resources/Cards/card_back");
+            }
+            else
+            {
+                Debug.LogWarning("Could not load card back from Resources/Cards/card_back");
+            }
+        }
+        
+        // If no cards loaded, create fallback cards
+        if (allCards.Count == 0)
+        {
+            CreateFallbackCards();
+        }
+    }
+    
+    private bool LoadFromManualAssignments()
+    {
+        // Check if manual sprites are assigned
+        bool hasManualSprites = false;
+        for (int i = 0; i < manualCardSprites.Length; i++)
+        {
+            if (manualCardSprites[i] != null)
+            {
+                hasManualSprites = true;
+                break;
+            }
+        }
+        
+        if (!hasManualSprites)
+        {
+            return false;
+        }
+        
+        Debug.Log("Loading cards from manual assignments...");
+        
+        // Load from manual assignments
+        string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
+        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+        
+        int spriteIndex = 0;
+        for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
+        {
+            for (int value = 1; value <= 13; value++)
+            {
+                if (spriteIndex < manualCardSprites.Length && manualCardSprites[spriteIndex] != null)
+                {
+                    PlayingCard card = new PlayingCard
+                    {
+                        value = value,
+                        suit = cardSuits[suitIndex],
+                        cardSprite = manualCardSprites[spriteIndex]
+                    };
+                    allCards.Add(card);
+                    Debug.Log($"Loaded: {card.GetCardName()} from manual assignment");
+                }
+                spriteIndex++;
+            }
+        }
+        
+        // Set manual card back
+        if (manualCardBackSprite != null)
+        {
+            cardBackSprite = manualCardBackSprite;
+            Debug.Log("Loaded card back from manual assignment");
+        }
+        
+        return allCards.Count > 0;
+    }
+    
+    private void CreateFallbackCards()
+    {
+        Debug.Log("Creating fallback cards for build...");
+        
+        // Create a simple colored rectangle as fallback
+        Texture2D fallbackTexture = new Texture2D(214, 227);
+        Color[] pixels = new Color[214 * 227];
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = Color.white;
+        }
+        fallbackTexture.SetPixels(pixels);
+        fallbackTexture.Apply();
+        
+        Sprite fallbackSprite = Sprite.Create(fallbackTexture, new Rect(0, 0, 214, 227), new Vector2(0.5f, 0.5f));
+        
+        // Create fallback cards for each suit and value
+        string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
+        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+        
+        for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
+        {
+            for (int value = 1; value <= 13; value++)
+            {
+                PlayingCard card = new PlayingCard
+                {
+                    value = value,
+                    suit = cardSuits[suitIndex],
+                    cardSprite = fallbackSprite
+                };
+                allCards.Add(card);
+            }
+        }
+        
+        // Set fallback card back
+        if (cardBackSprite == null)
+        {
+            cardBackSprite = fallbackSprite;
+        }
+        
+        Debug.Log($"Created {allCards.Count} fallback cards");
+    }
+    
+    private bool LoadCardsFromSamePath()
     {
         string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
         string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
         PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+        
+        bool loadedAnyCards = false;
         
         for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
         {
@@ -769,7 +979,15 @@ public class PlayingCardDrawer : MonoBehaviour
                 string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}.png";
                 string fullPath = $"{suitFolderPath}/{cardFileName}";
                 
-                Sprite cardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(fullPath);
+                Sprite cardSprite = null;
+                
+#if UNITY_EDITOR
+                cardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(fullPath);
+#else
+                // In builds, try to load from Resources with the same structure
+                string resourcePath = fullPath.Replace("Assets/", "").Replace(".png", "");
+                cardSprite = Resources.Load<Sprite>(resourcePath);
+#endif
                 
                 if (cardSprite != null)
                 {
@@ -780,6 +998,7 @@ public class PlayingCardDrawer : MonoBehaviour
                         cardSprite = cardSprite
                     };
                     allCards.Add(card);
+                    loadedAnyCards = true;
                     Debug.Log($"Loaded: {card.GetCardName()} from {fullPath}");
                 }
                 else
@@ -793,7 +1012,13 @@ public class PlayingCardDrawer : MonoBehaviour
         if (cardBackSprite == null)
         {
             string cardBackPath = $"{cardsBasePath}/Card Back/card_back_rect_1.png";
+            
+#if UNITY_EDITOR
             cardBackSprite = AssetDatabase.LoadAssetAtPath<Sprite>(cardBackPath);
+#else
+            string resourcePath = cardBackPath.Replace("Assets/", "").Replace(".png", "");
+            cardBackSprite = Resources.Load<Sprite>(resourcePath);
+#endif
             
             if (cardBackSprite != null)
             {
@@ -804,8 +1029,9 @@ public class PlayingCardDrawer : MonoBehaviour
                 Debug.LogWarning($"Could not load card back from: {cardBackPath}");
             }
         }
+        
+        return loadedAnyCards;
     }
-#endif
     
     private void InitializeCardSlots()
     {
@@ -1288,6 +1514,12 @@ public class PlayingCardDrawer : MonoBehaviour
         
         // Placeholder behavior - you can customize this
         OnCardDrawn(selectedCard);
+    }
+    
+    private void GoToSampleScene()
+    {
+        Debug.Log("Loading SampleScene...");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
     
     private IEnumerator TurnCardToBack(int cardIndex)
