@@ -44,7 +44,12 @@ namespace Game.Enemy
         // Update is called once per frame
         protected override void Update()
         {
-            base.Update();
+            if (Health <= 0)
+            {
+                --EnemyManager.Get().ZombieCount;
+                Destroy(gameObject);
+            }
+            
             BehaviorTree.Process();
         }
 

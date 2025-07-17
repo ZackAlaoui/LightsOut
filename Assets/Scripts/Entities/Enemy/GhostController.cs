@@ -40,7 +40,12 @@ namespace Game.Enemy
 
 		protected override void Update()
 		{
-			base.Update();
+			if (Health <= 0)
+			{
+				--EnemyManager.Get().GhostCount;
+				Destroy(gameObject);
+			}
+			
 			BehaviorTree.Process();
 		}
 
