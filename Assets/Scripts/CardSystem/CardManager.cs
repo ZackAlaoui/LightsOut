@@ -22,7 +22,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateStartingHand();
+        //GenerateStartingHand();
     }
 
     public void GenerateStartingHand()
@@ -318,7 +318,10 @@ public class CardManager : MonoBehaviour
     {
         List<string> expired = new();
 
-        foreach (var buff in activeBuffs.Keys)
+        // Create a copy of the keys to avoid modifying collection during enumeration
+        List<string> buffKeys = new List<string>(activeBuffs.Keys);
+
+        foreach (var buff in buffKeys)
         {
             activeBuffs[buff] -= Time.deltaTime;
             if (activeBuffs[buff] <= 0)
