@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< Updated upstream
+guid: ce4799d0e77b43c449aa4944fc603a4e
+=======
+<<<<<<< Updated upstream:Assets/Prefabs/Enemies/Ghost.prefab.meta
+guid: 66824554c2c9f054084cb1d1786c5cf6
+=======
+guid: ce4799d0e77b43c449aa4944fc603a4e
+>>>>>>> Stashed changes:Assets/Prefabs/Enemies/Triggers/ChaseRadius.prefab.meta
+>>>>>>> Stashed changes
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
