@@ -96,17 +96,20 @@ namespace Game.Enemy.Behavior
 
 		public Status Status { get; set; }
 
+		private readonly EnemyController _enemy;
 		private readonly WanderMachine _fsm;
 
-		public WanderBehavior(NavMeshAgent agent, float radius, float minIdleTime, float maxIdleTime)
+		public WanderBehavior(EnemyController enemy, NavMeshAgent agent, float radius, float minIdleTime, float maxIdleTime)
 		{
 			Status = Status.Running;
 
+			_enemy = enemy;
 			_fsm = new(agent, radius, minIdleTime, maxIdleTime);
 		}
 
 		public Status Process()
 		{
+			_enemy.CanBeDamaged = false;
 			_fsm.Update();
 			return Status;
 		}

@@ -41,6 +41,8 @@ namespace Game.Enemy.Behavior
 
 			if (_isTargetInAttackRange == false || _cooldownTime > 0) return Status.Failure;
 
+			_enemy.CanBeDamaged = true;
+
 			_attackTime += Time.deltaTime;
 			if (_attackTime < _attackDuration) return Status.Running;
 			
