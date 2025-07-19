@@ -22,7 +22,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateStartingHand();
+        //GenerateStartingHand();
     }
 
     public void GenerateStartingHand()
@@ -39,6 +39,7 @@ public class CardManager : MonoBehaviour
         }
 
         Debug.Log("Player starting hand generated.");
+        EvaluatePokerHand(); // Evaluate initial hand
     }
 
     public void UseCard(int cardIndex)
@@ -48,7 +49,19 @@ public class CardManager : MonoBehaviour
             playerHand[cardIndex].ActivateCard();
 
             if (playerHand[cardIndex].usageType == CardUsageType.SingleUse)
+            {
                 playerHand.RemoveAt(cardIndex);
+                EvaluatePokerHand(); // Re-evaluate after card removal
+            }
+        }
+    }
+
+    public void AddCardToHand(Card newCard)
+    {
+        if (playerHand.Count < 5)
+        {
+            playerHand.Add(newCard);
+            EvaluatePokerHand(); // Re-evaluate with new card
         }
     }
 
@@ -62,17 +75,31 @@ public class CardManager : MonoBehaviour
             suitCounts[card.suit]++;
         }
 
-        // Check Flush
+        // Check Flush (5 of same suit)
         foreach (var suit in suitCounts)
         {
             if (suit.Value == 5)
             {
                 Debug.Log($"Flush of {suit.Key}: Ultimate buff!");
+                BuffEffectsManager.Instance?.PlayPokerHandEffect("flush", suit.Key);
                 ApplySuitBuff(suit.Key, "flush");
                 return;
             }
         }
 
+        // Check Four of a Kind
+        foreach (var suit in suitCounts)
+        {
+            if (suit.Value == 4)
+            {
+                Debug.Log($"Four of a Kind ({suit.Key}): Major buff!");
+                BuffEffectsManager.Instance?.PlayPokerHandEffect("four", suit.Key);
+                ApplySuitBuff(suit.Key, "four");
+                return;
+            }
+        }
+
+        // Check pairs and three of a kind
         int pairs = 0;
         bool hasThree = false;
         CardSuit firstPairSuit = CardSuit.Brains;
@@ -94,31 +121,31 @@ public class CardManager : MonoBehaviour
                 hasThree = true;
                 threeSuit = suit.Key;
             }
-            else if (suit.Value == 4)
-            {
-                Debug.Log($"Four of a Kind ({suit.Key}): Major buff!");
-                ApplySuitBuff(suit.Key, "four");
-                return;
-            }
         }
 
-        if (pairs == 2)
-        {
-            Debug.Log($"Two Pair: {firstPairSuit} and {secondPairSuit}");
-            ApplyTwoPairBuff(firstPairSuit, secondPairSuit);
-            return;
-        }
-
+        // Check Full House (3 of one suit + 2 of another)
         if (hasThree && pairs >= 1)
         {
             Debug.Log($"Full House: {threeSuit} + {firstPairSuit}");
+            BuffEffectsManager.Instance?.PlayPokerHandEffect("fullhouse", threeSuit, firstPairSuit);
             ApplyFullHouseBuff(threeSuit, firstPairSuit);
             return;
         }
 
+        // Check Two Pair
+        if (pairs == 2)
+        {
+            Debug.Log($"Two Pair: {firstPairSuit} and {secondPairSuit}");
+            BuffEffectsManager.Instance?.PlayPokerHandEffect("twopair", firstPairSuit, secondPairSuit);
+            ApplyTwoPairBuff(firstPairSuit, secondPairSuit);
+            return;
+        }
+
+        // Check One Pair
         if (pairs == 1)
         {
             Debug.Log("One Pair: General minor buff.");
+            BuffEffectsManager.Instance?.PlayPokerHandEffect("pair", firstPairSuit);
             ApplyGeneralBuff();
         }
     }
@@ -132,20 +159,20 @@ public class CardManager : MonoBehaviour
                 switch (suit)
                 {
                     case CardSuit.Brains:
-                        AddBuff("UltimateCooldownReduction", 20f);
-                        AddBuff("StrongerLightBeam", 20f);  // Smarter = faster leveling
+                        AddBuff("UltimateCooldownReduction", 20f, suit);
+                        AddBuff("StrongerLightBeam", 20f, suit);
                         break;
                     case CardSuit.Bones:
-                        AddBuff("ArmorUp", 20f);
-                        AddBuff("KnockbackResistance", 20f);
+                        AddBuff("ArmorUp", 20f, suit);
+                        AddBuff("KnockbackResistance", 20f, suit);
                         break;
                     case CardSuit.Blood:
-                        AddBuff("Lifesteal", 20f);
-                        AddBuff("BleedOnHit", 20f);
+                        AddBuff("Lifesteal", 20f, suit);
+                        AddBuff("BleedOnHit", 20f, suit);
                         break;
                     case CardSuit.RottenFlesh:
-                        AddBuff("ToxicAura", 20f);
-                        AddBuff("InfectionSpread", 20f);
+                        AddBuff("ToxicAura", 20f, suit);
+                        AddBuff("InfectionSpread", 20f, suit);
                         break;
                 }
                 break;
@@ -155,26 +182,25 @@ public class CardManager : MonoBehaviour
                 switch (suit)
                 {
                     case CardSuit.Brains:
-                        AddBuff("CooldownReduction", 15f);
-                        AddBuff("EnergyRegen", 15f);
+                        AddBuff("CooldownReduction", 15f, suit);
+                        AddBuff("EnergyRegen", 15f, suit);
                         break;
                     case CardSuit.Bones:
-                        AddBuff("HealthRegen", 15f);
-                        AddBuff("ShieldBoost", 15f);
+                        AddBuff("HealthRegen", 15f, suit);
+                        AddBuff("ShieldBoost", 15f, suit);
                         break;
                     case CardSuit.Blood:
-                        AddBuff("AttackSpeed", 15f);
-                        AddBuff("DamageBoost", 15f);
+                        AddBuff("AttackSpeed", 15f, suit);
+                        AddBuff("DamageBoost", 15f, suit);
                         break;
                     case CardSuit.RottenFlesh:
-                        AddBuff("PoisonOnHit", 15f);
-                        AddBuff("RotShield", 15f); // absorbs damage and poisons attackers
+                        AddBuff("PoisonOnHit", 15f, suit);
+                        AddBuff("RotShield", 15f, suit);
                         break;
                 }
                 break;
         }
     }
-
 
     private void ApplyTwoPairBuff(CardSuit suit1, CardSuit suit2)
     {
@@ -182,26 +208,25 @@ public class CardManager : MonoBehaviour
 
         if ((suit1 == CardSuit.Bones && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Bones && suit1 == CardSuit.RottenFlesh))
         {
-            AddBuff("PoisonResistance", 12f);   // Rot synergy
-            AddBuff("ArmorBoost", 12f);         // Tanky support
+            AddBuff("PoisonResistance", 12f, suit1);
+            AddBuff("ArmorBoost", 12f, suit2);
         }
         else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Blood && suit1 == CardSuit.Brains))
         {
-            AddBuff("CooldownReduction", 12f);  // Tactical offense
-            AddBuff("DamageBoost", 10f);
+            AddBuff("CooldownReduction", 12f, suit1);
+            AddBuff("DamageBoost", 10f, suit2);
         }
         else if ((suit1 == CardSuit.Bones && suit2 == CardSuit.Brains) || (suit2 == CardSuit.Bones && suit1 == CardSuit.Brains))
         {
-            AddBuff("CooldownReduction", 10f);  // Defensive utility
-            AddBuff("HealthRegen", 10f);
+            AddBuff("CooldownReduction", 10f, suit1);
+            AddBuff("HealthRegen", 10f, suit2);
         }
         else if ((suit1 == CardSuit.Blood && suit2 == CardSuit.RottenFlesh) || (suit2 == CardSuit.Blood && suit1 == CardSuit.RottenFlesh))
         {
-            AddBuff("PoisonOnHit", 12f);        // Damage-over-time
-            AddBuff("MovementSpeedBoost", 10f); // Chase-down synergy
+            AddBuff("PoisonOnHit", 12f, suit1);
+            AddBuff("MovementSpeedBoost", 10f, suit2);
         }
     }
-
 
     private void ApplyFullHouseBuff(CardSuit threeSuit, CardSuit pairSuit)
     {
@@ -209,73 +234,74 @@ public class CardManager : MonoBehaviour
 
         if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Bones)
         {
-            AddBuff("CooldownReduction", 20f);     // Faster ability use
-            AddBuff("ArmorBoost", 20f);             // Defensive synergy
+            AddBuff("CooldownReduction", 20f, threeSuit);
+            AddBuff("ArmorBoost", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.RottenFlesh)
         {
-            AddBuff("Lifesteal", 20f);              // Aggressive + decay synergy
-            AddBuff("PoisonOnHit", 20f);            // Adds DoT to attacks
+            AddBuff("Lifesteal", 20f, threeSuit);
+            AddBuff("PoisonOnHit", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.RottenFlesh)
         {
-            AddBuff("TrapSense", 25f);              // Maybe increases flashlight radius or visibility
-            AddBuff("DecayAura", 20f);              // Nearby enemies take passive damage
+            AddBuff("TrapSense", 25f, threeSuit);
+            AddBuff("DecayAura", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Brains && pairSuit == CardSuit.Blood)
         {
-            AddBuff("CriticalChanceUp", 20f);       // Tactical aggression synergy
-            AddBuff("CooldownReduction", 20f);
+            AddBuff("CriticalChanceUp", 20f, threeSuit);
+            AddBuff("CooldownReduction", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.RottenFlesh)
         {
-            AddBuff("HealthRegen", 20f);            // Tanky sustain synergy
-            AddBuff("PoisonResistance", 20f);
+            AddBuff("HealthRegen", 20f, threeSuit);
+            AddBuff("PoisonResistance", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Brains)
         {
-            AddBuff("ShieldBoost", 25f);            // More defensive synergy
-            AddBuff("CooldownReduction", 15f);
+            AddBuff("ShieldBoost", 25f, threeSuit);
+            AddBuff("CooldownReduction", 15f, pairSuit);
         }
         else if (threeSuit == CardSuit.Bones && pairSuit == CardSuit.Blood)
         {
-            AddBuff("BerserkerMode", 20f);          // Boost dmg when under 50% health
-            AddBuff("ArmorBoost", 20f);
+            AddBuff("BerserkerMode", 20f, threeSuit);
+            AddBuff("ArmorBoost", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Brains)
         {
-            AddBuff("Executioner", 20f);            // Bonus damage to low-health enemies
-            AddBuff("CooldownReduction", 15f);
+            AddBuff("Executioner", 20f, threeSuit);
+            AddBuff("CooldownReduction", 15f, pairSuit);
         }
         else if (threeSuit == CardSuit.Blood && pairSuit == CardSuit.Bones)
         {
-            AddBuff("DamageBoost", 20f);
-            AddBuff("StaggerResistance", 20f);
+            AddBuff("DamageBoost", 20f, threeSuit);
+            AddBuff("StaggerResistance", 20f, pairSuit);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Brains)
         {
-            AddBuff("ConfuseEnemies", 15f);         // Chance for enemies to attack each other
-            AddBuff("TrapSense", 15f);
+            AddBuff("ConfuseEnemies", 15f, threeSuit);
+            AddBuff("TrapSense", 15f, pairSuit);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Blood)
         {
-            AddBuff("PoisonOnHit", 25f);
-            AddBuff("DamageBoost", 15f);
+            AddBuff("PoisonOnHit", 25f, threeSuit);
+            AddBuff("DamageBoost", 15f, pairSuit);
         }
         else if (threeSuit == CardSuit.RottenFlesh && pairSuit == CardSuit.Bones)
         {
-            AddBuff("DecayAura", 20f);
-            AddBuff("ArmorBoost", 15f);
+            AddBuff("DecayAura", 20f, threeSuit);
+            AddBuff("ArmorBoost", 15f, pairSuit);
         }
     }
-
 
     private void ApplyGeneralBuff()
     {
         Debug.Log("General Buff: +10% movement speed and +5% weapon damage.");
+        AddBuff("MovementSpeedBoost", 8f, CardSuit.Brains);
+        AddBuff("DamageBoost", 8f, CardSuit.Blood);
     }
 
-    public void AddBuff(string buffName, float duration)
+    public void AddBuff(string buffName, float duration, CardSuit primarySuit)
     {
         if (activeBuffs.ContainsKey(buffName))
             activeBuffs[buffName] = Mathf.Max(activeBuffs[buffName], duration);
@@ -283,13 +309,19 @@ public class CardManager : MonoBehaviour
             activeBuffs.Add(buffName, duration);
 
         Debug.Log($"Buff Applied: {buffName} for {duration} seconds.");
+        
+        // Trigger visual effects
+        BuffEffectsManager.Instance?.ActivateBuffEffect(buffName, duration, primarySuit);
     }
 
     private void Update()
     {
         List<string> expired = new();
 
-        foreach (var buff in activeBuffs.Keys)
+        // Create a copy of the keys to avoid modifying collection during enumeration
+        List<string> buffKeys = new List<string>(activeBuffs.Keys);
+
+        foreach (var buff in buffKeys)
         {
             activeBuffs[buff] -= Time.deltaTime;
             if (activeBuffs[buff] <= 0)
@@ -300,6 +332,18 @@ public class CardManager : MonoBehaviour
         {
             activeBuffs.Remove(buff);
             Debug.Log($"Buff expired: {buff}");
+            BuffEffectsManager.Instance?.DeactivateBuffEffect(buff);
         }
+    }
+
+    // Public getter for other systems to check active buffs
+    public bool HasActiveBuff(string buffName)
+    {
+        return activeBuffs.ContainsKey(buffName);
+    }
+
+    public float GetBuffRemainingTime(string buffName)
+    {
+        return activeBuffs.ContainsKey(buffName) ? activeBuffs[buffName] : 0f;
     }
 }
