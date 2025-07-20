@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.AI;
 using Game.Enemy.Trigger;
@@ -121,5 +120,4 @@ namespace Game.Enemy.Behavior
 			Status = Status.Failure;
 		}
 	}
-
 }

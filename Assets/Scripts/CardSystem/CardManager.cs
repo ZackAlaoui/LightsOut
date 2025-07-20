@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -310,7 +309,7 @@ public class CardManager : MonoBehaviour
             activeBuffs.Add(buffName, duration);
 
         Debug.Log($"Buff Applied: {buffName} for {duration} seconds.");
-
+        
         // Trigger visual effects
         BuffEffectsManager.Instance?.ActivateBuffEffect(buffName, duration, primarySuit);
     }
@@ -347,5 +346,4 @@ public class CardManager : MonoBehaviour
     {
         return activeBuffs.ContainsKey(buffName) ? activeBuffs[buffName] : 0f;
     }
-
 }

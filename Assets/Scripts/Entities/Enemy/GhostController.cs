@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Game.Enemy.Behavior;
 using Game.Enemy.Trigger;
@@ -58,5 +57,4 @@ namespace Game.Enemy
 			Gizmos.DrawWireSphere(transform.position, _wanderRadius);
 		}
 	}
-
 }

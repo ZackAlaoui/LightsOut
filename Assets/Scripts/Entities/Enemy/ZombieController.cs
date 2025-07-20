@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Game.Enemy.Behavior;
 using Game.Enemy.Trigger;

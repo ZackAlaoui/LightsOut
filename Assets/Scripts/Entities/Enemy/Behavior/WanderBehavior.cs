@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.AI;
 using static Game.Enemy.Behavior.BehaviorTreeNode;
@@ -118,4 +117,3 @@ namespace Game.Enemy.Behavior
 		public void Reset() { }
 	}
 }
-
