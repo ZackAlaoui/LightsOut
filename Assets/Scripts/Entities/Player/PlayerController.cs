@@ -107,16 +107,6 @@ namespace Game.Player
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
             _controller.Move(velocity * Time.deltaTime);
 
-            Plane lookPlane = new(Vector3.up, transform.position);
-            Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
-            Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
-            bool hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
-            if (hit)
-            {
-                _aimingAt = cameraRay.GetPoint(distanceFromCamera);
-                Flashlight.transform.LookAt(_aimingAt);
-            }
-
             if (Flashlight.IsEnabled == false)
             {
                 _timeInLight = 0f;
