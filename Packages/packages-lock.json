@@ -1,6 +1,6 @@
 {
   "dependencies": {
-<<<<<<< Updated upstream
+
     "com.unity.2d.common": {
       "version": "9.0.7",
       "depth": 1,
@@ -50,14 +50,7 @@
       },
       "url": "https://packages.unity.com"
     },
-=======
-    "com.unity.2d.sprite": {
-      "version": "1.0.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {}
-    },
->>>>>>> Stashed changes
+
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,
