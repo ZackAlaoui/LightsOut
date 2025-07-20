@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -56,4 +57,5 @@ namespace Game.Enemy.Behavior
 			_attackTime = 0f;
 		}
 	}
+
 }

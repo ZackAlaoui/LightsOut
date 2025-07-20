@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream:Assets/Materials/ShowcaseGround.mat.meta
+guid: 271effd3d4137d54cae03eca2ef7111c
+=======
+guid: c74fe3780e74c564d846ee21195244c2
+>>>>>>> Stashed changes:Assets/Materials/ShowcasePlayer.mat.meta
+=======
+guid: 271effd3d4137d54cae03eca2ef7111c
+>>>>>>> Stashed changes
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
