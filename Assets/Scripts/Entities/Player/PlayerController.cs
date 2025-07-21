@@ -59,7 +59,7 @@ namespace Game.Player
             _fireAction = InputSystem.actions.FindAction("Fire");
 
             _aimingAt = transform.position + Vector3.forward;
-            _fireAction.performed += (InputAction.CallbackContext context) => Fire();
+            _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
         }
@@ -67,17 +67,21 @@ namespace Game.Player
         // Update is called once per frame
         void Update()
         {
-            if (Health <= 0) SceneManager.LoadScene("MainMenu");
+            if (Health <= 0)
+            {
+                GameManager.Unload();
+                return;
+            }
 
             if (Health < _baseMaxHealth * MaxHealthMultiplier)
-            {
-                _healthBarSlider.gameObject.SetActive(true);
-                _healthBarSlider.value = Health;
-            }
-            else
-            {
-                _healthBarSlider.gameObject.SetActive(false);
-            }
+                {
+                    _healthBarSlider.gameObject.SetActive(true);
+                    _healthBarSlider.value = Health;
+                }
+                else
+                {
+                    _healthBarSlider.gameObject.SetActive(false);
+                }
 
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
@@ -111,8 +115,13 @@ namespace Game.Player
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
         }
 
-        [SerializeField] private LineRenderer line; // TEMPORARY
-        private void Fire()
+		private void OnDestroy()
+		{
+            _fireAction.performed -= Fire;
+		}
+
+		[SerializeField] private LineRenderer line; // TEMPORARY
+        private void Fire(InputAction.CallbackContext callbackContext)
         {
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
             line.startWidth = line.endWidth = 0.05f;

@@ -43,7 +43,7 @@ namespace Game.Player
             RemainingBatteryLife = _baseMaxBattery;
 
             _toggleAction ??= InputSystem.actions.FindAction("Toggle Flashlight");
-            _toggleAction.performed += (InputAction.CallbackContext context) => Toggle();
+            _toggleAction.performed += Toggle;
 
             _lookAction ??= InputSystem.actions.FindAction("Look");
             _aimingAt = transform.position + Vector3.forward;
@@ -56,7 +56,7 @@ namespace Game.Player
             Aim();
         }
 
-        public void Toggle()
+        public void Toggle(InputAction.CallbackContext callbackContext)
         {
             if (_remainingBatteryLife > 0) IsEnabled = !IsEnabled;
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Game.Enemy.EnemyManager;
 using Game.Enemy.Behavior;
 using Game.Enemy.Trigger;
 using Game.Player;
@@ -7,6 +8,8 @@ namespace Game.Enemy
 {
     public class ZombieController : EnemyController
     {
+        public override EnemyType Type { get; } = EnemyType.Zombie;
+
         [SerializeField] private AttackRangeTrigger _attackRangeTrigger;
         [SerializeField] private AttackReachTrigger _attackReachTrigger;
         [SerializeField] private float _attackDamage = 5f;
@@ -39,18 +42,6 @@ namespace Game.Enemy
             attackOrPursueOrWander.AddChild(wander);
             repeater.AddChild(attackOrPursueOrWander);
             BehaviorTree.AddChild(repeater);
-        }
-
-        // Update is called once per frame
-        protected override void Update()
-        {
-            if (Health <= 0)
-            {
-                --EnemyManager.Get().ZombieCount;
-                Destroy(gameObject);
-            }
-            
-            BehaviorTree.Process();
         }
 
 		public void OnDrawGizmosSelected()

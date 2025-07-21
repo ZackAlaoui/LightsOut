@@ -13,14 +13,7 @@ namespace Game
 
 		private BatteryManager() { }
 
-		public static BatteryManager Get()
-		{
-			if (s_instance == null) s_instance = new();
-
-			return s_instance;
-		}
-
-		public void SpawnBatteries(int count)
+		public static void SpawnBatteries(int count)
 		{
 			for (int i = 0; i < count; ++i)
 			{
@@ -30,8 +23,8 @@ namespace Game
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
 				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
 
-				Instantiate(_batteryPrefab, spawnPoint, Quaternion.identity);
-                ++_batteryCount;
+				Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity);
+                ++s_instance._batteryCount;
 			}
 		}
 
@@ -43,15 +36,9 @@ namespace Game
 			if (_batteryPrefab == null) throw new NullReferenceException("Battery Prefab is null.");
 		}
 
-		private void Start()
-		{
-			DontDestroyOnLoad(gameObject);
-			SpawnBatteries(7);
-		}
-
 		private void Update()
 		{
-			SpawnBatteries(7 - _batteryCount);
+			SpawnBatteries(7 - s_instance._batteryCount);
 		}
 	}
 }

@@ -8,6 +8,8 @@ namespace Game.Enemy
 {
     abstract public class EnemyController : MonoBehaviour, IDamageable
     {
+        public abstract EnemyManager.EnemyType Type { get; }
+
         public NavMeshAgent Agent { get; private set; }
 
         [SerializeField] protected float _maxHealth = 10;
@@ -39,7 +41,13 @@ namespace Game.Enemy
 
         protected virtual void Update()
         {
-            if (Health <= 0) Destroy(this.gameObject);
+            if (Health <= 0)
+            {
+                EnemyManager.Kill(this);
+                return;
+            }
+
+            BehaviorTree.Process();
         }
     }
 }
