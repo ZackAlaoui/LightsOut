@@ -87,10 +87,7 @@ namespace Game.Enemy
 
 		public static void KillAll()
 		{
-			foreach (EnemyController enemy in EnemyList)
-			{
-				Destroy(enemy.gameObject);
-			}
+			foreach (EnemyController enemy in EnemyList) Destroy(enemy.gameObject);
 			EnemyList = new();
 			ZombieList = new();
 			GhostList = new();
