@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Game.Entity;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 namespace Game.Player
 {
@@ -100,7 +101,7 @@ namespace Game.Player
 
             Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
             Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
-            bool hit = Physics.Raycast(cameraRay, out RaycastHit hitInfo, Mathf.Infinity, ~4); // evil bit level hacking
+            bool hit = Physics.Raycast(cameraRay, out RaycastHit hitInfo, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast"));
             if (hit)
             {
                 _aimingAt = hitInfo.point;
@@ -128,7 +129,7 @@ namespace Game.Player
             line.SetPosition(0, transform.position);
             line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
 
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
+            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
                 line.SetPosition(1, hit.point);
                 IDamageable target = hit.collider.GetComponent<IDamageable>();

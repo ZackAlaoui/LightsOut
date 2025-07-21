@@ -27,11 +27,13 @@ namespace Game
 		{
 			for (int i = 0; i < count; ++i)
 			{
-				Vector3 spawnPoint;
-				do
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
+				for (int numTries = 0; numTries < 15; ++numTries)
 				{
+					bool hit = Physics.CheckSphere(spawnPoint, 15f, LayerMask.GetMask("Player", "Battery"));
+					if (!hit) break;
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
-				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
+				}
 
 				Battery battery = Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity).GetComponent<Battery>();
 				BatteryList.Add(battery);

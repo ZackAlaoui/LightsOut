@@ -46,11 +46,20 @@ namespace Game.Enemy
 		{
 			for (int i = 0; i < count; ++i)
 			{
-				Vector3 spawnPoint;
-				do
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
+				for (int numTries = 0; numTries < 15; ++numTries)
 				{
+					int layerMask = LayerMask.GetMask("Player");
+					switch (type)
+					{
+						case EnemyType.Ghost:
+							layerMask |= LayerMask.GetMask("Ghost");
+							break;
+					}
+					bool hit = Physics.CheckSphere(spawnPoint, 15f, layerMask);
+					if (!hit) break;
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
-				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
+				}
 
 				switch (type)
 				{
