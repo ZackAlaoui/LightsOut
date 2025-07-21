@@ -62,6 +62,7 @@ namespace Game
         {
             SceneManager.LoadScene("MainMenu");
             EnemyManager.KillAll();
+            BatteryManager.DeleteAll();
         }
     }
 }

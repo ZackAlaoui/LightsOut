@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -7,11 +8,20 @@ namespace Game
 	{
 		[SerializeField] private GameObject _batteryPrefab;
 
-        private int _batteryCount = 0;
+		private static List<Battery> BatteryList { get; set; } = new();
+		private static int BatteryCount { get => BatteryList.Count; }
 
 		private static BatteryManager s_instance;
 
 		private BatteryManager() { }
+
+		private void Awake()
+		{
+			if (s_instance != null) throw new InvalidOperationException("BatteryManager has already been instantiated.");
+			s_instance = this;
+
+			if (_batteryPrefab == null) throw new NullReferenceException("Battery Prefab is null.");
+		}
 
 		public static void SpawnBatteries(int count)
 		{
@@ -23,22 +33,22 @@ namespace Game
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
 				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
 
-				Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity);
-                ++s_instance._batteryCount;
+				Battery battery = Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity).GetComponent<Battery>();
+				BatteryList.Add(battery);
 			}
 		}
 
-		private void Awake()
+		public static void Delete(Battery battery)
 		{
-			if (s_instance != null) throw new InvalidOperationException("BatteryManager has already been instantiated.");
-			s_instance = this;
-
-			if (_batteryPrefab == null) throw new NullReferenceException("Battery Prefab is null.");
+			BatteryList.Remove(battery);
+			Destroy(battery.gameObject);
+			SpawnBatteries(1);
 		}
 
-		private void Update()
+		public static void DeleteAll()
 		{
-			SpawnBatteries(7 - s_instance._batteryCount);
+			foreach (Battery battery in BatteryList) Destroy(battery.gameObject);
+			BatteryList = new();
 		}
 	}
 }
