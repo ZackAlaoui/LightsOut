@@ -10,15 +10,15 @@ namespace Game.Player
     public class PlayerController : MonoBehaviour, IDamageable
     {
         [SerializeField] private float _baseMovementSpeed = 7f;
-        public float MovementSpeedMultiplier { get; set; } = 1f;
+        public float MovementSpeedMultiplier { get; set; }
 
         [SerializeField] private GameObject _model;
 
         [SerializeField] private float _baseDamage = 5;
-        public float DamageMultiplier { get; set; } = 1f;
+        public float DamageMultiplier { get; set; }
 
         [SerializeField] private float _baseMaxHealth = 5f;
-        public float MaxHealthMultiplier { get; set; } = 1f;
+        public float MaxHealthMultiplier { get; set; }
         private float _health;
         public float Health
         {
@@ -38,12 +38,29 @@ namespace Game.Player
         private InputAction _moveAction;
         private InputAction _lookAction;
         private InputAction _fireAction;
+        private InputAction _toggleFlashlightAction;
 
         private Vector3 _aimingAt;
 
         public void Damage(MonoBehaviour source, float damage)
         {
             Flashlight.RemainingBatteryLife -= damage;
+        }
+
+        [SerializeField] private LineRenderer line; // TEMPORARY
+        private void Fire()
+        {
+            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
+            line.startWidth = line.endWidth = 0.05f;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
+
+            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
+            {
+                line.SetPosition(1, hit.point);
+                IDamageable target = hit.collider.GetComponent<IDamageable>();
+                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
+            }
         }
 
 		// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -57,9 +74,16 @@ namespace Game.Player
             _moveAction = InputSystem.actions.FindAction("Move");
             _lookAction = InputSystem.actions.FindAction("Look");
             _fireAction = InputSystem.actions.FindAction("Fire");
+            _toggleFlashlightAction = InputSystem.actions.FindAction("Toggle Flashlight");
 
             _aimingAt = transform.position + Vector3.forward;
+
+            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
             _fireAction.performed += (InputAction.CallbackContext context) => Fire();
+
+            MovementSpeedMultiplier = 1;
+            DamageMultiplier = 1;
+            MaxHealthMultiplier = 1;
 
             Health = _baseMaxHealth;
         }
@@ -83,6 +107,16 @@ namespace Game.Player
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
             _controller.Move(velocity * Time.deltaTime);
 
+            Plane lookPlane = new(Vector3.up, transform.position);
+            Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
+            Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
+            bool hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
+            if (hit)
+            {
+                _aimingAt = cameraRay.GetPoint(distanceFromCamera);
+                Flashlight.transform.LookAt(_aimingAt);
+            }
+
             if (Flashlight.IsEnabled == false)
             {
                 _timeInLight = 0f;
@@ -94,37 +128,7 @@ namespace Game.Player
                 if (_timeInLight >= _healingDelay) Health += Time.deltaTime;
             }
 
-            Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
-            Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
-            bool hit = Physics.Raycast(cameraRay, out RaycastHit hitInfo, Mathf.Infinity, ~4); // evil bit level hacking
-            if (hit)
-            {
-                _aimingAt = hitInfo.point;
-            }
-            else
-            {
-                Plane lookPlane = new(Vector3.up, transform.position);
-                hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
-                _aimingAt = cameraRay.GetPoint(distanceFromCamera);
-            }
-
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
-        }
-
-        [SerializeField] private LineRenderer line; // TEMPORARY
-        private void Fire()
-        {
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
-            line.startWidth = line.endWidth = 0.05f;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
-
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
-            {
-                line.SetPosition(1, hit.point);
-                IDamageable target = hit.collider.GetComponent<IDamageable>();
-                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
-            }
         }
     }
 }
