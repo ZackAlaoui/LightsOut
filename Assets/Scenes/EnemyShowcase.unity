@@ -8749,10 +8749,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
-    - target: {fileID: 6568354357280892150, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
-      propertyPath: m_Color.b
-      value: 0.49803922
-      objectReference: {fileID: 0}
     - target: {fileID: 6659788578729965640, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

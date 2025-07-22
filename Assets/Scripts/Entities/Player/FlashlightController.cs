@@ -34,7 +34,24 @@ namespace Game.Player
         }
 
         private InputAction _toggleAction;
-        public bool IsEnabled { get; private set; } = true;
+        private bool _isEnabled = true;
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                _brightVolume.enabled = _dimVolumes[0].enabled = _dimVolumes[1].enabled = _isEnabled;
+                if (_isEnabled)
+                {
+                    _spotLight.intensity = _baseIntensity * IntensityMultiplier * RemainingBatteryLife / (_baseMaxBattery * MaxBatteryLifeMultiplier);
+                }
+                else
+                {
+                    _spotLight.intensity = 0f;
+                }
+            }
+        }
 
         private InputAction _lookAction;
         private Vector3 _aimingAt;
@@ -85,15 +102,11 @@ namespace Game.Player
 
         private void UpdateBatteryLife()
         {
-            if (RemainingBatteryLife <= 0)  IsEnabled = false;
+            if (RemainingBatteryLife <= 0f)  IsEnabled = false;
             if (IsEnabled)
             {
                 RemainingBatteryLife -= Time.deltaTime;
-                _spotLight.intensity = _baseIntensity * IntensityMultiplier * RemainingBatteryLife / (MaxBatteryLifeMultiplier * _baseMaxBattery);
-            }
-            else
-            {
-                _spotLight.intensity = 0;
+                _spotLight.intensity = _baseIntensity * IntensityMultiplier * RemainingBatteryLife / (_baseMaxBattery * MaxBatteryLifeMultiplier);
             }
         }
 
