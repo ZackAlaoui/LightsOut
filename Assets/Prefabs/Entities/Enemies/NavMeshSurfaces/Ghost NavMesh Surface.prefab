@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2345779748526075116}
   - component: {fileID: 1253007623876739868}
   m_Layer: 0
-  m_Name: GhostNavMeshSurface
+  m_Name: Ghost NavMesh Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

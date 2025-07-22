@@ -44,7 +44,8 @@ namespace Game.Enemy
 			if (_zombiePrefab == null) throw new NullReferenceException("Zombie prefab is null.");
 			if (_ghostPrefab == null) throw new NullReferenceException("Ghost prefab is null.");
 
-			if (_ghostNavMeshSurfacePrefab == null) throw new NullReferenceException("Ghost NavMeshSurface prefab is null.");
+			if (_defaultNavMeshSurfacePrefab == null) throw new NullReferenceException("Default NavMesh Surface prefab is null.");
+			if (_ghostNavMeshSurfacePrefab == null) throw new NullReferenceException("Ghost NavMesh Surface prefab is null.");
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
