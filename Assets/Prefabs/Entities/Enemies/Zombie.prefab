@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcfe8c06fd7a004e9f4b015e9a2b9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agent: {fileID: 4535822758467189049}
   _maxHealth: 10
   _attackRangeTrigger: {fileID: 2875260033629816970}
   _attackReachTrigger: {fileID: 2040859706118581070}

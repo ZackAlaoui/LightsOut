@@ -10,7 +10,13 @@ namespace Game.Enemy
     {
         public abstract EnemyManager.EnemyType Type { get; }
 
-        public NavMeshAgent Agent { get; private set; }
+        [SerializeField]
+        private NavMeshAgent _agent;
+        public NavMeshAgent Agent
+        {
+            get => _agent;
+            private set => _agent = value;
+        }
 
         [SerializeField] protected float _maxHealth = 10;
         protected float _health;
@@ -33,7 +39,7 @@ namespace Game.Enemy
 
         protected virtual void Awake()
         {
-            Agent = GetComponent<NavMeshAgent>();
+            if (Agent == null) Agent = GetComponent<NavMeshAgent>();
 
             _health = _maxHealth;
             CanBeDamaged = false;

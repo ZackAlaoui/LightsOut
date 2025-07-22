@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Game.Enemy;
-using static Game.Enemy.EnemyManager;
 
 namespace Game
 {
@@ -52,8 +51,7 @@ namespace Game
         {
             if (scene == SceneManager.GetSceneByName("EnemyShowcase"))
             {
-                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
-                EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
+                EnemyManager.LoadEnemyShowcase();
                 BatteryManager.SpawnBatteries(7);
             }
         }
@@ -61,7 +59,7 @@ namespace Game
         public static void Unload()
         {
             SceneManager.LoadScene("MainMenu");
-            EnemyManager.KillAll();
+            EnemyManager.Unload();
             BatteryManager.DeleteAll();
         }
     }

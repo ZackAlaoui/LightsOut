@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game.Enemy
 {
@@ -23,6 +25,10 @@ namespace Game.Enemy
 		[SerializeField] private GameObject _zombiePrefab;
 		[SerializeField] private GameObject _ghostPrefab;
 
+		[SerializeField]
+		private NavMeshSurface _ghostNavMeshSurfacePrefab;
+		private static NavMeshSurface s_ghostNavMeshSurface;
+
 		private static EnemyManager s_instance;
 
 		private EnemyManager() { }
@@ -32,8 +38,10 @@ namespace Game.Enemy
 			if (s_instance != null) throw new InvalidOperationException("EnemyManager has already been instantiated.");
 			s_instance = this;
 
-			if (_zombiePrefab == null) throw new NullReferenceException("Zombie Prefab is null.");
-			if (_ghostPrefab == null) throw new NullReferenceException("Ghost Prefab is null.");
+			if (_zombiePrefab == null) throw new NullReferenceException("Zombie prefab is null.");
+			if (_ghostPrefab == null) throw new NullReferenceException("Ghost prefab is null.");
+
+			if (_ghostNavMeshSurfacePrefab == null) throw new NullReferenceException("Ghost NavMeshSurface prefab is null.");
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
@@ -100,6 +108,27 @@ namespace Game.Enemy
 			EnemyList = new();
 			ZombieList = new();
 			GhostList = new();
+		}
+
+		public static void Unload()
+		{
+			KillAll();
+			Destroy(s_ghostNavMeshSurface);
+		}
+
+		public static void BuildGhostNavMesh()
+		{
+			if (s_ghostNavMeshSurface != null) Destroy(s_ghostNavMeshSurface);
+
+			s_ghostNavMeshSurface = Instantiate(s_instance._ghostNavMeshSurfacePrefab);
+			s_ghostNavMeshSurface.BuildNavMesh();
+		}
+
+		public static void LoadEnemyShowcase()
+		{
+			BuildGhostNavMesh();
+			SpawnEnemies(EnemyType.Zombie, 20);
+			SpawnEnemies(EnemyType.Ghost, 5);
 		}
 	}
 }
