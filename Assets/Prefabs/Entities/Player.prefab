@@ -653,7 +653,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.49803922, a: 1}
   m_Intensity: 20
   m_Range: 15
   m_SpotAngle: 30
@@ -744,6 +744,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spotLight: {fileID: 6568354357280892150}
+  _brightVolume: {fileID: 2561172025971045384}
+  _dimVolumes:
+  - {fileID: 4508034962770863994}
+  - {fileID: 2623102933441800748}
   _baseMaxBattery: 30
   _batteryLifeSlider: {fileID: 1312461172984205512}
 --- !u!1 &2751491485726151129

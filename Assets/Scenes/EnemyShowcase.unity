@@ -8686,10 +8686,6 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3929464656561217052, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
-      propertyPath: _baseMaxBattery
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929464656561217052, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
       propertyPath: _lookAction.m_Name
       value: Look
       objectReference: {fileID: 0}

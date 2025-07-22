@@ -1,4 +1,6 @@
 using System;
+using Unity.AI.Navigation;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,6 +11,10 @@ namespace Game.Player
     public class FlashlightManager : MonoBehaviour
     {
         [SerializeField] private Light _spotLight;
+
+        [SerializeField] private NavMeshModifierVolume _brightVolume;
+        [SerializeField] private NavMeshModifierVolume[] _dimVolumes;
+
         private float _baseIntensity;
         public float IntensityMultiplier { get; set; } = 1;
 
@@ -37,7 +43,10 @@ namespace Game.Player
         void Start()
         {
             _spotLight ??= GetComponent<Light>();
+
             _baseIntensity = _spotLight.intensity;
+
+            AdjustNavMeshVolumes();
 
             _batteryLifeSlider ??= GetComponentInChildren<Slider>();
             RemainingBatteryLife = _baseMaxBattery;
@@ -54,6 +63,19 @@ namespace Game.Player
         {
             UpdateBatteryLife();
             Aim();
+        }
+
+        private void AdjustNavMeshVolumes()
+        {
+            float halfBrightScaleX = (float)(_spotLight.range / Math.Sqrt(2d) * Math.Sin(Mathf.Deg2Rad * _spotLight.innerSpotAngle / 2f));
+            float dimScaleX = (float)(_spotLight.range * Math.Tan(Mathf.Deg2Rad * _spotLight.spotAngle / 2)) - halfBrightScaleX + 2f;
+            _brightVolume.size = new Vector3(2f * halfBrightScaleX, 4f, _spotLight.range);
+            _dimVolumes[0].size = _dimVolumes[1].size = new Vector3(dimScaleX, 4f, _spotLight.range);
+
+            float dimPositionX = halfBrightScaleX + dimScaleX / 2f;
+            _brightVolume.center = new Vector3(0f, 0f, _spotLight.range / 2f);
+            _dimVolumes[0].center = new Vector3(dimPositionX, 0f, _spotLight.range / 2f);
+            _dimVolumes[1].center = new Vector3(-dimPositionX, 0f, _spotLight.range / 2f);
         }
 
         public void Toggle(InputAction.CallbackContext callbackContext)
