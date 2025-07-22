@@ -45,8 +45,10 @@ namespace Game.Enemy
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
+		private AsyncOperation _navMeshUpdate;
 		private void Update()
 		{
+			if (_navMeshUpdate == null || _navMeshUpdate.isDone) _navMeshUpdate = s_ghostNavMeshSurface.UpdateNavMesh(s_ghostNavMeshSurface.navMeshData);
 			_textComponent.text = $"Enemy Count: {EnemyCount}";
 		}
 
