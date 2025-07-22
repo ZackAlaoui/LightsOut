@@ -13,10 +13,10 @@ NavMeshProjectSettings:
     cost: 2
   - name: Ethereal
     cost: 1
-  - name: Light
+  - name: Bright Light
+    cost: 100
+  - name: Dim Light
     cost: 10
-  - name: 
-    cost: 1
   - name: 
     cost: 1
   - name: 
