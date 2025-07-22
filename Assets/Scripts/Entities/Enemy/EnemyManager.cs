@@ -26,7 +26,10 @@ namespace Game.Enemy
 		[SerializeField] private GameObject _ghostPrefab;
 
 		[SerializeField]
+		private NavMeshSurface _defaultNavMeshSurfacePrefab;
+		[SerializeField]
 		private NavMeshSurface _ghostNavMeshSurfacePrefab;
+		private static NavMeshSurface s_defaultNavMeshSurface;
 		private static NavMeshSurface s_ghostNavMeshSurface;
 
 		private static EnemyManager s_instance;
@@ -63,38 +66,45 @@ namespace Game.Enemy
 
 		public static void SpawnEnemies(EnemyType type, int count)
 		{
-			for (int i = 0; i < count; ++i)
+			static Vector3 ChooseSpawnPoint(float proximity, int proximityLayerMask)
 			{
 				Vector3 spawnPoint = new(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
 				for (int numTries = 0; numTries < 15; ++numTries)
 				{
-					int layerMask = LayerMask.GetMask("Player");
-					switch (type)
-					{
-						case EnemyType.Ghost:
-							layerMask |= LayerMask.GetMask("Ghost");
-							break;
-					}
-					bool hit = Physics.CheckSphere(spawnPoint, 15f, layerMask);
+					bool hit = Physics.CheckSphere(spawnPoint, proximity, proximityLayerMask);
 					if (!hit) break;
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
 				}
+				return spawnPoint;
+			}
 
-				switch (type)
-				{
-					case EnemyType.Zombie:
+			Transform parent;
+			switch (type)
+			{
+				case EnemyType.Zombie:
+					parent = new GameObject("Zombies").transform;
+					for (int i = 0; i < count; ++i)
+					{
+						Vector3 spawnPoint = ChooseSpawnPoint(15f, LayerMask.GetMask("Player"));
 						ZombieController zombie = Instantiate(s_instance._zombiePrefab, spawnPoint, Quaternion.identity).GetComponent<ZombieController>();
+						zombie.transform.parent = parent;
 						ZombieList.Add(zombie);
 						EnemyList.Add(zombie);
-						break;
-					case EnemyType.Ghost:
+					}
+					break;
+				case EnemyType.Ghost:
+					parent = new GameObject("Ghosts").transform;
+					for (int i = 0; i < count; ++i)
+					{
+						Vector3 spawnPoint = ChooseSpawnPoint(15f, LayerMask.GetMask("Player") | LayerMask.GetMask("Ghost"));
 						GhostController ghost = Instantiate(s_instance._ghostPrefab, spawnPoint, Quaternion.identity).GetComponent<GhostController>();
+						ghost.transform.parent = parent;
 						GhostList.Add(ghost);
 						EnemyList.Add(ghost);
-						break;
-					default:
-						throw new InvalidOperationException($"Unable to spawn enemy type {type}.");
-				}
+					}
+					break;
+				default:
+					throw new InvalidOperationException($"Unable to spawn enemy type {type}.");
 			}
 		}
 
@@ -115,7 +125,7 @@ namespace Game.Enemy
 
 		public static void KillAll()
 		{
-			foreach (EnemyController enemy in EnemyList) Destroy(enemy.gameObject);
+			foreach (EnemyController enemy in EnemyList) Destroy(enemy.gameObject); // consider replacing with Destroy(GameObject.Find("Zombies")), etc.
 			EnemyList = new();
 			ZombieList = new();
 			GhostList = new();
@@ -127,17 +137,21 @@ namespace Game.Enemy
 			Destroy(s_ghostNavMeshSurface);
 		}
 
-		public static void BuildGhostNavMesh()
+		public static void BuildNavMesh()
 		{
+			if (s_defaultNavMeshSurface != null) Destroy(s_defaultNavMeshSurface);
 			if (s_ghostNavMeshSurface != null) Destroy(s_ghostNavMeshSurface);
 
+			s_defaultNavMeshSurface = Instantiate(s_instance._defaultNavMeshSurfacePrefab);
 			s_ghostNavMeshSurface = Instantiate(s_instance._ghostNavMeshSurfacePrefab);
+
+			s_defaultNavMeshSurface.BuildNavMesh();
 			s_ghostNavMeshSurface.BuildNavMesh();
 		}
 
 		public static void LoadEnemyShowcase()
 		{
-			BuildGhostNavMesh();
+			BuildNavMesh();
 			SpawnEnemies(EnemyType.Zombie, 20);
 			SpawnEnemies(EnemyType.Ghost, 5);
 		}

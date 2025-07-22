@@ -3,6 +3,7 @@ using static Game.Enemy.EnemyManager;
 using Game.Enemy.Behavior;
 using Game.Enemy.Trigger;
 using Game.Player;
+using UnityEngine.AI;
 
 namespace Game.Enemy
 {
@@ -35,7 +36,8 @@ namespace Game.Enemy
 			BehaviorTreeSelector attackOrPursueOrWander = new("Attack OR Pursue OR Wander");
 			BehaviorTreeLeaf attack = new("Attack", new AttackBehavior(this, player.GetComponent<PlayerController>(), _attackRangeTrigger, _attackReachTrigger, _attackDamage, _attackDuration, _attackCooldown));
 			BehaviorTreeLeaf pursue = new("Pursue", new PursueBehavior(this, Agent, player, _chaseTrigger));
-			BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(this, Agent, _wanderRadius, _minIdleTime, _maxIdleTime));
+			int lightLayerMask = (1 << NavMesh.GetAreaFromName("Bright Light")) | (1 << NavMesh.GetAreaFromName("Dim Light"));
+			BehaviorTreeLeaf wander = new("Wander", new WanderBehavior(this, Agent, _wanderRadius, _minIdleTime, _maxIdleTime, lightLayerMask));
 			attackOrPursueOrWander.AddChild(attack);
 			attackOrPursueOrWander.AddChild(pursue);
 			attackOrPursueOrWander.AddChild(wander);

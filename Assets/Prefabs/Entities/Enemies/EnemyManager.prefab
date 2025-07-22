@@ -183,6 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _zombiePrefab: {fileID: 7359510805536089165, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
   _ghostPrefab: {fileID: 5764709206535737763, guid: 66824554c2c9f054084cb1d1786c5cf6, type: 3}
+  _defaultNavMeshSurfacePrefab: {fileID: 7603946191940368194, guid: 0eee6673c0ed57d4184362985909faff, type: 3}
   _ghostNavMeshSurfacePrefab: {fileID: 1253007623876739868, guid: 24652bf1ddc6c56448e8b1036dfde82c, type: 3}
   _textComponent: {fileID: 6444032686077465496}
 --- !u!1 &3886981850014649195
