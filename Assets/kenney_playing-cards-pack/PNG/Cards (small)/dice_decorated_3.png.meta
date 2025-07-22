@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
 guid: 8da055a34e72f1549a6ce706f56cf4f2
-=======
-guid: f3bc57a4867583e498e9f4ebb0903873
->>>>>>> Stashed changes
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +66,6 @@ TextureImporter:
   applyGammaDecoding: 0
   swizzle: 50462976
   cookieLightType: 0
-<<<<<<< Updated upstream
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
@@ -111,9 +106,6 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-=======
-  platformSettings: []
->>>>>>> Stashed changes
   spriteSheet:
     serializedVersion: 2
     sprites: []
