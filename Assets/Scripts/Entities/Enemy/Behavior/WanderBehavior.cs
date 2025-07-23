@@ -57,7 +57,6 @@ namespace Game.Enemy.Behavior
 
 				Vector2 offset = Random.insideUnitCircle * _radius;
 				Vector3 target = _origin + new Vector3(offset.x, 0, offset.y);
-				int lightMask = (1 << NavMesh.GetAreaFromName("Bright Light")) | (1 << NavMesh.GetAreaFromName("Dim Light"));
 				for (int numTries = 0; numTries < 10; ++numTries)
 				{
 					if (NavMesh.Raycast(_origin, target, out NavMeshHit hit, NavMesh.AllAreas))
