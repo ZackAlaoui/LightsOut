@@ -16,3 +16,5 @@ MonoBehaviour:
   cardType: 02000000
   abilityDesc: Double attack speed and movement for 7 seconds
   usageType: 00000000
+  cardSprite: {fileID: 0}
+  cooldownDuration: 5

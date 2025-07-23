@@ -16,3 +16,5 @@ MonoBehaviour:
   cardType: 02000000
   abilityDesc: Sacrifice 25% of your current HP to gain double damage for 10 seconds
   usageType: 00000000
+  cardSprite: {fileID: 0}
+  cooldownDuration: 5

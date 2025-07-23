@@ -16,3 +16,5 @@ MonoBehaviour:
   cardType: 03000000
   abilityDesc: Leave a toxic trail that slows and damages enemies
   usageType: 00000000
+  cardSprite: {fileID: 0}
+  cooldownDuration: 60

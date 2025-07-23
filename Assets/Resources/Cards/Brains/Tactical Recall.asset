@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
   m_Name: Tactical Recall
   m_EditorClassIdentifier: 
-  cardName: 
-  cardType: 
-  abilityDesc: 
-  usageType: 
+  cardName: Tactical Recall
+  cardType: 00000000
+  abilityDesc: Refresh all other cooldowns
+  usageType: 00000000
+  cardSprite: {fileID: 1126513499, guid: 04be594690161bb4fa5eb9818050bf9e, type: 3}
+  cooldownDuration: 30

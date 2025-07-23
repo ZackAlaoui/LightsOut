@@ -16,3 +16,5 @@ MonoBehaviour:
   cardType: 00000000
   abilityDesc: Kill all enemies within 15 meters
   usageType: 01000000
+  cardSprite: {fileID: 0}
+  cooldownDuration: 100
