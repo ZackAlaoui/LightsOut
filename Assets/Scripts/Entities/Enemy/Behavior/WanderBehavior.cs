@@ -49,6 +49,7 @@ namespace Game.Enemy.Behavior
 			{
 				_fsm = fsm;
 				_radius = radius;
+				_avoidLayerMask = avoidLayerMask;
 			}
 
 			public void Enter()
@@ -57,13 +58,14 @@ namespace Game.Enemy.Behavior
 
 				Vector2 offset = Random.insideUnitCircle * _radius;
 				Vector3 target = _origin + new Vector3(offset.x, 0, offset.y);
-				for (int numTries = 0; numTries < 10; ++numTries)
+				float maxDistance = Mathf.Sqrt(_fsm.Agent.radius * _fsm.Agent.radius + _fsm.Agent.height * _fsm.Agent.height / 4) + 0.5f; // maxDistance also applies vertically, so we calculate the distance from the center to a point on the ground (with margin of error for floating point calculations)
+				for (int numTries = 0; numTries < 25; ++numTries)
 				{
 					if (NavMesh.Raycast(_origin, target, out NavMeshHit hit, NavMesh.AllAreas))
 					{
 						target = hit.position;
 					}
-					if (!NavMesh.SamplePosition(target, out hit, _fsm.Agent.radius, _avoidLayerMask))
+					if (!NavMesh.SamplePosition(target, out hit, maxDistance, _avoidLayerMask))
 					{
 						break;
 					}
