@@ -16,3 +16,5 @@ MonoBehaviour:
   cardType: 01000000
   abilityDesc: Block all damages for 5 seconds
   usageType: 00000000
+  cardSprite: {fileID: 0}
+  cooldownDuration: 30

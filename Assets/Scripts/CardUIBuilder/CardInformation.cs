@@ -11,7 +11,8 @@ namespace CardData
         public List<CardType> cardType;
         public string abilityDesc;
         public List<CardUsageType> usageType;
-
+        public Sprite cardSprite;
+        public float cooldownDuration = 0f;
         public enum CardType
         {
             Brains,

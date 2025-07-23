@@ -1057,12 +1057,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseMovementSpeed: 7
-  _model: {fileID: 0}
+  _model: {fileID: 6852537536943190384}
   _baseDamage: 5
   _baseMaxHealth: 5
   _healingDelay: 3
   _healthBarSlider: {fileID: 2618771559832211134}
-  line: {fileID: 0}
+  line: {fileID: 724815308814910586}
 --- !u!120 &724815308814910586
 LineRenderer:
   serializedVersion: 2
