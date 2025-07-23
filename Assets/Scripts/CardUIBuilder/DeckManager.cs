@@ -16,6 +16,7 @@ public class DeckManager : MonoBehaviour
 
         //Add the loaded cards to the allCards list
         allCards.AddRange(cards);
+        ShuffleDeck();
     }
 
     public void DrawCard(HandManager handManager)
@@ -28,5 +29,18 @@ public class DeckManager : MonoBehaviour
         CardInformation nextCard = allCards[currentIndex];
         handManager.AddCardToHand(nextCard);
         currentIndex = (currentIndex + 1) % allCards.Count;
+    }
+
+    private void ShuffleDeck()
+    {
+        for (int i = 0; i < allCards.Count; i++)
+        {
+            int randomIndex = Random.Range(i, allCards.Count);
+            CardInformation temp = allCards[i];
+            allCards[i] = allCards[randomIndex];
+            allCards[randomIndex] = temp;
+        }
+        
+        currentIndex = 0;
     }
 }

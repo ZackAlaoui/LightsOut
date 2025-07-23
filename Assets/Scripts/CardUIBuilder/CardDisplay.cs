@@ -12,6 +12,7 @@ public class CardDisplay : MonoBehaviour
     public TMP_Text nameText;
     public Image[] typeImage;
     public Image[] usageImage;
+    public Image displayImage;
 
     private Color[] typeColors = {
         new Color(0.23f, 0.06f, 0.21f), //Brains
@@ -19,17 +20,14 @@ public class CardDisplay : MonoBehaviour
         Color.red, //blood
         Color.yellow //RottenFlesh
     };
-
-    void Start()
-    {
-        UpdatecardDisplay();
-    }
+    
 
     public void UpdatecardDisplay()
 {
     // Update card background color based on first type (optional)
     cardImage.color = typeColors[(int)cardData.cardType[0]];
     nameText.text = cardData.cardName;
+    displayImage.sprite = cardData.cardSprite;
 
     // --- Update Suit (CardType) Images ---
     for (int i = 0; i < typeImage.Length; i++)

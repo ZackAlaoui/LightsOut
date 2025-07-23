@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Game.Entity;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 
 namespace Game.Player
 {
