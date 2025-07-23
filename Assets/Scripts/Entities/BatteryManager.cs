@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -7,33 +8,12 @@ namespace Game
 	{
 		[SerializeField] private GameObject _batteryPrefab;
 
-        private int _batteryCount = 0;
+		private static List<Battery> BatteryList { get; set; } = new();
+		private static int BatteryCount { get => BatteryList.Count; }
 
 		private static BatteryManager s_instance;
 
 		private BatteryManager() { }
-
-		public static BatteryManager Get()
-		{
-			if (s_instance == null) s_instance = new();
-
-			return s_instance;
-		}
-
-		public void SpawnBatteries(int count)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				Vector3 spawnPoint;
-				do
-				{
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
-				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
-
-				Instantiate(_batteryPrefab, spawnPoint, Quaternion.identity);
-                ++_batteryCount;
-			}
-		}
 
 		private void Awake()
 		{
@@ -43,15 +23,34 @@ namespace Game
 			if (_batteryPrefab == null) throw new NullReferenceException("Battery Prefab is null.");
 		}
 
-		private void Start()
+		public static void SpawnBatteries(int count)
 		{
-			DontDestroyOnLoad(gameObject);
-			SpawnBatteries(7);
+			for (int i = 0; i < count; ++i)
+			{
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
+				for (int numTries = 0; numTries < 15; ++numTries)
+				{
+					bool hit = Physics.CheckSphere(spawnPoint, 15f, LayerMask.GetMask("Player", "Battery"));
+					if (!hit) break;
+					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
+				}
+
+				Battery battery = Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity).GetComponent<Battery>();
+				BatteryList.Add(battery);
+			}
 		}
 
-		private void Update()
+		public static void Delete(Battery battery)
 		{
-			SpawnBatteries(7 - _batteryCount);
+			BatteryList.Remove(battery);
+			Destroy(battery.gameObject);
+			SpawnBatteries(1);
+		}
+
+		public static void DeleteAll()
+		{
+			foreach (Battery battery in BatteryList) Destroy(battery.gameObject);
+			BatteryList = new();
 		}
 	}
 }
