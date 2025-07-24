@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Schema;
+using Game.Enemy;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game
 {
@@ -25,14 +29,23 @@ namespace Game
 
 		public static void SpawnBatteries(int count)
 		{
+			Bounds bounds = EnemyManager.DefaultNavMeshSurface.navMeshData.sourceBounds;
 			for (int i = 0; i < count; ++i)
 			{
-				Vector3 spawnPoint = new(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
-				for (int numTries = 0; numTries < 15; ++numTries)
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				for (int numTries = 0; numTries < 25; ++numTries)
 				{
 					bool hit = Physics.CheckSphere(spawnPoint, 15f, LayerMask.GetMask("Player", "Battery"));
 					if (!hit) break;
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
+					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				}
+				if (NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, 1 << NavMesh.GetAreaFromName("Walkable")))
+				{
+					spawnPoint = navMeshHit.position;
+				}
+				else
+				{
+					Debug.LogWarning("Spawning battery in unreachable location.");
 				}
 
 				Battery battery = Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity).GetComponent<Battery>();
