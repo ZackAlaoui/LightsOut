@@ -122,12 +122,11 @@ namespace Game.Player
 		[SerializeField] private LineRenderer line; // TEMPORARY
         private void Fire(InputAction.CallbackContext callbackContext)
         {
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
-            line.startWidth = line.endWidth = 0.05f;
+            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, 1f);
             line.SetPosition(0, transform.position);
             line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
 
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
+            if (Physics.BoxCast(transform.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - transform.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
                 line.SetPosition(1, hit.point);
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
