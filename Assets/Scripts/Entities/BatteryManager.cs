@@ -32,7 +32,7 @@ namespace Game
 			Bounds bounds = EnemyManager.DefaultNavMeshSurface.navMeshData.sourceBounds;
 			for (int i = 0; i < count; ++i)
 			{
-				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
 				int numTries;
 				bool isTooClose = false;
 				bool isNearNavMesh = true;
@@ -42,7 +42,7 @@ namespace Game
 					isNearNavMesh = NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, 1 << NavMesh.GetAreaFromName("Walkable"));
 					if (isNearNavMesh) spawnPoint = navMeshHit.position;
 					if (!isTooClose && isNearNavMesh) break;
-					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
 				}
 				if (isTooClose) Debug.LogWarning("Spawning batteries in close proximity.");
 				if (!isNearNavMesh) Debug.LogWarning("Spawning battery in unreachable location.");

@@ -69,17 +69,17 @@ namespace Game.Enemy
 		{
 			static Vector3 ChooseSpawnPoint(Bounds bounds, float minDistance, int proximityLayerMask, int navMeshLayerMask)
 			{
-				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
 				int numTries;
 				bool isTooClose = false;
 				bool isNearNavMesh = true;
 				for (numTries = 0; numTries < 15; ++numTries)
 				{
 					isTooClose = Physics.CheckSphere(spawnPoint, minDistance, proximityLayerMask);
-					isNearNavMesh = NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, navMeshLayerMask);
+					isNearNavMesh = NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, navMeshLayerMask) && navMeshHit.position.y < 2f;
 					if (isNearNavMesh) spawnPoint = navMeshHit.position;
 					if (!isTooClose && isNearNavMesh) break;
-					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
 				}
 				if (isTooClose) Debug.LogWarning("Spawning enemies in close proximity.");
 				if (!isNearNavMesh) Debug.LogWarning("Spawning enemy in unreachable location.");
@@ -165,6 +165,13 @@ namespace Game.Enemy
 		}
 
 		public static void LoadEnemyShowcase()
+		{
+			BuildNavMesh();
+			SpawnEnemies(EnemyType.Zombie, 20);
+			SpawnEnemies(EnemyType.Ghost, 5);
+		}
+
+		public static void LoadMap1()
 		{
 			BuildNavMesh();
 			SpawnEnemies(EnemyType.Zombie, 20);

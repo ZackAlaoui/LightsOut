@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1493990980076390861}
   - component: {fileID: 2561172025971045384}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bright Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6444406613710964026}
   - component: {fileID: 4508034962770863994}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dim Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 30
+  m_MaxValue: 5
   m_WholeNumbers: 0
   m_Value: 5
   m_OnValueChanged:
@@ -468,7 +468,7 @@ Transform:
   m_GameObject: {fileID: 2385181629624366223}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 15, z: -15}
+  m_LocalPosition: {x: 0, y: 30, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1500,7 +1500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1456259314807344554}
   - component: {fileID: 2623102933441800748}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dim Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
