@@ -69,6 +69,8 @@ namespace Game.Enemy.Behavior
 					{
 						break;
 					}
+					offset = Random.insideUnitCircle * _radius;
+					target = _origin + new Vector3(offset.x, 0, offset.y);
 				}
 
 				_fsm.Agent.SetDestination(target);
