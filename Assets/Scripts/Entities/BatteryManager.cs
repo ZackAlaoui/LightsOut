@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Xml.Schema;
+using Game.Enemy;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game
 {
@@ -7,33 +12,12 @@ namespace Game
 	{
 		[SerializeField] private GameObject _batteryPrefab;
 
-        private int _batteryCount = 0;
+		private static List<Battery> BatteryList { get; set; } = new();
+		private static int BatteryCount { get => BatteryList.Count; }
 
 		private static BatteryManager s_instance;
 
 		private BatteryManager() { }
-
-		public static BatteryManager Get()
-		{
-			if (s_instance == null) s_instance = new();
-
-			return s_instance;
-		}
-
-		public void SpawnBatteries(int count)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				Vector3 spawnPoint;
-				do
-				{
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-50f, 50f), 1, UnityEngine.Random.Range(-50f, 50f));
-				} while ((spawnPoint - GameObject.FindWithTag("Player").transform.position).magnitude < 15f);
-
-				Instantiate(_batteryPrefab, spawnPoint, Quaternion.identity);
-                ++_batteryCount;
-			}
-		}
 
 		private void Awake()
 		{
@@ -43,15 +27,42 @@ namespace Game
 			if (_batteryPrefab == null) throw new NullReferenceException("Battery Prefab is null.");
 		}
 
-		private void Start()
+		public static void SpawnBatteries(int count)
 		{
-			DontDestroyOnLoad(gameObject);
-			SpawnBatteries(7);
+			Bounds bounds = EnemyManager.DefaultNavMeshSurface.navMeshData.sourceBounds;
+			for (int i = 0; i < count; ++i)
+			{
+				Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				int numTries;
+				bool isTooClose = false;
+				bool isNearNavMesh = true;
+				for (numTries = 0; numTries < 25; ++numTries)
+				{
+					isTooClose = Physics.CheckSphere(spawnPoint, 20f, LayerMask.GetMask("Player", "Battery"));
+					isNearNavMesh = NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, 1 << NavMesh.GetAreaFromName("Walkable"));
+					if (isNearNavMesh) spawnPoint = navMeshHit.position;
+					if (!isTooClose && isNearNavMesh) break;
+					spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), bounds.center.y, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+				}
+				if (isTooClose) Debug.LogWarning("Spawning batteries in close proximity.");
+				if (!isNearNavMesh) Debug.LogWarning("Spawning battery in unreachable location.");
+
+				Battery battery = Instantiate(s_instance._batteryPrefab, spawnPoint, Quaternion.identity).GetComponent<Battery>();
+				BatteryList.Add(battery);
+			}
 		}
 
-		private void Update()
+		public static void Delete(Battery battery)
 		{
-			SpawnBatteries(7 - _batteryCount);
+			BatteryList.Remove(battery);
+			Destroy(battery.gameObject);
+			SpawnBatteries(1);
+		}
+
+		public static void DeleteAll()
+		{
+			foreach (Battery battery in BatteryList) Destroy(battery.gameObject);
+			BatteryList = new();
 		}
 	}
 }

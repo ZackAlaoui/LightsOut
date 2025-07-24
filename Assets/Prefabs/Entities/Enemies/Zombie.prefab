@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7069022695784984624}
   - component: {fileID: 4535822758467189049}
   - component: {fileID: 6653337983913996346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcfe8c06fd7a004e9f4b015e9a2b9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agent: {fileID: 4535822758467189049}
   _maxHealth: 10
   _attackRangeTrigger: {fileID: 2875260033629816970}
   _attackReachTrigger: {fileID: 2040859706118581070}
@@ -166,9 +167,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7312534071076215377}
     m_Modifications:
+    - target: {fileID: 859567949662099901, guid: beb394e1f7441f547817913caf215f85, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5069198797158173560, guid: beb394e1f7441f547817913caf215f85, type: 3}
       propertyPath: m_Name
       value: AttackRadius
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069198797158173560, guid: beb394e1f7441f547817913caf215f85, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8513902745702726253, guid: beb394e1f7441f547817913caf215f85, type: 3}
       propertyPath: m_LocalPosition.x
@@ -209,6 +218,10 @@ PrefabInstance:
     - target: {fileID: 8513902745702726253, guid: beb394e1f7441f547817913caf215f85, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9061171788699949764, guid: beb394e1f7441f547817913caf215f85, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -297,6 +310,10 @@ PrefabInstance:
     - target: {fileID: 8245467323459370973, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
       propertyPath: m_Name
       value: ChaseRadius
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245467323459370973, guid: ce4799d0e77b43c449aa4944fc603a4e, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

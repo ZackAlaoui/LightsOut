@@ -8,7 +8,15 @@ namespace Game.Enemy
 {
     abstract public class EnemyController : MonoBehaviour, IDamageable
     {
-        public NavMeshAgent Agent { get; private set; }
+        public abstract EnemyManager.EnemyType Type { get; }
+
+        [SerializeField]
+        private NavMeshAgent _agent;
+        public NavMeshAgent Agent
+        {
+            get => _agent;
+            private set => _agent = value;
+        }
 
         [SerializeField] protected float _maxHealth = 10;
         protected float _health;
@@ -31,7 +39,7 @@ namespace Game.Enemy
 
         protected virtual void Awake()
         {
-            Agent = GetComponent<NavMeshAgent>();
+            if (Agent == null) Agent = GetComponent<NavMeshAgent>();
 
             _health = _maxHealth;
             CanBeDamaged = false;
@@ -39,7 +47,13 @@ namespace Game.Enemy
 
         protected virtual void Update()
         {
-            if (Health <= 0) Destroy(this.gameObject);
+            if (Health <= 0)
+            {
+                EnemyManager.Kill(this);
+                return;
+            }
+
+            BehaviorTree.Process();
         }
     }
 }

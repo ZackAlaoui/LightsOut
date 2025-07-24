@@ -1,3 +1,4 @@
+using Game;
 using Game.Player;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class Battery : MonoBehaviour
         if (other.gameObject == _player)
         {
             _player.GetComponent<PlayerController>().Flashlight.RemainingBatteryLife += _batteryLife;
-            Destroy(transform.gameObject);
+            BatteryManager.Delete(this);
         }
 	}
 }

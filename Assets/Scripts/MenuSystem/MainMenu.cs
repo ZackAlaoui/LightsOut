@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Game;
 
 public class MainMenu : MonoBehaviour
 {
