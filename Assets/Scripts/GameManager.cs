@@ -54,6 +54,11 @@ namespace Game
                 EnemyManager.LoadEnemyShowcase();
                 BatteryManager.SpawnBatteries(7);
             }
+            if (scene == SceneManager.GetSceneByName("FirstMap"))
+            {
+                EnemyManager.LoadMap1();
+                BatteryManager.SpawnBatteries(7);
+            }
         }
 
         public static void Unload()
