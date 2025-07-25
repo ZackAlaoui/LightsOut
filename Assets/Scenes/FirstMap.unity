@@ -3859,7 +3859,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -8354,6 +8354,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5829776834965518960, guid: 0f767c3e6fe9acc4db0353dfa284a028, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1899762321}
+    - targetCorrespondingSourceObject: {fileID: -5829776834965518960, guid: 0f767c3e6fe9acc4db0353dfa284a028, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899762325}
   m_SourcePrefab: {fileID: 100100000, guid: 0f767c3e6fe9acc4db0353dfa284a028, type: 3}
 --- !u!1 &1404063390 stripped
 GameObject:
@@ -9421,6 +9424,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5828605, y: 0.63731694, z: 2.0299091}
   m_Center: {x: 0.0073439274, y: -0.00052216847, z: -0.0655886}
+--- !u!208 &1899762325
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899762313}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.34300002, y: 0.319, z: 0.56100005}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.002, y: -0.001, z: -0.52000004}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1960869201
 PrefabInstance:
   m_ObjectHideFlags: 0

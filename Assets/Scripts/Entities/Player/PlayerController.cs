@@ -110,6 +110,7 @@ namespace Game.Player
                 hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
                 _aimingAt = cameraRay.GetPoint(distanceFromCamera);
             }
+            _aimingAt.y = 1f;
 
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
         }
@@ -128,9 +129,9 @@ namespace Game.Player
 
             if (Physics.BoxCast(transform.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - transform.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
-                line.SetPosition(1, hit.point);
+                line.SetPosition(1, new Vector3(hit.point.x, 1f, hit.point.z));
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
-                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
+                target?.Damage(this, _baseDamage * DamageMultiplier);
             }
         }
     }
