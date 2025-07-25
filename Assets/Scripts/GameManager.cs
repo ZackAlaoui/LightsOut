@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Game.Enemy;
+using static Game.Enemy.EnemyManager;
 
 namespace Game
 {
@@ -13,6 +14,8 @@ namespace Game
         public static EnemyManager EnemyManager { get; private set; }
         [SerializeField] private GameObject _batteryManagerPrefab;
         public static BatteryManager BatteryManager { get; private set; }
+
+        public static int CurrentRound { get; private set; } = 0;
 
         private GameManager() { }
 
@@ -32,32 +35,63 @@ namespace Game
             if (_enemyManagerPrefab == null) throw new NullReferenceException("EnemyManager prefab is null.");
             if (_batteryManagerPrefab == null) throw new NullReferenceException("BatteryManager prefab is null.");
 
-            EnemyManager = Instantiate(_enemyManagerPrefab).GetComponent<EnemyManager>();
-            BatteryManager = Instantiate(_batteryManagerPrefab).GetComponent<BatteryManager>();
-
-            EnemyManager.transform.parent = this.transform;
-            BatteryManager.transform.parent = this.transform;
-
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            EnemyManager = Instantiate(_enemyManagerPrefab, transform).GetComponent<EnemyManager>();
+            BatteryManager = Instantiate(_batteryManagerPrefab, transform).GetComponent<BatteryManager>();
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             DontDestroyOnLoad(gameObject);
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("FirstMap")) StartGame();
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        public static void StartGame()
         {
-            if (scene == SceneManager.GetSceneByName("EnemyShowcase"))
+            CurrentRound = 0;
+            NextRound();
+        }
+
+        public static void NextRound()
+        {
+            ++CurrentRound;
+            EnemyManager.KillAll();
+            BatteryManager.DeleteAll();
+            switch (CurrentRound)
             {
-                EnemyManager.LoadEnemyShowcase();
-                BatteryManager.SpawnBatteries(7);
-            }
-            if (scene == SceneManager.GetSceneByName("FirstMap"))
-            {
-                EnemyManager.LoadMap1();
-                BatteryManager.SpawnBatteries(7);
+                case 1:
+                    if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("FirstMap")) SceneManager.LoadScene("FirstMap");
+                    EnemyManager.BuildNavMeshes();
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                    BatteryManager.SpawnBatteries(10);
+                    break;
+                case 2:
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 25);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
+                    BatteryManager.SpawnBatteries(10);
+                    break;
+                case 3:
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(7);
+                    break;
+                case 4:
+                    // await async method from TransitionManager?
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                default:
+                    break;
             }
         }
 

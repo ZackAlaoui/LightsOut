@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("FirstMap"); // Change "GameScene" to your actual gameplay scene name
+        GameManager.StartGame(); // Change "GameScene" to your actual gameplay scene name
     }
 
     public void OpenHowToPlay()
