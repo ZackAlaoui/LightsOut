@@ -73,14 +73,14 @@ namespace Game.Player
             }
 
             if (Health < _baseMaxHealth * MaxHealthMultiplier)
-                {
-                    _healthBarSlider.gameObject.SetActive(true);
-                    _healthBarSlider.value = Health;
-                }
-                else
-                {
-                    _healthBarSlider.gameObject.SetActive(false);
-                }
+            {
+                _healthBarSlider.gameObject.SetActive(true);
+                _healthBarSlider.value = Health;
+            }
+            else
+            {
+                _healthBarSlider.gameObject.SetActive(false);
+            }
 
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
@@ -99,17 +99,9 @@ namespace Game.Player
 
             Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
             Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
-            bool hit = Physics.Raycast(cameraRay, out RaycastHit hitInfo, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast"));
-            if (hit)
-            {
-                _aimingAt = hitInfo.point;
-            }
-            else
-            {
-                Plane lookPlane = new(Vector3.up, transform.position);
-                hit = lookPlane.Raycast(cameraRay, out float distanceFromCamera);
-                _aimingAt = cameraRay.GetPoint(distanceFromCamera);
-            }
+            Plane lookPlane = new(Vector3.up, transform.position);
+            lookPlane.Raycast(cameraRay, out float distanceFromCamera);
+            _aimingAt = cameraRay.GetPoint(distanceFromCamera);
             _aimingAt.y = 1f;
 
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
