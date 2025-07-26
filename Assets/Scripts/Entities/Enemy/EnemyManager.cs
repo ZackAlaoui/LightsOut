@@ -51,6 +51,7 @@ namespace Game.Enemy
 
 			DefaultNavMeshSurface = Instantiate(s_instance._defaultNavMeshSurfacePrefab, transform);
 			s_ghostNavMeshSurface = Instantiate(s_instance._ghostNavMeshSurfacePrefab, transform);
+			Debug.Log(s_ghostNavMeshSurface);
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
@@ -144,13 +145,13 @@ namespace Game.Enemy
 
 			s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
 
-			if (EnemyCount <= 0) GameManager.NextRound();
+			if (EnemyCount <= 0) s_instance.StartCoroutine(GameManager.NextRound());
 		}
 
 		public static void KillAll()
 		{
-			Destroy(ZombiesObject);
-			Destroy(GhostsObject);
+			if (ZombiesObject != null) Destroy(ZombiesObject);
+			if (GhostsObject != null) Destroy(GhostsObject);
 			ZombiesObject = null;
 			GhostsObject = null;
 			EnemyList = new();
@@ -161,6 +162,8 @@ namespace Game.Enemy
 		public static void Unload()
 		{
 			KillAll();
+			DefaultNavMeshSurface.RemoveData();
+			s_ghostNavMeshSurface.RemoveData();
 		}
 
 		public static void BuildNavMeshes()

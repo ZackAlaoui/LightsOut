@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Game.Enemy;
 using static Game.Enemy.EnemyManager;
+using System.Collections;
 
 namespace Game
 {
@@ -49,10 +50,10 @@ namespace Game
         public static void StartGame()
         {
             CurrentRound = 0;
-            NextRound();
+            s_instance.StartCoroutine(NextRound());
         }
 
-        public static void NextRound()
+        public static IEnumerator NextRound()
         {
             ++CurrentRound;
             EnemyManager.KillAll();
@@ -60,7 +61,11 @@ namespace Game
             switch (CurrentRound)
             {
                 case 1:
-                    if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("FirstMap")) SceneManager.LoadScene("FirstMap");
+                    if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("FirstMap"))
+                    {
+                        AsyncOperation loadingScene = SceneManager.LoadSceneAsync("FirstMap");
+                        while (!loadingScene.isDone) yield return null;
+                    }
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                     BatteryManager.SpawnBatteries(10);

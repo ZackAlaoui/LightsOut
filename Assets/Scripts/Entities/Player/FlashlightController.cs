@@ -82,7 +82,12 @@ namespace Game.Player
             Aim();
         }
 
-        private void AdjustNavMeshVolumes()
+		private void OnDestroy()
+		{
+            if (_toggleAction != null) _toggleAction.performed -= Toggle;
+		}
+
+		private void AdjustNavMeshVolumes()
         {
             float halfBrightScaleX = (float)(_spotLight.range / Math.Sqrt(2d) * Math.Sin(Mathf.Deg2Rad * _spotLight.innerSpotAngle / 2f));
             float dimScaleX = (float)(_spotLight.range * Math.Tan(Mathf.Deg2Rad * _spotLight.spotAngle / 2)) - halfBrightScaleX + 2f;

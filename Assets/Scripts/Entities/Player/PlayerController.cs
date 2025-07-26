@@ -109,7 +109,7 @@ namespace Game.Player
 
 		private void OnDestroy()
 		{
-            _fireAction.performed -= Fire;
+            if (_fireAction != null) _fireAction.performed -= Fire;
 		}
 
 		[SerializeField] private LineRenderer line; // TEMPORARY
