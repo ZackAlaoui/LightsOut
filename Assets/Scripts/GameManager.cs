@@ -9,16 +9,16 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager s_instance;
+        private static GameManager s_instance;      //Singleton instance for the GameManager
 
-        [SerializeField] private GameObject _enemyManagerPrefab;
-        public static EnemyManager EnemyManager { get; private set; }
-        [SerializeField] private GameObject _batteryManagerPrefab;
-        public static BatteryManager BatteryManager { get; private set; }
+        [SerializeField] private GameObject _enemyManagerPrefab;                //EnemyManager prefab 
+        public static EnemyManager EnemyManager { get; private set; }           //Getter and setter for the EnemyManager
+        [SerializeField] private GameObject _batteryManagerPrefab;              //Gameobject for the battery manager
+        public static BatteryManager BatteryManager { get; private set; }       //Getter and setter for the BatteryManager           
 
         public static int CurrentRound { get; private set; } = 0;
 
-        private GameManager() { }
+        private GameManager() { }   //Constructor for the GameManager
 
         private void Awake()
         {
@@ -100,9 +100,12 @@ namespace Game
             }
         }
 
+        //This moves to the MainMenu scene and clears out all the enemies from the EnemyManager class
+        //This class also removes all the battery objects
+        //This should be called when moving to the Main Menu, or when moving from one scene to the next
         public static void Unload()
         {
-            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
             EnemyManager.Unload();
             BatteryManager.DeleteAll();
         }
