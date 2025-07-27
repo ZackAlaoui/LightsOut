@@ -83,7 +83,7 @@ namespace Game.Player
 
             _aimingAt = transform.position + Vector3.forward;
 
-            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle();
+            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle(context);
             _fireAction.performed += (InputAction.CallbackContext context) => Fire();
 
             MovementSpeedMultiplier = 1;
