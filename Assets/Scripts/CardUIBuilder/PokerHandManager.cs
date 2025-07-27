@@ -7,7 +7,17 @@ using Game.Player;
 public class PokerHandManager : MonoBehaviour
 {
     public HandManager handManager;
-    //public PlayerController player;
+
+    private PlayerController player;
+
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerController>();
+        if (player == null)
+        {
+            Debug.LogError("PlayerController not found in scene!");
+        }
+    }
 
     private void Update()
     {
@@ -16,6 +26,8 @@ public class PokerHandManager : MonoBehaviour
 
     public void EvaluateHandAndApplyBuffs()
     {
+        if (player == null) return;
+
         ResetPlayerBuffs();
 
         List<CardInformation> currentHand = handManager.GetCurrentHand();
@@ -41,22 +53,27 @@ public class PokerHandManager : MonoBehaviour
         if (counts.Contains(4))
         {
             Debug.Log("Four of a Kind (Suit): Damage Buff Applied");
+            player.DamageMultiplier = 2f;
         }
         else if (counts.Contains(3) && counts.Contains(2))
         {
             Debug.Log("Full House (Suit): Max Health Buff Applied");
+            player.MaxHealthMultiplier = 2f;
         }
         else if (counts.Contains(3))
         {
             Debug.Log("Three of a Kind (Suit): Damage Buff Applied");
+            player.DamageMultiplier = 1.5f;
         }
         else if (counts.Count(c => c == 2) == 2)
         {
             Debug.Log("Two Pair (Suit): Max Health Buff Applied");
+            player.MaxHealthMultiplier = 1.5f;
         }
         else if (counts.Contains(2))
         {
             Debug.Log("Pair (Suit): Speed Buff Applied");
+            player.MovementSpeedMultiplier = 1.5f;
         }
         else
         {
@@ -66,11 +83,10 @@ public class PokerHandManager : MonoBehaviour
         Debug.Log($"Evaluating hand with {currentHand.Count} cards.");
     }
 
-
     void ResetPlayerBuffs()
     {
-        //player.MovementSpeedMultiplier = 1f;
-        //player.DamageMultiplier = 1f;
-        //player.MaxHealthMultiplier = 1f;
+        player.MovementSpeedMultiplier = 1f;
+        player.DamageMultiplier = 1f;
+        player.MaxHealthMultiplier = 1f;
     }
 }

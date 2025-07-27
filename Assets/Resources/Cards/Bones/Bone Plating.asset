@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Reconstruct
+  m_Name: Bone Plating
   m_EditorClassIdentifier: 
-  cardName: Reconstruct
+  cardName: Bone Plating
   cardType: 01000000
-  abilityDesc: Restore HP over time
+  abilityDesc: Flat Damage Reduction
   usageType: 00000000
   cardSprite: {fileID: 0}
-  cooldownDuration: 0
+  cooldownDuration: 30

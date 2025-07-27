@@ -144,9 +144,21 @@ public class HandManager : MonoBehaviour
         if (abilityUI != null)
         {
             abilityUI.StartCooldown();
-            Debug.Log($"Activated card in slot {index + 1}: {card.GetComponent<CardDisplay>().cardData.cardName}");
         }
+
+        CardDisplay display = card.GetComponent<CardDisplay>();
+        if (display != null)
+        {
+            AbilityManager abilityManager = FindObjectOfType<AbilityManager>();
+            if (abilityManager != null)
+            {
+                abilityManager.ActivateAbility(display.cardData.cardName);
+            }
+        }
+
+        Debug.Log($"Activated card in slot {index + 1}: {card.GetComponent<CardDisplay>().cardData.cardName}");
     }
+
 
 
 }
