@@ -1,0 +1,4533 @@
+fileFormatVersion: 2
+guid: b5bd266d96e8e4f469619a96e081dd26
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 25
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05cff595e6115c143852cc9d8802792b
+      internalID: -1902457687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72f089e7523744644b2476112b3e704b
+      internalID: -1658179464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6836ea4a14fba2642b68f38d244f01bd
+      internalID: 1550722943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdcbabefc4e57a741808fb8a99ecc715
+      internalID: 20742132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6175c46a89f904e9cd330313fe6abc
+      internalID: 93418994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f548e34e2c6f4624aabab270132f481f
+      internalID: -1987328838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_6
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af5ccbe9241054a4cb8e4316f934e1a4
+      internalID: -1291529853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_7
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1b31ccaeb0fff248bb7a6c0d2cc5dbc
+      internalID: -14711408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_8
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51163f969accd594ead639bb41d17937
+      internalID: 9482730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_9
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafc7adbb65e34e408959feee648b5f4
+      internalID: 204537183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_10
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de01c9c6ab2a73b46829d91b73c3d87b
+      internalID: -1575465238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_11
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac3026926bd86384f9d4d2017acff17b
+      internalID: -384497768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_12
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ba68b8bcb2c00649a3659e205893536
+      internalID: -576193044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_13
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e04a5b73257735249a67e52460908332
+      internalID: -1644547425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_14
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97198e4dcf16ad745bfd9bc91755306c
+      internalID: 2106430849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_15
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 318e9068f7071f24c870eb7ef7b98275
+      internalID: -1602803477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_16
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34f552a8870be448b2b4cefdefef894
+      internalID: -1429708682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_17
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 314a1801cae162b43bb367a289c9dc7f
+      internalID: -440782428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_18
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6594a8c2e1fd9446b7b5d1757e06651
+      internalID: 1709472586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_19
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b172bd76bd5082942be618fe7a6c96f6
+      internalID: 1386040937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_20
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bafba4f9ac93314690eddc24c9cbd61
+      internalID: 189357330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_21
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12301ed14d85ad94487fcca08ba18bd1
+      internalID: -518819307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_22
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9d8daf494806cc42a8094e20d6de903
+      internalID: 359421728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_23
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba08e26447a003441a823b8353c7ac0f
+      internalID: -710644077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 615e6ab5aa5131f449ed385069ad34bd
+      internalID: -1269635738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_25
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b41de58cd12074c42a622ee90c791928
+      internalID: -1974569688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_26
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddb7c7bb127a4f478985f6b4ca11970
+      internalID: -2104255104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_27
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d42daf7dd0659ff43bbdb1a484d53a24
+      internalID: -1688140109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_28
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaaaff15948da4846826fb8183fcf582
+      internalID: -1811224407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_29
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83019081bda3e95469d0058fdfbdf4b7
+      internalID: -767623424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_30
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed68ec22f96371f4a93c8a92f3b39203
+      internalID: -825029588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_31
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dd04dc946ad768418319a7a0545a428
+      internalID: 1859676761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_32
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b3697e7004fd3a4c82721626439ac93
+      internalID: -662026993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_33
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49087adb5c9c18545b83953708aa6dd8
+      internalID: 42096792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_34
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19e9c17d56b49f9489aa525dce747161
+      internalID: -2121612756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_35
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eadcdf5e57b51bd4fb14f0ed6a70f712
+      internalID: 588638654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_36
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b8df784bc8f4e54c966c5b380ed2ca8
+      internalID: -1605482731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_37
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7df155e88dc37aa4fb7c464a4bce71f6
+      internalID: -870686532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_38
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba5f90e62bec43b4696448c9bc9db6c1
+      internalID: 1514690152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_39
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14b822b7b3c92c54fb544c603d9a6d04
+      internalID: -783096418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_40
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dc74c44511d17479d8b1cad38adb11
+      internalID: 1062383697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_41
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25d5cbc89bfd01a4285970e21203db3c
+      internalID: -1725041584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_42
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b923b479db366424d9f46245e21af651
+      internalID: -1057340651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_43
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70b1c39040180ce4ab4627a259d1c334
+      internalID: 2065907264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_44
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 728e17dd49622754faf860fe6906cc88
+      internalID: -1187268342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_45
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b53d1b09e8ef2e42a10198a91771309
+      internalID: -185077512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_46
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91b618a19e27cc44dabd3bc8ee12b335
+      internalID: 1566479667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_47
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 576
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43540b2f7d4e6494798c63e078c63e2e
+      internalID: -1271057337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2376136811347244a7c03e808774223
+      internalID: -745690145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_49
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ada7fb7f359193343aa503d824c67c12
+      internalID: -2075760172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_50
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ce6f987edaf2664590599c9304e26e4
+      internalID: 283216840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_51
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd65271d2c764c647b1735ac618ed1ee
+      internalID: -226762252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_52
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87e180baa0aa1bb4caaa8046c7c5eca6
+      internalID: 240716786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_53
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf062eee2d85af9428f932467c164f33
+      internalID: 1034116552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_54
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 247ede7664442664e9b327ed948d3d7a
+      internalID: -453780989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_55
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4f25f6fc9af6da4799e63c1d9af50bd
+      internalID: -1838520387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_56
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c79ab7fe7acb8224e9f61fc7e950b8a4
+      internalID: -1677734365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_57
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a99d3bc743155149b5da269129afdf9
+      internalID: -516885232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_58
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28986f48140f57349b3520a829b417c4
+      internalID: 1348093820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_59
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0316edf38dea32e40b91849a24d68b8d
+      internalID: 2136247194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_60
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07f220087dc00f844adb19025da79b24
+      internalID: -204303162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_61
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b8f0fd232d74bc4282ecef4d57ef8a2
+      internalID: 1613170729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_62
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d840f5e4d0747c04fa1d605b5601e036
+      internalID: 182906714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_63
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f963871afcf3c4f9c2382c01fcfbbc
+      internalID: 509704562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_64
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93b7fc82d40681d4baab19e8d9dcb574
+      internalID: -1299603878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_65
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f95e9d9293ff40544a59898fcd68df28
+      internalID: 614276498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_66
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e301f1221430fbb4e8721d5077fd375a
+      internalID: -897585082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_67
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f84754d734470b54db904f79480da92d
+      internalID: -1333586915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_68
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50ffbc1ce100edd438eeb345571c6ef4
+      internalID: -852173723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_69
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34d0c549201582b44899ac3526d5f5d5
+      internalID: -616969853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_70
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0733c64f91ac82944a301a5150b5507f
+      internalID: 1890590328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_71
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 480
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 937ac99a473546f49a881dab5efac0e9
+      internalID: -1918547071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_72
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47b20a609b3ee1b42beae71e45f2d70f
+      internalID: 744473051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_73
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c5c33d66deb96d42918c36ee69a8e21
+      internalID: 120073163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_74
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dce68373a92cae14cb7351a15dd08f35
+      internalID: -1451144774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_75
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51227934d3bdddc4a86b9ae3e26bbbd7
+      internalID: -471910768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_76
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4b08d17e1fc9dd4ba331a60b394e152
+      internalID: -1176887802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_77
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa230ce574d1dbf4a8c80414bb289876
+      internalID: -755015020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_78
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c98de56c06862f41b44fd5d305213b3
+      internalID: -1757491515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_79
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e0ace51d40907c46aa99ed74cb2aee5
+      internalID: 267168387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_80
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a6d81d36d28874a9885b0b742d7ac6
+      internalID: 970300019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_81
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24950e4bfdf80c84096a993a088f2d63
+      internalID: -1292320611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_82
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 912c8e12cc378b946b637e3f9e577ed9
+      internalID: -273882098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_83
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bffb4cc2d7482441bf0411417ca4856
+      internalID: 792541976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_84
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 934306bc37234fc429d827f1596f26ff
+      internalID: -1383293815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_85
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e7275ab2d4061446a6845eea8b9efb4
+      internalID: -1757605394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_86
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 655a77d2d47132a4786a4e4ddf76c42a
+      internalID: -806148147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_87
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e48dde696c747a48aa35f3ef383e5ae
+      internalID: 287383848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_88
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed47e705f6588074a88c258bcf80ea7c
+      internalID: -1110694673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_89
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbef9a4f87f2d2e4eb2e95acdf060bbf
+      internalID: 1880767552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_90
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8ea832e061e1eb4d900bf4555c828ec
+      internalID: -1224076306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_91
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53600292b61778a4e8f7f2e85634ac2e
+      internalID: 422892809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_92
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7decc13785ebfde4fa92b026e72ac1e9
+      internalID: -1611659226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_93
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0928469408c4ade4b89d893cfa71164d
+      internalID: -528753552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_94
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c5bc98625b8f574088eb5fc1ce5071f
+      internalID: -1243744297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_95
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 384
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f996e6a7788bb0449b5f1624f9be78e
+      internalID: 138277943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ef633d0be18a524599fa2815d39f730
+      internalID: -1346718127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_97
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4837eeec9ce1126498cdbbfa8423b5ad
+      internalID: -1092126632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_98
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b45e07da54b78e94db177693e5808881
+      internalID: 660975085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_99
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf55692540241b4dbf9d10632d0f6b2
+      internalID: -520288242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_100
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 364d4f44c52ce7a47942f2cb5c2551b4
+      internalID: 1487713453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_101
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e50c0ac7298f7da4fb94c63a34f79414
+      internalID: -476466052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_102
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7b609d355dd77a4fa62cd2eb68b5e77
+      internalID: -495537668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_103
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211d6f36994fdc14db1987b6468afef7
+      internalID: -1017096826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_104
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22c3f93ecab71d74790e82d5c0f363da
+      internalID: 1035181689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_105
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 675ffafd84604db478a1133d6244fe0e
+      internalID: 1841337283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_106
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c3f9dd4248185478d705303b6bc9e5
+      internalID: 1676535960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_107
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b47eb05f9316a0d43a9ac3afe5a93a5f
+      internalID: 1404193639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_108
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cfddd82ac3dadb4ca37e9d5dde8f1aa
+      internalID: -336264481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_109
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32bf7f78a09fc9e48a06dfcfaec088cf
+      internalID: 820645543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_110
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8607a47f83193040a9d28a78b29e970
+      internalID: 293096269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_111
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b65a84b18ad071a49ba3e506e0cf3ab7
+      internalID: -19240396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_112
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce5a8ca951f5e644ad8753513bc7864
+      internalID: 167553731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_113
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f296df04ec8ec8346a4efee22d858f11
+      internalID: -296415503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_114
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e352c1109892b34ab47c1d9cbb209d1
+      internalID: -1409245245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_115
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc05518d3aa8ee849940eb474ccef36d
+      internalID: 738264805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_116
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 032af3f7a4c89f44384a55bf6ab7bf48
+      internalID: -1221842021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_117
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4faf0f164545234cbe2d628dc4d724f
+      internalID: -1532940972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_118
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4194f0390487efe49a47ff322f07708c
+      internalID: 460129099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_119
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25a9f19d54302d14e94271beb793f423
+      internalID: 905926242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_120
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea9e1df88d2d53f46b3e29d29d3d787d
+      internalID: 425623001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_121
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 294e2b2c11fad1c4387a092c31bbd22a
+      internalID: 1120553503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_122
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8730e95adb2fae842b262987fe6394ae
+      internalID: -1383845288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_123
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35d66012908dfca4688e218719184ee6
+      internalID: 1716674865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_124
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f42b48588d39c44e8f640f4ff827f47
+      internalID: -1806826695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_125
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9718e068ffafdee4b948c6601f6d69a3
+      internalID: -85771260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_126
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e026217039a88547a2744bbf738e411
+      internalID: -1007256327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_127
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40ae2022f1989e74396a983702480cbb
+      internalID: -2131962324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_128
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c18824520b1becc4fb945efd8c039603
+      internalID: -1752645313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_129
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e565de5a26ca64e49b754b548a6f432d
+      internalID: -547516639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_130
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28d63b4574e9acd409be998e8e0982aa
+      internalID: -1684515715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_131
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57cd2af22c1985043bc9f62d3e310553
+      internalID: -69718217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_132
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be480c1ffce351d42aec07b994f04c77
+      internalID: 137606867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_133
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b7d5e532fc76fa4d8cb75de982a7756
+      internalID: 1108283754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_134
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc0c8810b9c499d49bc508631785d487
+      internalID: -2101007320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_135
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e43b4b162ece724b8ed5dd1996252be
+      internalID: 471069784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_136
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c58cb8ec22dacf64e8b3794a7fb764e8
+      internalID: -1212553553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_137
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83e0e92544c7444eb19eb3587d53b37
+      internalID: 146498713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_138
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13c09c523891b89459e227d7fb6e26be
+      internalID: -1615579800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_139
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0276e5e8c5e0ab489878bd19778e0e9
+      internalID: -1079428642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_140
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5263ff22e30bfa543b9bf47bed107214
+      internalID: 1474693054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_141
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0655a9f44c43a2043b89a619d01ebe9a
+      internalID: 903256758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_142
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 300a7acfd7f6cf441a2772f4aa7c032d
+      internalID: -1628730563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_143
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ec2170e990b60b4a96b45332a7c26dd
+      internalID: -1097678027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_144
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dbff61108e06414ca9cc7bf08ac361f
+      internalID: 445341900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_145
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 455bca0c5528eef44ad9c3bfbc40572e
+      internalID: -1724972818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_146
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d3017f74d64664a914686d981f192a
+      internalID: 235050826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_147
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6934eba4e9324ba489f8ea14022f3ed5
+      internalID: -1726762856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_148
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26caba539669b0849b222458a54cf9bd
+      internalID: 233423532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_149
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49d031f04a17a3a48a12322000ee1388
+      internalID: 1821778792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_150
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37097f53331c189488a821ae24b720e9
+      internalID: -168254802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_151
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0aaa599f23fa184f85fe914d67254aa
+      internalID: 460175648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_152
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d58261af6f00f6489f50a03c3e62b30
+      internalID: 1676027385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_153
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7066a93c8874a3847976750715f1c825
+      internalID: -450680079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_154
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76010f60715903f48ba05221cd1811d1
+      internalID: -358103576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_155
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b87c7f1f581e900448647dc49d51906b
+      internalID: -1395630953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_156
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2083448fae459de4f8680de183ad5c2e
+      internalID: -517701877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_157
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba381d172e555d744ba19dc964882772
+      internalID: -1634595713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_158
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 978e94df23c8a7244adddc9773fbb717
+      internalID: 1090564852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_159
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17c687525a372154890bf3ccab8d2697
+      internalID: -1434341350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_160
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837928d0187fbab4480bf984f060be08
+      internalID: -571234814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_161
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb29f3a2e5cc1b9449a3a5d33a086187
+      internalID: 573302917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_162
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69fdc13f261ea3c458dc3d92e86c322c
+      internalID: -596704069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_163
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f1a364a8f796b4449ac73abd8dc4391
+      internalID: -1285468822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_164
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c217299b1325ee5419a0ec1d51289a91
+      internalID: -1812436915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_165
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7d604aadad73843b9c55482773ea65
+      internalID: 390232284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_166
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdd47e0d673778449b38adf0d55777d0
+      internalID: -1342741087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_167
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a847d496ddf4e44fb5c8d3f4e1a8473
+      internalID: 1555473285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_168
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3a2758130dfaf14cb8eb1d843db67e8
+      internalID: -983855687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_169
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbc29417afc275a4e9991f72c49b15cd
+      internalID: -1237498871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_170
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d97eddf07df6def44ba5a0bc8ff3973f
+      internalID: -331208702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_171
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13216ee3e9f1ec74db8ac3f936220a9b
+      internalID: -1728908655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_172
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2509ca3063636db48807ff6d20b56b16
+      internalID: 260135574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_173
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dcfe0ff3f94f494bb6982347a08fb00
+      internalID: 755231982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_174
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58f2327a538f5974db6ba86913241ed8
+      internalID: -536145356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_175
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b963ef158cc38514b9bd3a0d3f15e1cb
+      internalID: 1582989827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_176
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 523effe8f75e1864cad719ac489b223a
+      internalID: -1416449370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_177
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bde802bb2ca8dee448cb76f2d4dcf523
+      internalID: -1791133356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_178
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4374d648c5a0ad449a4f00a27b54758
+      internalID: -128371604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_179
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a202c92aeb930f4ea556bdb58ae139c
+      internalID: 181733335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_180
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9353a9cd29db74144a0b4a69e29ce4f2
+      internalID: -185544883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_181
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b90b3815be8e5ec4c8fa5fc98f9faf26
+      internalID: -1650430608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_182
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca0aa5704499f5943928a74b0829e716
+      internalID: -924143473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_183
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bebbf9c1858f2024dae6b7066709ab58
+      internalID: -1774743848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_184
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e904de8a8097a44b933c2bb79a23c0
+      internalID: -657101686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_185
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf5143a3b6c2ec46876fb6fc74e1bd4
+      internalID: -687843368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_186
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4430bc5332ad2a14abb71738fd5c4396
+      internalID: 462475586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_187
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4fdb498723c2045a10a3b2a4f48f07
+      internalID: -1140375930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_188
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8470dde755a7e084b810db2a489cd986
+      internalID: -1771134162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_189
+      rect:
+        serializedVersion: 2
+        x: 2016
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a732f38c15d397e4f8d74e337c7f7dd1
+      internalID: -131218257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_190
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66a81094512268445800e5e22f7f5dd2
+      internalID: -1317764288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human-Worker-Cyan_scaled_3x_pngcrushed_191
+      rect:
+        serializedVersion: 2
+        x: 2208
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d54f2d32eb1a2e84998981a8e8d05144
+      internalID: -515370156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f78538142e36b814d937acc0216b5ffb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Human-Worker-Cyan_scaled_3x_pngcrushed_0: -1902457687
+      Human-Worker-Cyan_scaled_3x_pngcrushed_1: -1658179464
+      Human-Worker-Cyan_scaled_3x_pngcrushed_10: -1575465238
+      Human-Worker-Cyan_scaled_3x_pngcrushed_100: 1487713453
+      Human-Worker-Cyan_scaled_3x_pngcrushed_101: -476466052
+      Human-Worker-Cyan_scaled_3x_pngcrushed_102: -495537668
+      Human-Worker-Cyan_scaled_3x_pngcrushed_103: -1017096826
+      Human-Worker-Cyan_scaled_3x_pngcrushed_104: 1035181689
+      Human-Worker-Cyan_scaled_3x_pngcrushed_105: 1841337283
+      Human-Worker-Cyan_scaled_3x_pngcrushed_106: 1676535960
+      Human-Worker-Cyan_scaled_3x_pngcrushed_107: 1404193639
+      Human-Worker-Cyan_scaled_3x_pngcrushed_108: -336264481
+      Human-Worker-Cyan_scaled_3x_pngcrushed_109: 820645543
+      Human-Worker-Cyan_scaled_3x_pngcrushed_11: -384497768
+      Human-Worker-Cyan_scaled_3x_pngcrushed_110: 293096269
+      Human-Worker-Cyan_scaled_3x_pngcrushed_111: -19240396
+      Human-Worker-Cyan_scaled_3x_pngcrushed_112: 167553731
+      Human-Worker-Cyan_scaled_3x_pngcrushed_113: -296415503
+      Human-Worker-Cyan_scaled_3x_pngcrushed_114: -1409245245
+      Human-Worker-Cyan_scaled_3x_pngcrushed_115: 738264805
+      Human-Worker-Cyan_scaled_3x_pngcrushed_116: -1221842021
+      Human-Worker-Cyan_scaled_3x_pngcrushed_117: -1532940972
+      Human-Worker-Cyan_scaled_3x_pngcrushed_118: 460129099
+      Human-Worker-Cyan_scaled_3x_pngcrushed_119: 905926242
+      Human-Worker-Cyan_scaled_3x_pngcrushed_12: -576193044
+      Human-Worker-Cyan_scaled_3x_pngcrushed_120: 425623001
+      Human-Worker-Cyan_scaled_3x_pngcrushed_121: 1120553503
+      Human-Worker-Cyan_scaled_3x_pngcrushed_122: -1383845288
+      Human-Worker-Cyan_scaled_3x_pngcrushed_123: 1716674865
+      Human-Worker-Cyan_scaled_3x_pngcrushed_124: -1806826695
+      Human-Worker-Cyan_scaled_3x_pngcrushed_125: -85771260
+      Human-Worker-Cyan_scaled_3x_pngcrushed_126: -1007256327
+      Human-Worker-Cyan_scaled_3x_pngcrushed_127: -2131962324
+      Human-Worker-Cyan_scaled_3x_pngcrushed_128: -1752645313
+      Human-Worker-Cyan_scaled_3x_pngcrushed_129: -547516639
+      Human-Worker-Cyan_scaled_3x_pngcrushed_13: -1644547425
+      Human-Worker-Cyan_scaled_3x_pngcrushed_130: -1684515715
+      Human-Worker-Cyan_scaled_3x_pngcrushed_131: -69718217
+      Human-Worker-Cyan_scaled_3x_pngcrushed_132: 137606867
+      Human-Worker-Cyan_scaled_3x_pngcrushed_133: 1108283754
+      Human-Worker-Cyan_scaled_3x_pngcrushed_134: -2101007320
+      Human-Worker-Cyan_scaled_3x_pngcrushed_135: 471069784
+      Human-Worker-Cyan_scaled_3x_pngcrushed_136: -1212553553
+      Human-Worker-Cyan_scaled_3x_pngcrushed_137: 146498713
+      Human-Worker-Cyan_scaled_3x_pngcrushed_138: -1615579800
+      Human-Worker-Cyan_scaled_3x_pngcrushed_139: -1079428642
+      Human-Worker-Cyan_scaled_3x_pngcrushed_14: 2106430849
+      Human-Worker-Cyan_scaled_3x_pngcrushed_140: 1474693054
+      Human-Worker-Cyan_scaled_3x_pngcrushed_141: 903256758
+      Human-Worker-Cyan_scaled_3x_pngcrushed_142: -1628730563
+      Human-Worker-Cyan_scaled_3x_pngcrushed_143: -1097678027
+      Human-Worker-Cyan_scaled_3x_pngcrushed_144: 445341900
+      Human-Worker-Cyan_scaled_3x_pngcrushed_145: -1724972818
+      Human-Worker-Cyan_scaled_3x_pngcrushed_146: 235050826
+      Human-Worker-Cyan_scaled_3x_pngcrushed_147: -1726762856
+      Human-Worker-Cyan_scaled_3x_pngcrushed_148: 233423532
+      Human-Worker-Cyan_scaled_3x_pngcrushed_149: 1821778792
+      Human-Worker-Cyan_scaled_3x_pngcrushed_15: -1602803477
+      Human-Worker-Cyan_scaled_3x_pngcrushed_150: -168254802
+      Human-Worker-Cyan_scaled_3x_pngcrushed_151: 460175648
+      Human-Worker-Cyan_scaled_3x_pngcrushed_152: 1676027385
+      Human-Worker-Cyan_scaled_3x_pngcrushed_153: -450680079
+      Human-Worker-Cyan_scaled_3x_pngcrushed_154: -358103576
+      Human-Worker-Cyan_scaled_3x_pngcrushed_155: -1395630953
+      Human-Worker-Cyan_scaled_3x_pngcrushed_156: -517701877
+      Human-Worker-Cyan_scaled_3x_pngcrushed_157: -1634595713
+      Human-Worker-Cyan_scaled_3x_pngcrushed_158: 1090564852
+      Human-Worker-Cyan_scaled_3x_pngcrushed_159: -1434341350
+      Human-Worker-Cyan_scaled_3x_pngcrushed_16: -1429708682
+      Human-Worker-Cyan_scaled_3x_pngcrushed_160: -571234814
+      Human-Worker-Cyan_scaled_3x_pngcrushed_161: 573302917
+      Human-Worker-Cyan_scaled_3x_pngcrushed_162: -596704069
+      Human-Worker-Cyan_scaled_3x_pngcrushed_163: -1285468822
+      Human-Worker-Cyan_scaled_3x_pngcrushed_164: -1812436915
+      Human-Worker-Cyan_scaled_3x_pngcrushed_165: 390232284
+      Human-Worker-Cyan_scaled_3x_pngcrushed_166: -1342741087
+      Human-Worker-Cyan_scaled_3x_pngcrushed_167: 1555473285
+      Human-Worker-Cyan_scaled_3x_pngcrushed_168: -983855687
+      Human-Worker-Cyan_scaled_3x_pngcrushed_169: -1237498871
+      Human-Worker-Cyan_scaled_3x_pngcrushed_17: -440782428
+      Human-Worker-Cyan_scaled_3x_pngcrushed_170: -331208702
+      Human-Worker-Cyan_scaled_3x_pngcrushed_171: -1728908655
+      Human-Worker-Cyan_scaled_3x_pngcrushed_172: 260135574
+      Human-Worker-Cyan_scaled_3x_pngcrushed_173: 755231982
+      Human-Worker-Cyan_scaled_3x_pngcrushed_174: -536145356
+      Human-Worker-Cyan_scaled_3x_pngcrushed_175: 1582989827
+      Human-Worker-Cyan_scaled_3x_pngcrushed_176: -1416449370
+      Human-Worker-Cyan_scaled_3x_pngcrushed_177: -1791133356
+      Human-Worker-Cyan_scaled_3x_pngcrushed_178: -128371604
+      Human-Worker-Cyan_scaled_3x_pngcrushed_179: 181733335
+      Human-Worker-Cyan_scaled_3x_pngcrushed_18: 1709472586
+      Human-Worker-Cyan_scaled_3x_pngcrushed_180: -185544883
+      Human-Worker-Cyan_scaled_3x_pngcrushed_181: -1650430608
+      Human-Worker-Cyan_scaled_3x_pngcrushed_182: -924143473
+      Human-Worker-Cyan_scaled_3x_pngcrushed_183: -1774743848
+      Human-Worker-Cyan_scaled_3x_pngcrushed_184: -657101686
+      Human-Worker-Cyan_scaled_3x_pngcrushed_185: -687843368
+      Human-Worker-Cyan_scaled_3x_pngcrushed_186: 462475586
+      Human-Worker-Cyan_scaled_3x_pngcrushed_187: -1140375930
+      Human-Worker-Cyan_scaled_3x_pngcrushed_188: -1771134162
+      Human-Worker-Cyan_scaled_3x_pngcrushed_189: -131218257
+      Human-Worker-Cyan_scaled_3x_pngcrushed_19: 1386040937
+      Human-Worker-Cyan_scaled_3x_pngcrushed_190: -1317764288
+      Human-Worker-Cyan_scaled_3x_pngcrushed_191: -515370156
+      Human-Worker-Cyan_scaled_3x_pngcrushed_2: 1550722943
+      Human-Worker-Cyan_scaled_3x_pngcrushed_20: 189357330
+      Human-Worker-Cyan_scaled_3x_pngcrushed_21: -518819307
+      Human-Worker-Cyan_scaled_3x_pngcrushed_22: 359421728
+      Human-Worker-Cyan_scaled_3x_pngcrushed_23: -710644077
+      Human-Worker-Cyan_scaled_3x_pngcrushed_24: -1269635738
+      Human-Worker-Cyan_scaled_3x_pngcrushed_25: -1974569688
+      Human-Worker-Cyan_scaled_3x_pngcrushed_26: -2104255104
+      Human-Worker-Cyan_scaled_3x_pngcrushed_27: -1688140109
+      Human-Worker-Cyan_scaled_3x_pngcrushed_28: -1811224407
+      Human-Worker-Cyan_scaled_3x_pngcrushed_29: -767623424
+      Human-Worker-Cyan_scaled_3x_pngcrushed_3: 20742132
+      Human-Worker-Cyan_scaled_3x_pngcrushed_30: -825029588
+      Human-Worker-Cyan_scaled_3x_pngcrushed_31: 1859676761
+      Human-Worker-Cyan_scaled_3x_pngcrushed_32: -662026993
+      Human-Worker-Cyan_scaled_3x_pngcrushed_33: 42096792
+      Human-Worker-Cyan_scaled_3x_pngcrushed_34: -2121612756
+      Human-Worker-Cyan_scaled_3x_pngcrushed_35: 588638654
+      Human-Worker-Cyan_scaled_3x_pngcrushed_36: -1605482731
+      Human-Worker-Cyan_scaled_3x_pngcrushed_37: -870686532
+      Human-Worker-Cyan_scaled_3x_pngcrushed_38: 1514690152
+      Human-Worker-Cyan_scaled_3x_pngcrushed_39: -783096418
+      Human-Worker-Cyan_scaled_3x_pngcrushed_4: 93418994
+      Human-Worker-Cyan_scaled_3x_pngcrushed_40: 1062383697
+      Human-Worker-Cyan_scaled_3x_pngcrushed_41: -1725041584
+      Human-Worker-Cyan_scaled_3x_pngcrushed_42: -1057340651
+      Human-Worker-Cyan_scaled_3x_pngcrushed_43: 2065907264
+      Human-Worker-Cyan_scaled_3x_pngcrushed_44: -1187268342
+      Human-Worker-Cyan_scaled_3x_pngcrushed_45: -185077512
+      Human-Worker-Cyan_scaled_3x_pngcrushed_46: 1566479667
+      Human-Worker-Cyan_scaled_3x_pngcrushed_47: -1271057337
+      Human-Worker-Cyan_scaled_3x_pngcrushed_48: -745690145
+      Human-Worker-Cyan_scaled_3x_pngcrushed_49: -2075760172
+      Human-Worker-Cyan_scaled_3x_pngcrushed_5: -1987328838
+      Human-Worker-Cyan_scaled_3x_pngcrushed_50: 283216840
+      Human-Worker-Cyan_scaled_3x_pngcrushed_51: -226762252
+      Human-Worker-Cyan_scaled_3x_pngcrushed_52: 240716786
+      Human-Worker-Cyan_scaled_3x_pngcrushed_53: 1034116552
+      Human-Worker-Cyan_scaled_3x_pngcrushed_54: -453780989
+      Human-Worker-Cyan_scaled_3x_pngcrushed_55: -1838520387
+      Human-Worker-Cyan_scaled_3x_pngcrushed_56: -1677734365
+      Human-Worker-Cyan_scaled_3x_pngcrushed_57: -516885232
+      Human-Worker-Cyan_scaled_3x_pngcrushed_58: 1348093820
+      Human-Worker-Cyan_scaled_3x_pngcrushed_59: 2136247194
+      Human-Worker-Cyan_scaled_3x_pngcrushed_6: -1291529853
+      Human-Worker-Cyan_scaled_3x_pngcrushed_60: -204303162
+      Human-Worker-Cyan_scaled_3x_pngcrushed_61: 1613170729
+      Human-Worker-Cyan_scaled_3x_pngcrushed_62: 182906714
+      Human-Worker-Cyan_scaled_3x_pngcrushed_63: 509704562
+      Human-Worker-Cyan_scaled_3x_pngcrushed_64: -1299603878
+      Human-Worker-Cyan_scaled_3x_pngcrushed_65: 614276498
+      Human-Worker-Cyan_scaled_3x_pngcrushed_66: -897585082
+      Human-Worker-Cyan_scaled_3x_pngcrushed_67: -1333586915
+      Human-Worker-Cyan_scaled_3x_pngcrushed_68: -852173723
+      Human-Worker-Cyan_scaled_3x_pngcrushed_69: -616969853
+      Human-Worker-Cyan_scaled_3x_pngcrushed_7: -14711408
+      Human-Worker-Cyan_scaled_3x_pngcrushed_70: 1890590328
+      Human-Worker-Cyan_scaled_3x_pngcrushed_71: -1918547071
+      Human-Worker-Cyan_scaled_3x_pngcrushed_72: 744473051
+      Human-Worker-Cyan_scaled_3x_pngcrushed_73: 120073163
+      Human-Worker-Cyan_scaled_3x_pngcrushed_74: -1451144774
+      Human-Worker-Cyan_scaled_3x_pngcrushed_75: -471910768
+      Human-Worker-Cyan_scaled_3x_pngcrushed_76: -1176887802
+      Human-Worker-Cyan_scaled_3x_pngcrushed_77: -755015020
+      Human-Worker-Cyan_scaled_3x_pngcrushed_78: -1757491515
+      Human-Worker-Cyan_scaled_3x_pngcrushed_79: 267168387
+      Human-Worker-Cyan_scaled_3x_pngcrushed_8: 9482730
+      Human-Worker-Cyan_scaled_3x_pngcrushed_80: 970300019
+      Human-Worker-Cyan_scaled_3x_pngcrushed_81: -1292320611
+      Human-Worker-Cyan_scaled_3x_pngcrushed_82: -273882098
+      Human-Worker-Cyan_scaled_3x_pngcrushed_83: 792541976
+      Human-Worker-Cyan_scaled_3x_pngcrushed_84: -1383293815
+      Human-Worker-Cyan_scaled_3x_pngcrushed_85: -1757605394
+      Human-Worker-Cyan_scaled_3x_pngcrushed_86: -806148147
+      Human-Worker-Cyan_scaled_3x_pngcrushed_87: 287383848
+      Human-Worker-Cyan_scaled_3x_pngcrushed_88: -1110694673
+      Human-Worker-Cyan_scaled_3x_pngcrushed_89: 1880767552
+      Human-Worker-Cyan_scaled_3x_pngcrushed_9: 204537183
+      Human-Worker-Cyan_scaled_3x_pngcrushed_90: -1224076306
+      Human-Worker-Cyan_scaled_3x_pngcrushed_91: 422892809
+      Human-Worker-Cyan_scaled_3x_pngcrushed_92: -1611659226
+      Human-Worker-Cyan_scaled_3x_pngcrushed_93: -528753552
+      Human-Worker-Cyan_scaled_3x_pngcrushed_94: -1243744297
+      Human-Worker-Cyan_scaled_3x_pngcrushed_95: 138277943
+      Human-Worker-Cyan_scaled_3x_pngcrushed_96: -1346718127
+      Human-Worker-Cyan_scaled_3x_pngcrushed_97: -1092126632
+      Human-Worker-Cyan_scaled_3x_pngcrushed_98: 660975085
+      Human-Worker-Cyan_scaled_3x_pngcrushed_99: -520288242
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
