@@ -9,6 +9,11 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        Rigidbody rb;
+        Animator animator;
+        private bool _isSprinting = false;
+        [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
+
         [SerializeField] private float _baseMovementSpeed = 7f;     //Base movement speed of the player
         public float MovementSpeedMultiplier { get; set; }          //Multiplier for the movement speed
 
@@ -71,6 +76,9 @@ namespace Game.Player
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
+
             if (_model == null) _model = transform.Find("Model").gameObject;
 
             Flashlight = GetComponentInChildren<FlashlightManager>();
@@ -91,6 +99,14 @@ namespace Game.Player
             MaxHealthMultiplier = 1;
 
             Health = _baseMaxHealth;
+            animator = GetComponent<Animator>();
+        }
+
+        void FixedUpdate()
+        {
+            /*rb.linearVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            animator.SetFloat("xVelocity", rb.linearVelocity.x);
+            animator.SetFloat("zVelocity", rb.linearVelocity.z);*/
         }
 
         // Update is called once per frame
@@ -115,6 +131,8 @@ namespace Game.Player
             }
 
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
+            animator.SetFloat("xVelocity", moveDirection.x);
+            animator.SetFloat("zVelocity", moveDirection.y);
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
             _controller.Move(velocity * Time.deltaTime);
 
@@ -137,7 +155,13 @@ namespace Game.Player
             _aimingAt.y = 1f;
 
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
+
+            if (_isSprinting && Flashlight.IsEnabled && Flashlight.RemainingBatteryLife > 0)
+            {
+                Flashlight.RemainingBatteryLife -= _sprintBatteryDrainRate * Time.deltaTime;
+            }
         }
+
 
         private void OnDestroy()
         {
@@ -171,5 +195,48 @@ namespace Game.Player
             }
         }
 
+    
+        
+        private InputAction _runAction;
+
+        private void OnEnable()
+        {
+            if (_runAction == null)
+            {
+                _runAction = InputSystem.actions.FindAction("Sprint");
+                if (_runAction != null)
+                {
+                    _runAction.performed += OnRunPerformed;
+                    _runAction.canceled += OnRunCanceled;
+                    _runAction.Enable();
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_runAction != null)
+            {
+                _runAction.performed -= OnRunPerformed;
+                _runAction.canceled -= OnRunCanceled;
+                _runAction.Disable();
+            }
+        }
+
+        private void OnRunPerformed(InputAction.CallbackContext context)
+        {
+            MovementSpeedMultiplier = 2f;
+            _isSprinting = true;
+        }
+
+        private void OnRunCanceled(InputAction.CallbackContext context)
+        {
+            MovementSpeedMultiplier = 1f;
+            _isSprinting = false;
+        }
+
     }
+
+
+
 }
