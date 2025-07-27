@@ -96,6 +96,15 @@ public class HandManager : MonoBehaviour
 
     void Update()
     {
+        for (int i = 0; i < cardsInHand.Length; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                Debug.Log($"Key {(KeyCode.Alpha1 + i)} pressed - activating card index {i}");
+                ActivateCard(i);
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.Q)) DiscardCard(0);
         if (Input.GetKeyDown(KeyCode.W)) DiscardCard(1);
         if (Input.GetKeyDown(KeyCode.E)) DiscardCard(2);
@@ -123,5 +132,21 @@ public class HandManager : MonoBehaviour
 
         return handData;
     }
+    
+    public void ActivateCard(int index)
+    {
+        if (index < 0 || index >= cardsInHand.Length) return;
+
+        GameObject card = cardsInHand[index];
+        if (card == null) return;
+
+        CardAbilityUI abilityUI = card.GetComponent<CardAbilityUI>();
+        if (abilityUI != null)
+        {
+            abilityUI.StartCooldown();
+            Debug.Log($"Activated card in slot {index + 1}: {card.GetComponent<CardDisplay>().cardData.cardName}");
+        }
+    }
+
 
 }

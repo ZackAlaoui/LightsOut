@@ -6,42 +6,68 @@ public class CardAbilityUI : MonoBehaviour
 {
     [Header("UI Elements")]
     public Color unavailableColor;
-    public GameObject durationBar; // The fill image for cooldown display
+    public GameObject durationBar; // Assigned via Inspector
+    public Image backgroundImage;  // 🟡 Assign this in Inspector
 
     private bool abilityActive = false;
     private float currentDuration = 0f;
     private CardInformation cardInfo;
-
-    private Image backgroundImage;
+    private Color originalColor;
 
     private void Awake()
     {
-        backgroundImage = GetComponent<Image>();
-        durationBar.SetActive(false);
+        // Make sure the bar is hidden at first
+        if (durationBar != null)
+            durationBar.SetActive(false);
+        else
+            Debug.LogWarning("Duration bar is not assigned!");
+
+        if (backgroundImage == null)
+            Debug.LogWarning("Background image not assigned!");
     }
 
-    // Assigns the card data to this UI
     public void SetCard(CardInformation info)
     {
         cardInfo = info;
         currentDuration = cardInfo.cooldownDuration;
+
+        if (backgroundImage != null)
+        {
+            originalColor = backgroundImage.color;
+        }
     }
 
-    // Call this when ability starts
     public void StartCooldown()
     {
-        if (cardInfo == null) return;
+        Debug.Log("StartCooldown() called");
+
+        if (cardInfo == null)
+        {
+            Debug.LogWarning("StartCooldown called, but cardInfo is null!");
+            return;
+        }
 
         abilityActive = true;
         currentDuration = cardInfo.cooldownDuration;
-        durationBar.SetActive(true);
-        UpdateImage(false); // Show ability is unavailable
+
+        if (durationBar != null)
+            durationBar.SetActive(true);
+        else
+            Debug.LogWarning("durationBar is NULL when trying to activate!");
+
+        UpdateImage(false);
     }
 
-    // Enable/disable card visuals based on availability
     public void UpdateImage(bool abilityAvailable)
     {
-        backgroundImage.color = abilityAvailable ? Color.white : unavailableColor;
+        if (backgroundImage != null)
+        {
+            backgroundImage.color = abilityAvailable ? originalColor : unavailableColor;
+        }
+        else
+        {
+            Debug.LogWarning("backgroundImage is null in UpdateImage");
+        }
     }
 
     private void Update()
@@ -49,15 +75,23 @@ public class CardAbilityUI : MonoBehaviour
         if (!abilityActive || cardInfo == null) return;
 
         currentDuration -= Time.deltaTime;
-
         float fill = Mathf.Clamp01(currentDuration / cardInfo.cooldownDuration);
-        durationBar.GetComponent<Image>().fillAmount = fill;
 
-        if (currentDuration <= 0)
+        if (durationBar != null)
+        {
+            Image img = durationBar.GetComponent<Image>();
+            if (img != null)
+                img.fillAmount = fill;
+        }
+
+        if (currentDuration <= 0f)
         {
             abilityActive = false;
-            durationBar.SetActive(false);
-            UpdateImage(true); // Ability ready again
+
+            if (durationBar != null)
+                durationBar.SetActive(false);
+
+            UpdateImage(true);
         }
     }
 }
