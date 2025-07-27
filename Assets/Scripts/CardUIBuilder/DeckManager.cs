@@ -5,11 +5,19 @@ using CardData;
 
 public class DeckManager : MonoBehaviour
 {
+    public static DeckManager Instance;
     public List<CardInformation> allCards = new List<CardInformation>();
 
     private int currentIndex = 0;
-    
-
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+ 
+ 
     void Start()
     {
         //Load all card assets

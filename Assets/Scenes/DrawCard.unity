@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 137063663}
   - component: {fileID: 137063664}
+  - component: {fileID: 137063666}
   m_Layer: 0
   m_Name: DrawCard
   m_TagString: Untagged
@@ -237,6 +238,12 @@ MonoBehaviour:
   cardScale: 1.25
   drawCardButton: {fileID: 0}
   maxCardsInHand: 5
+  backButton: {fileID: 0}
+  backButtonColor: {r: 0.6, g: 0.2, b: 0.2, a: 1}
+  backButtonHoverColor: {r: 0.8, g: 0.3, b: 0.3, a: 1}
+  backButtonPressedColor: {r: 0.5, g: 0.15, b: 0.15, a: 1}
+  backButtonText: Back to Menu
+  backButtonCornerRadius: 15
   hotbarContainer: {fileID: 0}
   hotbarHeight: 120
   hotbarCardScale: 0.8
@@ -302,6 +309,31 @@ MonoBehaviour:
   - {fileID: 0}
   manualCardBackSprite: {fileID: 0}
   loadedCardsCount: 0
+--- !u!114 &137063666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137063661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0946ef98e02d9a40a092bb660c4ff9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pokerHandManager: {fileID: 0}
+  deckManager: {fileID: 0}
+  cardPrefab: {fileID: 0}
+  handTransform: {fileID: 0}
+  fanSpread: 5
+  cardSpacing: 100
+  verticalSpacing: 100
+  cardSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &391422443
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,63 +547,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2794621087351117631
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 571.5287
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 268.93698
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -71.36576
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4640615061654599955, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8791480120580968340, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
-      propertyPath: m_Name
-      value: EnterDealer
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 87f99dbd6f7217e4284ece320eb0e4ff, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -579,4 +554,3 @@ SceneRoots:
   - {fileID: 609670633}
   - {fileID: 391422445}
   - {fileID: 137063663}
-  - {fileID: 2794621087351117631}

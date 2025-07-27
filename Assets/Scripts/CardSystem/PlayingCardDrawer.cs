@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Game;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -757,23 +758,106 @@ public class PlayingCardDrawer : MonoBehaviour
         }
     }
     
+    // NEW: Load cards from the central CardManager so this drawer uses the same
+    // card assets / definitions as the rest of the UI (e.g. HandUIManager).
+    private bool LoadCardsFromCardManager()
+    {
+        if (CardManager.Instance == null || CardManager.Instance.allCards == null || CardManager.Instance.allCards.Count == 0)
+            return false;
+
+        foreach (var c in CardManager.Instance.allCards)
+        {
+            if (c == null || c.CardImage == null) continue;
+
+            PlayingCardSuit mappedSuit = MapCardSuit(c.suit);
+
+            allCards.Add(new PlayingCard
+            {
+                // "value" is not meaningful for our custom cards – just use 1 so it is valid.
+                value = 1,
+                suit = mappedSuit,
+                cardSprite = c.CardImage
+            });
+        }
+
+        // We intentionally leave cardBackSprite untouched here – it will be set by the
+        // existing loading logic or fallbacks later on.
+        return allCards.Count > 0;
+    }
+
+    // NEW: Load cards directly from DeckManager's CardInformation assets.
+    private bool LoadCardsFromDeckManager()
+    {
+        if (DeckManager.Instance == null || DeckManager.Instance.allCards == null || DeckManager.Instance.allCards.Count == 0)
+            return false;
+
+        foreach (var info in DeckManager.Instance.allCards)
+        {
+            if (info == null || info.cardSprite == null) continue;
+
+            // Determine suit from the first CardType entry (if any)
+            PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            if (info.cardType != null && info.cardType.Count > 0)
+            {
+                ps = info.cardType[0] switch
+                {
+                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+                    _ => PlayingCardSuit.Clubs
+                };
+            }
+
+            allCards.Add(new PlayingCard
+            {
+                value = 1,
+                suit = ps,
+                cardSprite = info.cardSprite
+            });
+        }
+
+        return allCards.Count > 0;
+    }
+
+    private PlayingCardSuit MapCardSuit(CardSuit suit)
+    {
+        return suit switch
+        {
+            CardSuit.Brains => PlayingCardSuit.Clubs,
+            CardSuit.Bones => PlayingCardSuit.Hearts,
+            CardSuit.Blood => PlayingCardSuit.Diamonds,
+            CardSuit.RottenFlesh => PlayingCardSuit.Spades,
+            _ => PlayingCardSuit.Clubs
+        };
+    }
+
     private void LoadAllCards()
     {
         allCards.Clear();
+
+        // FIRST: Try to load cards from the shared CardManager so we are in sync with
+        // HandUIManager and the rest of the card-based gameplay systems.
+        if (LoadCardsFromCardManager())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from CardManager!");
+            return;
+        }
+
+        // SECOND: Try to load from DeckManager's ScriptableObject deck
+        if (LoadCardsFromDeckManager())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from DeckManager!");
+            return;
+        }
         
         // Try manual assignments first
         if (LoadFromManualAssignments())
         {
             loadedCardsCount = allCards.Count;
             Debug.Log($"Loaded {allCards.Count} cards from manual assignments!");
-            return;
-        }
-        
-        // Try loading from the same path structure
-        if (LoadCardsFromSamePath())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} cards from path structure!");
             return;
         }
         
@@ -1516,10 +1600,28 @@ public class PlayingCardDrawer : MonoBehaviour
         OnCardDrawn(selectedCard);
     }
     
+    // Advances the game to the next round and returns the player to the primary gameplay scene that
+    // was active before opening the dealer UI. If, for some reason, there is no previous scene
+    // recorded, a safe fallback ("SampleScene") is used instead.
     private void GoToSampleScene()
     {
-        Debug.Log("Loading SampleScene...");
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        // Advance to the following round – this spawns the next wave, handles scene transitions,
+        // and performs any other round-initialisation logic inside GameManager.
+        GameManager.ProceedToNextRound();
+
+        // Return the player to the appropriate gameplay scene so they can face the new round.
+        string targetScene = GameManager.PreviousSceneName;
+
+        if (!string.IsNullOrEmpty(targetScene))
+        {
+            Debug.Log($"Loading {targetScene} for next round...");
+            SceneManager.LoadScene(targetScene);
+        }
+        else
+        {
+            Debug.LogWarning("Previous scene not found. Loading fallback scene 'SampleScene'.");
+            SceneManager.LoadScene("SampleScene");
+        }
     }
     
     private IEnumerator TurnCardToBack(int cardIndex)
