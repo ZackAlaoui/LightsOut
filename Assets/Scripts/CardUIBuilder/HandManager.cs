@@ -12,91 +12,98 @@ public class HandManager : MonoBehaviour
     public float fanSpread = 5f;
     public float cardSpacing = 100f;
     public float verticalSpacing = 100f;
-    public List<GameObject> cardsInHand = new List<GameObject>(); //Hold a list of the card objects in our hand
+    private GameObject[] cardsInHand = new GameObject[5];
+    public RectTransform[] cardSlots = new RectTransform[5];
+    //Hold a list of the card objects in our hand
     
 
     public void AddCardToHand(CardInformation cardData)
     {
-
-        if (cardsInHand.Count >= 5)
+        for (int i = 0; i < cardsInHand.Length; i++)
         {
-            Debug.LogWarning("Hand is full! Cannot add more than 5 cards.");
-            return;
+            if (cardsInHand[i] == null)
+            {
+                GameObject newCard = Instantiate(cardPrefab);
+
+// Parent it correctly without messing up world position
+                newCard.transform.SetParent(cardSlots[i], false);
+
+// Now stretch to fill the slot
+                RectTransform rt = newCard.GetComponent<RectTransform>();
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                rt.localScale = Vector3.one; // reset any scale issues
+
+                cardsInHand[i] = newCard;
+
+
+                // Set the card data for CardDisplay
+                CardDisplay display = newCard.GetComponent<CardDisplay>();
+                display.cardData = cardData;
+                display.UpdatecardDisplay();
+
+                // Set the card data for CardAbilityUI
+                CardAbilityUI ui = newCard.GetComponent<CardAbilityUI>();
+                if (ui != null)
+                    ui.SetCard(cardData);
+
+                pokerHandManager?.EvaluateHandAndApplyBuffs();
+                return;
+            }
         }
-        //Instantiate the card
-        GameObject newCard = Instantiate(cardPrefab, handTransform.position, Quaternion.identity, handTransform);
-        cardsInHand.Add(newCard);
 
-        //Set the cardData of the Instantiated card
-        newCard.GetComponent<CardDisplay>().cardData = cardData;
-
-        pokerHandManager?.EvaluateHandAndApplyBuffs();
-        
-        // After adding the card
-        int index = cardsInHand.Count - 1; // index of the newly added card
-        CardDisplay cardDisplay = newCard.GetComponent<CardDisplay>();
-        newCard.GetComponent<CardDisplay>().UpdatecardDisplay();
-        
-        UpdateHandVisuals();
+        Debug.LogWarning("Hand is full! Cannot add more than 5 cards.");
     }
+    
+    private void Start()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            deckManager.DrawCard(this);
+        }
+    }
+
+
+
     
     public void DiscardCard(int cardIndex)
     {
-        if (cardIndex < 0 || cardIndex >= cardsInHand.Count)
+        if (cardIndex < 0 || cardIndex >= cardsInHand.Length)
         {
-            Debug.LogWarning("Invalid card index to discard.");
+            Debug.LogWarning("Invalid slot index.");
             return;
         }
 
+        if (cardsInHand[cardIndex] == null)
+        {
+            Debug.Log("Slot " + cardIndex + " is already empty.");
+            return;
+        }
+
+        // Safely clear the reference before destroying
         GameObject cardToRemove = cardsInHand[cardIndex];
-        cardsInHand.RemoveAt(cardIndex);
+        cardsInHand[cardIndex] = null; // Clear it first!
+
         Destroy(cardToRemove);
 
-        UpdateHandVisuals();
-
         pokerHandManager?.EvaluateHandAndApplyBuffs();
-
-        // Draw a new card
-        deckManager.DrawCard(this);
     }
+
+
 
 
     void Update()
     {
-        UpdateHandVisuals();
-
-        if (Input.GetKeyDown(KeyCode.Q)) // Example: discard card at index 0
-        {
-            DiscardCard(0);
-        }
+        if (Input.GetKeyDown(KeyCode.Q)) DiscardCard(0);
+        if (Input.GetKeyDown(KeyCode.W)) DiscardCard(1);
+        if (Input.GetKeyDown(KeyCode.E)) DiscardCard(2);
+        if (Input.GetKeyDown(KeyCode.R)) DiscardCard(3);
+        if (Input.GetKeyDown(KeyCode.T)) DiscardCard(4);
     }
 
-
-    private void UpdateHandVisuals()
-    {
-        int cardCount = cardsInHand.Count;
-
-        if (cardCount == 1)
-        {
-            cardsInHand[0].transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            cardsInHand[0].transform.localPosition = new Vector3(0f, 0f, 0f);
-            return;
-        }
-
-        for (int i = 0; i < cardCount; i++)
-        {
-            float rotationAngle = (fanSpread * (i - (cardCount - 1) / 2f));
-            cardsInHand[i].transform.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
-
-            float horizontalOffset = (cardSpacing * (i - (cardCount - 1) / 2f));
-
-            float normalizedPosition = (2f * i / (cardCount - 1) - 1f); //Normalize card position between -1 and 1
-            float verticalOffset = verticalSpacing * (1 - normalizedPosition * normalizedPosition);
-
-            //Set card position
-            cardsInHand[i].transform.localPosition = new Vector3(horizontalOffset, verticalOffset, 0f);
-        }
-    }
+    
 
     public List<CardInformation> GetCurrentHand()
     {
@@ -104,13 +111,17 @@ public class HandManager : MonoBehaviour
 
         foreach (GameObject card in cardsInHand)
         {
-            CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
-            if (cardDisplay != null && cardDisplay.cardData != null)
+            if (card != null)
             {
-                handData.Add(cardDisplay.cardData);
+                CardDisplay display = card.GetComponent<CardDisplay>();
+                if (display != null && display.cardData != null)
+                {
+                    handData.Add(display.cardData);
+                }
             }
         }
-        
+
         return handData;
     }
+
 }

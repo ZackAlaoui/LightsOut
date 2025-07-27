@@ -8,11 +8,15 @@ public class DeckManager : MonoBehaviour
     public List<CardInformation> allCards = new List<CardInformation>();
 
     private int currentIndex = 0;
+    
 
     void Start()
     {
         //Load all card assets
         CardInformation[] cards = Resources.LoadAll<CardInformation>("Cards");
+
+        // --- ADD THIS LINE ---
+        Debug.Log($"Found {cards.Length} cards in Resources/Cards folder.");
 
         //Add the loaded cards to the allCards list
         allCards.AddRange(cards);
