@@ -12,7 +12,7 @@ public class TransitionManager : MonoBehaviour
     public CanvasGroup loadingCanvasGroup;
 
     public GameObject obj;
-    public GameObject levelLoader;
+
     public float transitionTime = 1f;                                       //Transition Time
 
     //Create a singleton so we can only have one instance of the transition manager
@@ -22,13 +22,6 @@ public class TransitionManager : MonoBehaviour
         if (instance != null && instance != this)
         {
             Destroy(gameObject); // Prevent duplicates
-            return;
-        }
-
-        levelLoader = GameObject.Find("LevelLoader");
-        if (levelLoader == null)
-        {
-            Debug.LogError("LevelLoader GameObject not found in the scene.");
             return;
         }
 
