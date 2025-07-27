@@ -68,7 +68,6 @@ namespace Game
 					Destroy(battery.gameObject);
 				}
 			}
-
 			BatteryList = new();
 		}
 	}
