@@ -28,6 +28,7 @@ namespace Game.Player
             get => _remainingBatteryLife;
             set
             {
+                if (_remainingBatteryLife == 0 && value > 0) IsEnabled = true;
                 _remainingBatteryLife = Math.Clamp(value, 0, _baseMaxBattery * MaxBatteryLifeMultiplier);
                 _batteryLifeSlider.value = _remainingBatteryLife;
             }
