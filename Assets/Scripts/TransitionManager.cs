@@ -8,7 +8,7 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager instance { get; private set; }          //Singleton Instance variable
     public Animator transition;                                             //Animator Component
-
+    public GameObject levelLoader;
     public CanvasGroup loadingCanvasGroup;
 
     public GameObject obj;
@@ -22,6 +22,13 @@ public class TransitionManager : MonoBehaviour
         if (instance != null && instance != this)
         {
             Destroy(gameObject); // Prevent duplicates
+            return;
+        }
+
+        levelLoader = GameObject.Find("LevelLoader");
+        if (levelLoader == null)
+        {
+            Debug.LogError("LevelLoader GameObject not found in the scene.");
             return;
         }
 
@@ -39,12 +46,17 @@ public class TransitionManager : MonoBehaviour
     //     //This gets the current build index from the build settings and adds 1
     //     //to the current buildIndex to go to the next scene.
     //     Debug.Log("Button Clicked in LoadNextLevel function");
+    //     levelLoader.SetActive(true);
     //     StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     // }
 
 
     public static IEnumerator LoadLevel(string name)
     {
+        instance.transition.enabled = true;       // Enable the animator to start the transition
+
+        instance.transition.Play("Idle", 0, 0f); // or "DefaultState"
+
         //Play Animation
         instance.transition.SetTrigger("Start");
 
@@ -54,10 +66,9 @@ public class TransitionManager : MonoBehaviour
         //Load Scene
         AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(name);
         while (!loadingOperation.isDone) yield return null; // wait until scene has loaded
-        instance.transition.enabled = false;
-        instance.HideLoadingUI();
+        instance.HideLoadingUI();              // Hide canvas group
+        instance.transition.enabled = false;   // Optional: stop animator from doing anything else
     }
-
 
     public void HideLoadingUI()
     {
