@@ -1,7 +1,8 @@
+// Attach this script to your tilemap GameObject
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Tilemap3DColliderGenerator : MonoBehaviour
+public class Walls : MonoBehaviour
 {
     public Tilemap tilemap;
 
@@ -17,20 +18,13 @@ public class Tilemap3DColliderGenerator : MonoBehaviour
                 TileBase tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    Vector3Int cellPos = new Vector3Int(x + bounds.x, y + bounds.y, 0);
-                    Vector3 worldPos = tilemap.CellToWorld(cellPos);
-                    
-                    // Offset to center of the tile
-                    Vector3 offset = tilemap.cellSize / 2;
-                    worldPos += offset;
-
-                    // Create box at tile position
-                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    cube.transform.position = worldPos;
-                    cube.transform.localScale = tilemap.cellSize;
-
-                    // Optional: organize in hierarchy
-                    cube.transform.parent = this.transform;
+                    Vector3Int tilePos = new Vector3Int(x + bounds.x, y + bounds.y, 0);
+                    Vector3 worldPos = tilemap.CellToWorld(tilePos);
+                    GameObject colliderObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    colliderObj.transform.position = worldPos + tilemap.cellSize / 2 - new Vector3(0.5f, 0f, 0.5f);
+                    colliderObj.transform.localScale = tilemap.cellSize * 3f;
+                    // Make the collider invisible by removing the renderer
+                    DestroyImmediate(colliderObj.GetComponent<Renderer>());
                 }
             }
         }
