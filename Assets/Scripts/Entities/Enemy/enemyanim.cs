@@ -1,22 +1,22 @@
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class enemyanim : MonoBehaviour
 {
-
-    Rigidbody rb;
-    Animator animator;
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Animator _animator;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        if (_agent == null) _agent = GetComponentInChildren<NavMeshAgent>();
+        if (_animator == null) _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        rb.linearVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        animator.SetFloat("xVelocity", rb.linearVelocity.x);
-        animator.SetFloat("zVelocity", rb.linearVelocity.z);
-    }
+        _animator.SetFloat("xVelocity", _agent.velocity.x);
+        _animator.SetFloat("zVelocity", _agent.velocity.z);
+	}
 }
