@@ -1,6 +1,6 @@
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
+using Game;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
     public void OnButtonClick()
     {
         Debug.Log("Button Clicked and we are in the OnButtonClick function.");
-        TransitionManager.instance.LoadNextLevel();
+        GameManager.StartGame();
     }
 
 

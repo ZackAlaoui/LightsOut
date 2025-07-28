@@ -58,6 +58,20 @@ namespace Game
         {
             DontDestroyOnLoad(gameObject);
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("FirstMap")) StartGame();
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
+            {
+                EnemyManager.BuildNavMeshes();
+                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                BatteryManager.SpawnBatteries(5);
+            }
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("EnemyShowcase"))
+            {
+                EnemyManager.BuildNavMeshes();
+                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
+                BatteryManager.SpawnBatteries(7);
+            }
         }
 
         public static void StartGame()
@@ -76,8 +90,7 @@ namespace Game
                 case 1:
                     if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("FirstMap"))
                     {
-                        AsyncOperation loadingScene = SceneManager.LoadSceneAsync("FirstMap");
-                        while (!loadingScene.isDone) yield return null;
+                        yield return TransitionManager.LoadLevel("FirstMap");
                     }
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
@@ -94,19 +107,34 @@ namespace Game
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
-                    // await async method from TransitionManager?
+                    // Dungeon
                     break;
                 case 5:
+                    // FirstMap
                     break;
                 case 6:
+                    // FirstMap
                     break;
                 case 7:
+                    // FirstMap
                     break;
                 case 8:
+                    // Dungeon
                     break;
                 case 9:
+                    // FirstMap
                     break;
                 case 10:
+                    // FirstMap
+                    break;
+                case 11:
+                    // FirstMap
+                    break;
+                case 12:
+                    // Dungeon
+                    break;
+                case 13:
+                    // BossFight
                     break;
                 default:
                     break;

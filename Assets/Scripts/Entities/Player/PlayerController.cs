@@ -9,17 +9,21 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        private bool _isSprinting = false;
+        [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
+
         [SerializeField] private float _baseMovementSpeed = 7f;     //Base movement speed of the player
-        public float MovementSpeedMultiplier { get; set; }          //Multiplier for the movement speed
+        public float MovementSpeedMultiplier { get; set; } = 1f;    //Multiplier for the movement speed
 
         [SerializeField] private GameObject _model;                 //Model of the player
+        [SerializeField] private Animator _animator;
 
         [SerializeField] private float _baseDamage = 5;             //Base damage dealt by the player
         [SerializeField] private LineRenderer line;                 //Line renderer for the player's attack
-        public float DamageMultiplier { get; set; }                 //Multiplier for the damage dealt by the player
+        public float DamageMultiplier { get; set; } = 1f;           //Multiplier for the damage dealt by the player
 
         [SerializeField] private float _baseMaxHealth = 5f;         //Base maximum health of the player
-        public float MaxHealthMultiplier { get; set; }              //Multiplier for the maximum health of the player
+        public float MaxHealthMultiplier { get; set; } = 1f;        //Multiplier for the maximum health of the player
         private float _health;
         public float Health
         {
@@ -41,7 +45,6 @@ namespace Game.Player
         private InputAction _moveAction;
         private InputAction _lookAction;
         private InputAction _fireAction;
-        private InputAction _toggleFlashlightAction;
 
         private Vector3 _aimingAt;
 
@@ -51,27 +54,12 @@ namespace Game.Player
             Flashlight.RemainingBatteryLife -= damage;
         }
 
-        //[SerializeField] private LineRenderer line; // TEMPORARY
-        private void Fire()
-        {
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
-            line.startWidth = line.endWidth = 0.05f;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
-
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
-            {
-                line.SetPosition(1, hit.point);
-                IDamageable target = hit.collider.GetComponent<IDamageable>();
-                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
-            }
-        }
-
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
-            if (_model == null) _model = transform.Find("Model").gameObject;
+            if (_model == null) _model = transform.Find("Sprite").gameObject;
+            if (_animator == null) _animator = GetComponentInChildren<Animator>();
 
             Flashlight = GetComponentInChildren<FlashlightManager>();
 
@@ -79,16 +67,10 @@ namespace Game.Player
             _moveAction = InputSystem.actions.FindAction("Move");
             _lookAction = InputSystem.actions.FindAction("Look");
             _fireAction = InputSystem.actions.FindAction("Fire");
-            _toggleFlashlightAction = InputSystem.actions.FindAction("Toggle Flashlight");
 
             _aimingAt = transform.position + Vector3.forward;
 
-            _toggleFlashlightAction.performed += (InputAction.CallbackContext context) => Flashlight.Toggle(context);
-            _fireAction.performed += (InputAction.CallbackContext context) => Fire();
-
-            MovementSpeedMultiplier = 1;
-            DamageMultiplier = 1;
-            MaxHealthMultiplier = 1;
+            _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
         }
@@ -115,6 +97,8 @@ namespace Game.Player
             }
 
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
+            _animator.SetFloat("xVelocity", moveDirection.x);
+            _animator.SetFloat("zVelocity", moveDirection.y);
             Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
             _controller.Move(velocity * Time.deltaTime);
 
@@ -137,7 +121,13 @@ namespace Game.Player
             _aimingAt.y = 1f;
 
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
+
+            if (_isSprinting && Flashlight.IsEnabled && Flashlight.RemainingBatteryLife > 0)
+            {
+                Flashlight.RemainingBatteryLife -= _sprintBatteryDrainRate * Time.deltaTime;
+            }
         }
+
 
         private void OnDestroy()
         {
@@ -149,7 +139,7 @@ namespace Game.Player
         {
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, 1f);
             line.SetPosition(0, transform.position);
-            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
+            line.SetPosition(1, transform.position + 100f * (_aimingAt - transform.position).normalized);
 
             if (Physics.BoxCast(transform.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - transform.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
@@ -165,11 +155,54 @@ namespace Game.Player
             //If the object that we collide with has a tag of LevelPortal then we will go to the new scene
             if (other.gameObject.tag == "LevelPortal")
             {
-                TransitionManager.instance.LoadNextLevel();
+                // TransitionManager.instance.LoadNextLevel();
                 //load into a new scene
                 //SceneManager.LoadScene(2); // Assuming scene index 2 is the next level
             }
         }
 
+    
+        
+        private InputAction _runAction;
+
+        private void OnEnable()
+        {
+            if (_runAction == null)
+            {
+                _runAction = InputSystem.actions.FindAction("Sprint");
+                if (_runAction != null)
+                {
+                    _runAction.performed += OnRunPerformed;
+                    _runAction.canceled += OnRunCanceled;
+                    _runAction.Enable();
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_runAction != null)
+            {
+                _runAction.performed -= OnRunPerformed;
+                _runAction.canceled -= OnRunCanceled;
+                _runAction.Disable();
+            }
+        }
+
+        private void OnRunPerformed(InputAction.CallbackContext context)
+        {
+            MovementSpeedMultiplier = 2f;
+            _isSprinting = true;
+        }
+
+        private void OnRunCanceled(InputAction.CallbackContext context)
+        {
+            MovementSpeedMultiplier = 1f;
+            _isSprinting = false;
+        }
+
     }
+
+
+
 }

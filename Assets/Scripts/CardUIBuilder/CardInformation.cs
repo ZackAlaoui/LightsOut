@@ -18,13 +18,14 @@ namespace CardData
             Brains,
             Bones,
             Blood,
-            RottenFlesh
+            RottenFlesh,
+            Void
         }
 
         public enum CardUsageType
         {
-            Cooldown,
-            SingleUse
+            Active,
+            Passive
         }
 
     }

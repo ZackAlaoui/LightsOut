@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CardData;
+using Game.Player;
 
 public class HandManager : MonoBehaviour
 {
     public PokerHandManager pokerHandManager;
     public DeckManager deckManager;
-    public GameObject cardPrefab; //Assign card prefab in inspector
-    public Transform handTransform; //Root of the hand position
+    public GameObject cardPrefab;
+    public Transform handTransform;
     public float fanSpread = 5f;
     public float cardSpacing = 100f;
     public float verticalSpacing = 100f;
+
     private GameObject[] cardsInHand = new GameObject[5];
     public RectTransform[] cardSlots = new RectTransform[5];
-    //Hold a list of the card objects in our hand
-    
+
+    // Track passive cards separately
+    private List<int> passiveCardIndexes = new List<int>();
 
     public void AddCardToHand(CardInformation cardData)
     {
@@ -24,30 +27,29 @@ public class HandManager : MonoBehaviour
             if (cardsInHand[i] == null)
             {
                 GameObject newCard = Instantiate(cardPrefab);
-
-// Parent it correctly without messing up world position
                 newCard.transform.SetParent(cardSlots[i], false);
 
-// Now stretch to fill the slot
                 RectTransform rt = newCard.GetComponent<RectTransform>();
                 rt.anchorMin = Vector2.zero;
                 rt.anchorMax = Vector2.one;
                 rt.offsetMin = Vector2.zero;
                 rt.offsetMax = Vector2.zero;
-                rt.localScale = Vector3.one; // reset any scale issues
+                rt.localScale = Vector3.one;
 
                 cardsInHand[i] = newCard;
 
-
-                // Set the card data for CardDisplay
                 CardDisplay display = newCard.GetComponent<CardDisplay>();
                 display.cardData = cardData;
                 display.UpdatecardDisplay();
 
-                // Set the card data for CardAbilityUI
                 CardAbilityUI ui = newCard.GetComponent<CardAbilityUI>();
-                if (ui != null)
-                    ui.SetCard(cardData);
+                if (ui != null) ui.SetCard(cardData);
+
+                // Track passive cards
+                if (cardData.usageType.Contains(CardInformation.CardUsageType.Passive))
+                {
+                    passiveCardIndexes.Add(i);
+                }
 
                 pokerHandManager?.EvaluateHandAndApplyBuffs();
                 return;
@@ -56,7 +58,7 @@ public class HandManager : MonoBehaviour
 
         Debug.LogWarning("Hand is full! Cannot add more than 5 cards.");
     }
-    
+
     private void Start()
     {
         for (int i = 0; i < 5; i++)
@@ -65,9 +67,6 @@ public class HandManager : MonoBehaviour
         }
     }
 
-
-
-    
     public void DiscardCard(int cardIndex)
     {
         if (cardIndex < 0 || cardIndex >= cardsInHand.Length)
@@ -82,29 +81,59 @@ public class HandManager : MonoBehaviour
             return;
         }
 
-        // Safely clear the reference before destroying
         GameObject cardToRemove = cardsInHand[cardIndex];
-        cardsInHand[cardIndex] = null; // Clear it first!
+        cardsInHand[cardIndex] = null;
+        passiveCardIndexes.Remove(cardIndex); // Remove from passive list if it was there
 
         Destroy(cardToRemove);
-
         pokerHandManager?.EvaluateHandAndApplyBuffs();
     }
 
-
-
-
     void Update()
     {
+        // 🔹 Manual activation only if NOT passive
         for (int i = 0; i < cardsInHand.Length; i++)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            if (cardsInHand[i] == null) continue;
+
+            CardDisplay display = cardsInHand[i].GetComponent<CardDisplay>();
+            if (display != null && !display.cardData.usageType.Contains(CardInformation.CardUsageType.Passive))
             {
-                Debug.Log($"Key {(KeyCode.Alpha1 + i)} pressed - activating card index {i}");
-                ActivateCard(i);
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                {
+                    Debug.Log($"Key {(KeyCode.Alpha1 + i)} pressed - activating card index {i}");
+                    ActivateCard(i);
+                }
             }
         }
-        
+
+        // 🔹 Passive card condition monitoring (example: "Last Light")
+        foreach (int index in passiveCardIndexes.ToArray()) // clone list to avoid mod error
+        {
+            GameObject card = cardsInHand[index];
+            if (card == null) continue;
+
+            CardDisplay display = card.GetComponent<CardDisplay>();
+            if (display == null) continue;
+
+            CardInformation cardData = display.cardData;
+
+            if (cardData.cardName == "Last Light") // Example passive
+            {
+                PlayerController player = FindObjectOfType<PlayerController>();
+                if (player != null && player.Flashlight.RemainingBatteryLife <= 2f)
+                {
+                    Debug.Log("Passive Trigger: Last Light activated");
+                    player.Flashlight.RemainingBatteryLife = 30f;
+                    DiscardCard(index);
+                    break; // exit so we don't change collection while iterating
+                }
+            }
+
+            // Add more passive conditions here if needed
+        }
+
+        // Discard keys
         if (Input.GetKeyDown(KeyCode.Q)) DiscardCard(0);
         if (Input.GetKeyDown(KeyCode.W)) DiscardCard(1);
         if (Input.GetKeyDown(KeyCode.E)) DiscardCard(2);
@@ -112,27 +141,21 @@ public class HandManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T)) DiscardCard(4);
     }
 
-    
-
     public List<CardInformation> GetCurrentHand()
     {
         List<CardInformation> handData = new List<CardInformation>();
-
         foreach (GameObject card in cardsInHand)
         {
             if (card != null)
             {
                 CardDisplay display = card.GetComponent<CardDisplay>();
                 if (display != null && display.cardData != null)
-                {
                     handData.Add(display.cardData);
-                }
             }
         }
-
         return handData;
     }
-    
+
     public void ActivateCard(int index)
     {
         if (index < 0 || index >= cardsInHand.Length) return;
@@ -140,13 +163,23 @@ public class HandManager : MonoBehaviour
         GameObject card = cardsInHand[index];
         if (card == null) return;
 
+        CardDisplay display = card.GetComponent<CardDisplay>();
+        if (display == null) return;
+
+        if (display.cardData.usageType.Contains(CardInformation.CardUsageType.Passive))
+        {
+            Debug.Log("Cannot activate passive card manually.");
+            return;
+        }
+
         CardAbilityUI abilityUI = card.GetComponent<CardAbilityUI>();
         if (abilityUI != null)
-        {
             abilityUI.StartCooldown();
-            Debug.Log($"Activated card in slot {index + 1}: {card.GetComponent<CardDisplay>().cardData.cardName}");
-        }
+
+        AbilityManager abilityManager = FindObjectOfType<AbilityManager>();
+        if (abilityManager != null)
+            abilityManager.ActivateAbility(display.cardData.cardName);
+
+        Debug.Log($"Activated card in slot {index + 1}: {display.cardData.cardName}");
     }
-
-
 }
