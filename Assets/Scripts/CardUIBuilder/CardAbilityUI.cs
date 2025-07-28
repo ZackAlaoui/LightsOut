@@ -7,7 +7,7 @@ public class CardAbilityUI : MonoBehaviour
     [Header("UI Elements")]
     public Color unavailableColor;
     public GameObject durationBar; // Assigned via Inspector
-    public Image backgroundImage;  // 🟡 Assign this in Inspector
+    public Image backgroundImage;  // Assign in Inspector
 
     private bool abilityActive = false;
     private float currentDuration = 0f;
@@ -16,7 +16,6 @@ public class CardAbilityUI : MonoBehaviour
 
     private void Awake()
     {
-        // Make sure the bar is hidden at first
         if (durationBar != null)
             durationBar.SetActive(false);
         else
@@ -29,23 +28,34 @@ public class CardAbilityUI : MonoBehaviour
     public void SetCard(CardInformation info)
     {
         cardInfo = info;
-        currentDuration = cardInfo.cooldownDuration;
 
-        if (backgroundImage != null)
+        if (cardInfo.usageType.Contains(CardInformation.CardUsageType.Passive))
         {
-            originalColor = backgroundImage.color;
+            if (durationBar != null)
+                durationBar.SetActive(false);
+
+            UpdateImage(true); // Passive cards are always shown as available
+        }
+        else
+        {
+            currentDuration = cardInfo.cooldownDuration;
+
+            if (backgroundImage != null)
+                originalColor = backgroundImage.color;
         }
     }
 
     public void StartCooldown()
     {
-        Debug.Log("StartCooldown() called");
+        if (cardInfo == null) return;
 
-        if (cardInfo == null)
+        if (cardInfo.usageType.Contains(CardInformation.CardUsageType.Passive))
         {
-            Debug.LogWarning("StartCooldown called, but cardInfo is null!");
+            Debug.Log($"Cooldown skipped for passive card: {cardInfo.cardName}");
             return;
         }
+
+        Debug.Log("StartCooldown() called");
 
         abilityActive = true;
         currentDuration = cardInfo.cooldownDuration;
@@ -72,7 +82,8 @@ public class CardAbilityUI : MonoBehaviour
 
     private void Update()
     {
-        if (!abilityActive || cardInfo == null) return;
+        if (cardInfo == null || cardInfo.usageType.Contains(CardInformation.CardUsageType.Passive)) return;
+        if (!abilityActive) return;
 
         currentDuration -= Time.deltaTime;
         float fill = Mathf.Clamp01(currentDuration / cardInfo.cooldownDuration);

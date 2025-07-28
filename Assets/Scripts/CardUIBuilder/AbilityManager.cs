@@ -8,35 +8,24 @@ public class AbilityManager : MonoBehaviour
     private FlashlightManager _flashlight;
     
     
-    void Start()
+    private IEnumerator Start()
     {
-        _player = GetComponent<PlayerController>();
+        yield return null; // wait one frame
 
+        _player = FindObjectOfType<PlayerController>();
         if (_player == null)
         {
-            Debug.LogError("PlayerController not found on AbilityManager GameObject!");
-            return;
+            Debug.LogError("PlayerController not found.");
+            yield break;
         }
 
         _flashlight = _player.Flashlight;
-
         if (_flashlight == null)
         {
             Debug.LogError("FlashlightManager is null! Make sure it's attached to a child of the Player.");
         }
     }
-
-
     
-    
-
-    private void Awake()
-    {
-        _player = FindObjectOfType<PlayerController>();
-        if (_player == null) Debug.LogError("PlayerController not found.");
-        _flashlight = _player.Flashlight;
-    }
-
     public void ActivateAbility(string cardName)
     {
         switch (cardName)
