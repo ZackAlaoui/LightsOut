@@ -61,7 +61,7 @@ namespace Game.Enemy
 		{
 			if (_navMeshUpdate == null || _navMeshUpdate.isDone && _timeSinceUpdate >= 1f)
 			{
-				_navMeshUpdate = s_ghostNavMeshSurface.UpdateNavMesh(s_ghostNavMeshSurface.navMeshData);
+				if (s_ghostNavMeshSurface != null && s_ghostNavMeshSurface.navMeshData != null) _navMeshUpdate = s_ghostNavMeshSurface.UpdateNavMesh(s_ghostNavMeshSurface.navMeshData);
 				_timeSinceUpdate = 0f;
 			}
 			else

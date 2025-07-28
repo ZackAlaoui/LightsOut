@@ -34,27 +34,28 @@ public class TransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Persist across scenes
     }
 
-    public void LoadNextLevel()
-    {
-        //This gets the current build index from the build settings and adds 1
-        //to the current buildIndex to go to the next scene.
-        Debug.Log("Button Clicked in LoadNextLevel function");
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
-    }
+    // public void LoadNextLevel()
+    // {
+    //     //This gets the current build index from the build settings and adds 1
+    //     //to the current buildIndex to go to the next scene.
+    //     Debug.Log("Button Clicked in LoadNextLevel function");
+    //     StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    // }
 
 
-    IEnumerator LoadLevel(int levelIndex)
+    public static IEnumerator LoadLevel(string name)
     {
         //Play Animation
-        transition.SetTrigger("Start");
+        instance.transition.SetTrigger("Start");
 
         //Wait     
-        yield return new WaitForSeconds(transitionTime);
+        yield return new WaitForSeconds(instance.transitionTime);
 
         //Load Scene
-        SceneManager.LoadScene(levelIndex);
-        transition.enabled = false;
-        HideLoadingUI();
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(name);
+        while (!loadingOperation.isDone) yield return null; // wait until scene has loaded
+        instance.transition.enabled = false;
+        instance.HideLoadingUI();
     }
 
 
