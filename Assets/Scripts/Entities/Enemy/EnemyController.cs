@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using Game.Enemy.Behavior;
 using Game.Entity;
 using System;
+using UnityEngine.UI;
 
 namespace Game.Enemy
 {
@@ -10,39 +11,47 @@ namespace Game.Enemy
     {
         public abstract EnemyManager.EnemyType Type { get; }
 
-        [SerializeField]
-        private NavMeshAgent _agent;
+        [SerializeField] private NavMeshAgent _agent;
         public NavMeshAgent Agent
         {
             get => _agent;
             private set => _agent = value;
         }
 
-        [SerializeField] protected float _maxHealth = 10;
-        protected float _health;
+        [SerializeField] protected float maxHealth = 10;
+        protected float health;
         public float Health
         {
-            get => _health;
+            get => health;
             set
             {
-                _health = Math.Clamp(value, 0, _maxHealth);
+                health = Math.Clamp(value, 0, maxHealth);
             }
         }
         public bool CanBeDamaged { get; set; }
+
+        [SerializeField] private Slider _healthSlider;
 
         protected BehaviorTree BehaviorTree { get; set; }
 
         public virtual void Damage(MonoBehaviour source, float damage)
         {
-            if (CanBeDamaged) Health -= damage;
+            if (CanBeDamaged)
+            {
+                Health -= damage;
+                _healthSlider.value = health;
+            }
         }
 
         protected virtual void Awake()
         {
             if (Agent == null) Agent = GetComponent<NavMeshAgent>();
+            if (_healthSlider == null) _healthSlider = transform.Find("HealthBar").GetComponent<Slider>();
 
-            _health = _maxHealth;
+            health = maxHealth;
             CanBeDamaged = false;
+
+            _healthSlider.value = _healthSlider.maxValue = Health;
         }
 
         protected virtual void Update()
