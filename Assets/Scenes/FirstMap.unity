@@ -3800,7 +3800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3274640288372934325, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
       propertyPath: m_text
-      value: 
+      value: Loading...
       objectReference: {fileID: 0}
     - target: {fileID: 3417178527434920588, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
       propertyPath: m_Layer
@@ -10644,6 +10644,10 @@ PrefabInstance:
     - target: {fileID: 463884301497142544, guid: 88fa563611f728647ab07dc32a41834b, type: 3}
       propertyPath: m_TagString
       value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122251664737308075, guid: 88fa563611f728647ab07dc32a41834b, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1122251664737308075, guid: 88fa563611f728647ab07dc32a41834b, type: 3}
       propertyPath: ShapeModule.m_Texture

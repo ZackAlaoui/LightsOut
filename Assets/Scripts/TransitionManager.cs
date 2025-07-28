@@ -51,11 +51,11 @@ public class TransitionManager : MonoBehaviour
     }
 
 
-    IEnumerator LoadLevel(int levelIndex)
+    public IEnumerator LoadLevel(int levelIndex)
     {
         transition.enabled = true;       // Enable the animator to start the transition
 
-        transition.Play("Idle", -1, 0f); // or "DefaultState"
+        transition.Play("Idle", 0, 0f); // or "DefaultState"
 
         //Play Animation
         transition.SetTrigger("Start");
