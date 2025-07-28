@@ -24,7 +24,7 @@ public class Walls : MonoBehaviour
                     colliderObj.transform.position = worldPos + tilemap.cellSize / 2 - new Vector3(0.5f, 0f, 0.5f);
                     colliderObj.transform.localScale = tilemap.cellSize * 3f;
                     // Make the collider invisible by removing the renderer
-                    DestroyImmediate(colliderObj.GetComponent<Renderer>());
+                    //DestroyImmediate(colliderObj.GetComponent<Renderer>());
                 }
             }
         }
