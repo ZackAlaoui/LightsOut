@@ -53,7 +53,6 @@ namespace Game.Enemy
 
 			DefaultNavMeshSurface = Instantiate(s_instance._defaultNavMeshSurfacePrefab, transform);
 			s_ghostNavMeshSurface = Instantiate(s_instance._ghostNavMeshSurfacePrefab, transform);
-			Debug.Log(s_ghostNavMeshSurface);
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
