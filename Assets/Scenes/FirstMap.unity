@@ -10202,14 +10202,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8392661795103155112, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
-      propertyPath: gun
-      value: 
-      objectReference: {fileID: 454639729}
-    - target: {fileID: 8392661795103155112, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
-      propertyPath: bulletSpawn
-      value: 
-      objectReference: {fileID: 1673617064}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
