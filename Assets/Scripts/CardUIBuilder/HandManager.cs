@@ -27,6 +27,7 @@ public class HandManager : MonoBehaviour
     private void Awake()
     {
         _player = PlayerController.Instance;
+        deckManager = DeckManager.Instance;
     }
 
 

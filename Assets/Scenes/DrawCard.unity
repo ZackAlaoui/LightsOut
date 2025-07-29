@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 137063663}
   - component: {fileID: 137063664}
   - component: {fileID: 137063666}
+  - component: {fileID: 137063667}
   m_Layer: 0
   m_Name: DrawCard
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 137063661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd6a35a4643b824a8b1f358385b9eaa, type: 3}
+  m_Script: {fileID: 11500000, guid: 372efd15e2c6d4d43a28be3ef5523bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardSlots:
@@ -242,8 +243,8 @@ MonoBehaviour:
   hotbarHeight: 120
   hotbarCardScale: 0.8
   hotbarCardSpacing: 15
-  hotbarBackgroundColor: {r: 0.1, g: 0.1, b: 0.15, a: 0}
-  hotbarBorderColor: {r: 0.3, g: 0.3, b: 0.4, a: 0}
+  hotbarBackgroundColor: {r: 0.1, g: 0.1, b: 0.15, a: 0.9}
+  hotbarBorderColor: {r: 0.3, g: 0.3, b: 0.4, a: 0.8}
   playerHand: []
   selectedHotbarCardIndex: -1
   isSwapMode: 0
@@ -316,8 +317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokerHandManager: {fileID: 0}
-  deckManager: {fileID: 0}
-  cardPrefab: {fileID: 0}
+  deckManager: {fileID: 137063667}
+  cardPrefab: {fileID: 6953982017557780813, guid: 2fdedd9acb6fac24aa417cbc20928527, type: 3}
   handTransform: {fileID: 0}
   fanSpread: 5
   cardSpacing: 100
@@ -328,6 +329,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &137063667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137063661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2440bde084070e41a06ed241cae636d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allCards: []
 --- !u!1 &391422443
 GameObject:
   m_ObjectHideFlags: 0

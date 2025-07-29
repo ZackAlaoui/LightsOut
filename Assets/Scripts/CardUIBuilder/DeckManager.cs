@@ -5,21 +5,20 @@ using CardData;
 
 public class DeckManager : MonoBehaviour
 {
-    public static DeckManager Instance;
+    private int currentIndex = 0; // Index for the next card to draw
     public List<CardInformation> allCards = new List<CardInformation>();
 
-    private int currentIndex = 0;
+    public static DeckManager Instance { get; private set; }
+
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(gameObject); // Optional: Enforce singleton
+            return;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-            
+
+        Instance = this;
     }
  
  
