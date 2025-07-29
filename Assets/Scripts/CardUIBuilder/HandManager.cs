@@ -15,18 +15,18 @@ public class HandManager : MonoBehaviour
     public float cardSpacing = 100f;
     public float verticalSpacing = 100f;
 
-    private GameObject[] cardsInHand = new GameObject[5];
-    public RectTransform[] cardSlots = new RectTransform[5];
+    private GameObject[] cardsInHand = new GameObject[5];               // Number of cards in hand
+    public RectTransform[] cardSlots = new RectTransform[5];            // Number of slots in hand
 
     // Track passive cards separately
     private List<int> passiveCardIndexes = new List<int>();
     
-    private PlayerController _player;
+    private PlayerController _player;                                   //PlayerController reference
     private bool _slipstreamTriggered = false;
 
     private void Awake()
     {
-        _player = FindObjectOfType<PlayerController>();
+        _player = PlayerController.Instance;
     }
 
 

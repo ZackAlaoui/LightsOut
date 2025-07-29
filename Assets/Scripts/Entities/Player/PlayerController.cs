@@ -6,6 +6,7 @@ using Game.Entity;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
+using UnityEngine.Analytics;
 
 
 namespace Game.Player
@@ -15,7 +16,7 @@ namespace Game.Player
         Animator animator;
 
         AudioManager audioManager;
-        public TextMeshProUGUI spookyText; // Text to display spooky messages
+        public TextMeshPro spookyText; // Text to display spooky messages
         public float fadeDuration = 2f; // Duration for fading text
         private Coroutine fadeCoroutine; // Coroutine for fading text
         private bool _isSprinting = false;
@@ -30,19 +31,20 @@ namespace Game.Player
         [SerializeField] private float _baseDamage = 5;             //Base damage dealt by the player
         [SerializeField] private LineRenderer line;                 //Line renderer for the player's attack
         [SerializeField] private Transform bulletSpawn;              //Transform for the bullet spawn point
+        [SerializeField] private GameObject spookyTextObject;       // GameObject for spooky text
         public float DamageMultiplier { get; set; } = 1f;           //Multiplier for the damage dealt by the player
 
         [SerializeField] private float _baseMaxHealth = 5f;         //Base maximum health of the player
         public float MaxHealthMultiplier { get; set; } = 1f;        //Multiplier for the maximum health of the player
         public float MaxHealth => _baseMaxHealth * MaxHealthMultiplier;
         private float _health;
-        
+
         public float DamageResistanceMultiplier { get; set; } = 1f; // For Ivory Guard
         public bool IsInvincible { get; set; } = false;             // For Spinal Shield
 
         public delegate void PlayerHit();                           // For Fractured Payback
         public event PlayerHit OnHit;
-        
+
         public bool IsSprinting => _isSprinting;
 
 
@@ -115,6 +117,11 @@ namespace Game.Player
             _lookAction = InputSystem.actions.FindAction("Look");
             _fireAction = InputSystem.actions.FindAction("Fire");
 
+            if (_moveAction == null || _lookAction == null || _fireAction == null)
+            {
+                Debug.LogError("Input actions not found. Please ensure they are set up in the Input System.");
+                return;
+            }
             _aimingAt = transform.position + Vector3.forward;
 
             _fireAction.performed += Fire;
@@ -132,19 +139,28 @@ namespace Game.Player
                 GameManager.Unload();
                 return;
             }
+            if (spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Debug.Log("Spacebar pressed while spooky text is active!");
+                if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+
+                StartCoroutine(TransitionManager.LoadLevel("DrawCard"));
+                //spookyTextObject.SetActive(false); // Instantly disables the object
+            }
 
             if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard")
             {
-                return; // Do not update player in the dungeon scene
+                Health = MaxHealth; // Reset health in card shop or draw card scene
+                _healthBarSlider.gameObject.SetActive(false);
             }
             else if (Health < _baseMaxHealth * MaxHealthMultiplier)
             {
-                    _healthBarSlider.gameObject.SetActive(true);
-                    _healthBarSlider.value = Health;
+                _healthBarSlider.gameObject.SetActive(true);
+                _healthBarSlider.value = Health;
             }
             else
             {
-                    _healthBarSlider.gameObject.SetActive(false);
+                _healthBarSlider.gameObject.SetActive(false);
             }
 
 
@@ -187,7 +203,7 @@ namespace Game.Player
                 Flashlight.RemainingBatteryLife -= _sprintBatteryDrainRate * Time.deltaTime;
             }
         }
-        
+
         public void IncreaseBaseMaxHealth(float amount)
         {
             _baseMaxHealth += amount;
@@ -230,40 +246,45 @@ namespace Game.Player
 
             if (other.gameObject.tag == "MagicBook")
             {
+                spookyText = spookyTextObject.GetComponent<TextMeshPro>();
+                Debug.Log("Entered Magic Book Trigger");
                 // Cancel any ongoing fade-out and start fade-in
                 if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-                fadeCoroutine = StartCoroutine(FadeText(0f, 1f));   
+                fadeCoroutine = StartCoroutine(FadeText(0f, 1f));
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            
-            if (other.gameObject.tag != "MagicBook")
+            if (other.gameObject.tag == "MagicBook")
             {
-                GameObject.Find("SpookyText").SetActive(false);
+                if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+                spookyTextObject.SetActive(false); // Instantly disables the object
             }
         }
 
         public IEnumerator FadeText(float startAlpha, float endAlpha)
         {
             float time = 0f;
-            spookyText = GameObject.Find("SpookyText").GetComponent<TextMeshProUGUI>();
-            if (spookyText == null)
+
+            if (spookyTextObject == null)
             {
                 Debug.LogError("SpookyText not found in the scene.");
                 yield break; // Exit if the text is not found
             }
+
+            spookyTextObject.SetActive(true);
+            float alpha = 0f;
             while (time < fadeDuration)
             {
-                float alpha = Mathf.Lerp(startAlpha, endAlpha, time / fadeDuration);
+                alpha = Mathf.Lerp(startAlpha, endAlpha, time / fadeDuration);
                 spookyText.color = new Color(spookyText.color.r, spookyText.color.g, spookyText.color.b, alpha);
                 time += Time.deltaTime;
                 yield return null;
             }
             spookyText.color = new Color(spookyText.color.r, spookyText.color.g, spookyText.color.b, endAlpha);
         }
-        
+
         private InputAction _runAction;
 
         private void OnEnable()
@@ -303,7 +324,7 @@ namespace Game.Player
         }
 
     }
-    
+
 
 
 
