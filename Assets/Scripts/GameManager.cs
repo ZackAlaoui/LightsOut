@@ -108,7 +108,7 @@ namespace Game
                     break;
                 case 4:
                     //Transition to the dungeon scene
-                    yield return TransitionManager.LoadLevel("Dungeon");
+                    yield return TransitionManager.LoadLevel("CardShopDungeon");
                     //Set the player health to unlimited in the dungeon
                     PlayerController playerController = Game.Player.PlayerController.Instance;
                     playerController.Health = 5f; // Set to a high value for the dungeon
