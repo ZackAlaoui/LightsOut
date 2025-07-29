@@ -8,6 +8,7 @@ public class Walls : MonoBehaviour
 
     void Start()
     {
+        GameObject wallColliders = new GameObject("WallColliders");
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
 
@@ -23,6 +24,7 @@ public class Walls : MonoBehaviour
                     GameObject colliderObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     colliderObj.transform.position = worldPos + tilemap.cellSize / 2 - new Vector3(0.5f, 0f, 0.5f);
                     colliderObj.transform.localScale = tilemap.cellSize * 3f;
+                    colliderObj.transform.parent = wallColliders.transform;
                     // Make the collider invisible by removing the renderer
                     //DestroyImmediate(colliderObj.GetComponent<Renderer>());
                 }
