@@ -4,53 +4,41 @@ using UnityEngine;
 using CardData;
 using Game.Player;
 using Game.Enemy;
-using Unity.VisualScripting;
 
 public class HandManager : MonoBehaviour
 {
-    private static HandManager s_instance;
-
     public PokerHandManager pokerHandManager;
+    public DeckManager deckManager;
     public GameObject cardPrefab;
     public Transform handTransform;
     public float fanSpread = 5f;
     public float cardSpacing = 100f;
     public float verticalSpacing = 100f;
 
-    private GameObject[] cardsInHand = new GameObject[5];
-    public RectTransform[] cardSlots = new RectTransform[5];
+    private GameObject[] cardsInHand = new GameObject[5];               // Number of cards in hand
+    public RectTransform[] cardSlots = new RectTransform[5];            // Number of slots in hand
 
     // Track passive cards separately
     private List<int> passiveCardIndexes = new List<int>();
     
-    private PlayerController _player;
+    private PlayerController _player;                                   //PlayerController reference
     private bool _slipstreamTriggered = false;
 
     private void Awake()
     {
-        if (s_instance != null && s_instance != this)
-        {
-            Debug.LogWarning("HandManager has already been instantiated. Deleting duplicate HandManager.");
-            Destroy(gameObject);
-            return;
-        }
-        else
-        {
-            s_instance = this;
-        }
-
         _player = PlayerController.Instance;
+        deckManager = DeckManager.Instance;
     }
 
 
-    public static void AddCardToHand(CardInformation cardData)
+    public void AddCardToHand(CardInformation cardData)
     {
-        for (int i = 0; i < s_instance.cardsInHand.Length; i++)
+        for (int i = 0; i < cardsInHand.Length; i++)
         {
-            if (s_instance.cardsInHand[i] == null)
+            if (cardsInHand[i] == null)
             {
-                GameObject newCard = Instantiate(s_instance.cardPrefab);
-                newCard.transform.SetParent(s_instance.cardSlots[i], false);
+                GameObject newCard = Instantiate(cardPrefab);
+                newCard.transform.SetParent(cardSlots[i], false);
 
                 RectTransform rt = newCard.GetComponent<RectTransform>();
                 rt.anchorMin = Vector2.zero;
@@ -59,7 +47,7 @@ public class HandManager : MonoBehaviour
                 rt.offsetMax = Vector2.zero;
                 rt.localScale = Vector3.one;
 
-                s_instance.cardsInHand[i] = newCard;
+                cardsInHand[i] = newCard;
 
                 CardDisplay display = newCard.GetComponent<CardDisplay>();
                 display.cardData = cardData;
@@ -71,10 +59,10 @@ public class HandManager : MonoBehaviour
                 // Track passive cards
                 if (cardData.usageType.Contains(CardInformation.CardUsageType.Passive))
                 {
-                    s_instance.passiveCardIndexes.Add(i);
+                    passiveCardIndexes.Add(i);
                 }
 
-                s_instance.pokerHandManager?.EvaluateHandAndApplyBuffs();
+                pokerHandManager?.EvaluateHandAndApplyBuffs();
                 return;
             }
         }
@@ -86,7 +74,7 @@ public class HandManager : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            DeckManager.DrawCard(this);
+            deckManager.DrawCard(this);
         }
     }
 
@@ -145,24 +133,24 @@ public class HandManager : MonoBehaviour
             switch (name)
             {
                 case "Last Light":
-                    if (_player != null && _player.Flashlight.RemainingBatteryLife <= 2f)
+                    if (_player.Flashlight.RemainingBatteryLife <= 2f)
                         triggered = true;
                     break;
 
                 case "Decay Bloom":
-                    if (_player != null && _player.Health / _player.MaxHealth <= 0.25f)
+                    if (_player.Health / _player.MaxHealth <= 0.25f)
                         triggered = true;
                     break;
 
                 case "Slipstream Echo":
-                    if (_player != null && !_player.IsSprinting && !_slipstreamTriggered)
+                    if (!_player.IsSprinting && !_slipstreamTriggered)
                     {
                         _slipstreamTriggered = true;
                         triggered = true;
                     }
                     break;
                 case "Adrenaline Spike":
-                    if (_player != null && _player.Health / _player.MaxHealth < 0.5f)
+                    if (_player.Health / _player.MaxHealth < 0.5f)
                         triggered = true;
                     break;
 
@@ -231,19 +219,4 @@ public class HandManager : MonoBehaviour
 
         Debug.Log($"Activated card in slot {index + 1}: {display.cardData.cardName}");
     }
-    
-    public bool TryAddCardToHand(CardInformation cardData)
-    {
-        for (int i = 0; i < cardsInHand.Length; i++)
-        {
-            if (cardsInHand[i] == null)
-            {
-                AddCardToHand(cardData); // Reuse existing method
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 }
