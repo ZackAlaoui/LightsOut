@@ -62,22 +62,6 @@ namespace Game.Player
             Flashlight.RemainingBatteryLife -= damage;
         }
 
-        //[SerializeField] private LineRenderer line; // TEMPORARY
-        private void Fire()
-        {
-            audioManager.PlaySFX(audioManager.fire);
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
-            line.startWidth = line.endWidth = 0.05f;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
-
-            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
-            {
-                line.SetPosition(1, hit.point);
-                IDamageable target = hit.collider.GetComponent<IDamageable>();
-                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
-            }
-        }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         // This Start function initializes all the controls and variables for the player.
@@ -176,8 +160,8 @@ namespace Game.Player
         //[SerializeField] private LineRenderer line; // TEMPORARY
         private void Fire(InputAction.CallbackContext callbackContext)
         {
+            audioManager.PlaySFX(audioManager.fire);
             line.startColor = line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
-            //Transform bulletSpawn = GameObject.Find("BulletSpawn").transform;
 
             line.SetPosition(0, bulletSpawn.position);
             line.SetPosition(1, bulletSpawn.position + 200f * (_aimingAt - bulletSpawn.position).normalized);
