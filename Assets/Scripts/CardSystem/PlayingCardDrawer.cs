@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Game;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,18 @@ public enum PlayingCardSuit { Clubs, Hearts, Diamonds, Spades }
 [System.Serializable]
 public class PlayingCard
 {
+    public string customName; // Optional: overrides default name when provided
     public int value; // 1-13 (1=Ace, 11=Jack, 12=Queen, 13=King)
     public PlayingCardSuit suit;
     public Sprite cardSprite;
     
     public string GetCardName()
     {
+        if (!string.IsNullOrEmpty(customName))
+        {
+            return customName;
+        }
+
         string valueName = value switch
         {
             1 => "Ace",
@@ -81,11 +88,11 @@ public class PlayingCardDrawer : MonoBehaviour
     public float borderThickness = 2f;
     
     [Header("Modern Button Styling")]
-    [Header("Primary Button (Draw New Hand)")]
+    [Header("Primary Button (Continue)")]
     public Color primaryButtonColor = new Color(0.2f, 0.6f, 0.9f, 1f);
     public Color primaryButtonHoverColor = new Color(0.3f, 0.7f, 1f, 1f);
     public Color primaryButtonPressedColor = new Color(0.15f, 0.5f, 0.8f, 1f);
-    public string primaryButtonText = "Draw New Hand";
+    public string primaryButtonText = "Continue";
     public float primaryButtonCornerRadius = 15f;
     public float buttonWidth = 200f;
     public float buttonHeight = 50f;
@@ -108,13 +115,13 @@ public class PlayingCardDrawer : MonoBehaviour
     public Button drawCardButton;
     public int maxCardsInHand = 5;
     
-    [Header("Back Button")]
-    public Button backButton;
-    public Color backButtonColor = new Color(0.6f, 0.2f, 0.2f, 1f);
-    public Color backButtonHoverColor = new Color(0.8f, 0.3f, 0.3f, 1f);
-    public Color backButtonPressedColor = new Color(0.5f, 0.15f, 0.15f, 1f);
-    public string backButtonText = "Back to Menu";
-    public float backButtonCornerRadius = 15f;
+    // Back button removed
+    //public Button backButton;
+    //public Color backButtonColor = new Color(0.6f, 0.2f, 0.2f, 1f);
+    //public Color backButtonHoverColor = new Color(0.8f, 0.3f, 0.3f, 1f);
+    //public Color backButtonPressedColor = new Color(0.5f, 0.15f, 0.15f, 1f);
+    //public string backButtonText = "Back to Menu";
+    //public float backButtonCornerRadius = 15f;
     
     [Header("Hotbar System")]
     public GameObject hotbarContainer;
@@ -138,6 +145,7 @@ public class PlayingCardDrawer : MonoBehaviour
     
     [Header("Debug Info")]
     [SerializeField] private int loadedCardsCount = 0;
+    private bool hasDrawnCard = false; // prevents multiple draws per visit
     
     private List<PlayingCard> allCards = new List<PlayingCard>();
     private List<PlayingCard> currentDrawnCards = new List<PlayingCard>();
@@ -157,7 +165,12 @@ public class PlayingCardDrawer : MonoBehaviour
         
         if (drawButton != null)
         {
-            drawButton.onClick.AddListener(() => StartCoroutine(DrawCardsWithAnimation()));
+            drawButton.onClick.RemoveAllListeners();
+            drawButton.onClick.AddListener(GoToSampleScene);
+            // Update displayed label text in case serialized value still shows old wording
+            Text label = drawButton.GetComponentInChildren<Text>();
+            if (label != null) label.text = primaryButtonText;
+
             SetupModernButton(drawButton, primaryButtonColor, primaryButtonHoverColor, primaryButtonPressedColor);
         }
         
@@ -167,11 +180,12 @@ public class PlayingCardDrawer : MonoBehaviour
             SetupModernButton(drawCardButton, secondaryButtonColor, secondaryButtonHoverColor, secondaryButtonPressedColor);
         }
         
-        if (backButton != null)
-        {
-            backButton.onClick.AddListener(GoToSampleScene);
-            SetupModernButton(backButton, backButtonColor, backButtonHoverColor, backButtonPressedColor);
-        }
+        // backButton removed
+        //if (backButton != null)
+        //{
+        //    backButton.onClick.AddListener(GoToSampleScene);
+        //    SetupModernButton(backButton, backButtonColor, backButtonHoverColor, backButtonPressedColor);
+        //}
             
         StartCoroutine(DrawCardsWithAnimation()); // Draw initial cards
     }
@@ -434,7 +448,7 @@ public class PlayingCardDrawer : MonoBehaviour
         {
             drawButton = CreateModernButton(buttonContainer.transform, primaryButtonText, primaryButtonColor, 
                 primaryButtonHoverColor, primaryButtonPressedColor, primaryButtonCornerRadius, 
-                new Vector2(0, 30), new Vector2(buttonWidth, buttonHeight));
+                new Vector2(0, -30), new Vector2(buttonWidth, buttonHeight));
         }
         
         // Create secondary button (Draw Card)
@@ -442,16 +456,10 @@ public class PlayingCardDrawer : MonoBehaviour
         {
             drawCardButton = CreateModernButton(buttonContainer.transform, secondaryButtonText, secondaryButtonColor,
                 secondaryButtonHoverColor, secondaryButtonPressedColor, secondaryButtonCornerRadius,
-                new Vector2(0, -30), new Vector2(buttonWidth, buttonHeight));
+                new Vector2(0, 30), new Vector2(buttonWidth, buttonHeight));
         }
         
-        // Create back button
-        if (backButton == null)
-        {
-            backButton = CreateModernButton(buttonContainer.transform, backButtonText, backButtonColor,
-                backButtonHoverColor, backButtonPressedColor, backButtonCornerRadius,
-                new Vector2(0, -90), new Vector2(buttonWidth, buttonHeight));
-        }
+        // Back button no longer created (replaced by Continue/primary button behaviour)
     }
     
     private Button CreateModernButton(Transform parent, string text, Color normalColor, Color hoverColor, 
@@ -574,6 +582,56 @@ public class PlayingCardDrawer : MonoBehaviour
         cardsContainerRect.anchoredPosition = Vector2.zero;
         
         Debug.Log("Created modern hotbar");
+
+        // After creating the hotbar layout, populate it with the player's current active cards
+        // that live inside DeckManager so the UI reflects the latest state.
+        PopulateHotbarFromDeckManager();
+    }
+
+    private void PopulateHotbarFromDeckManager()
+    {
+        if (DeckManager.Instance == null) return;
+
+        // Clear any existing local list / visual children
+        playerHand.Clear();
+        Transform cardsContainer = hotbarContainer?.transform.Find("Hotbar Cards Container");
+        if (cardsContainer == null) return;
+
+        foreach (Transform child in cardsContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int count = Mathf.Min(maxCardsInHand, DeckManager.Instance.allCards.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            var info = DeckManager.Instance.allCards[i];
+            if (info == null || info.cardSprite == null) continue;
+
+            PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            if (info.cardType != null && info.cardType.Count > 0)
+            {
+                ps = info.cardType[0] switch
+                {
+                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+                    _ => PlayingCardSuit.Clubs
+                };
+            }
+
+            PlayingCard pc = new PlayingCard
+            {
+                value = 1,
+                suit = ps,
+                cardSprite = info.cardSprite
+            };
+
+            playerHand.Add(pc);
+            CreateHotbarCard(pc, i);
+        }
     }
     
     private void SetupModernButton(Button button, Color normalColor, Color hoverColor, Color pressedColor)
@@ -662,6 +720,7 @@ public class PlayingCardDrawer : MonoBehaviour
             return;
         }
         
+        if (hasDrawnCard) return;
         cardSlots[cardIndex].isHovered = isHovering;
         StartCoroutine(AnimateCardHover(cardIndex, isHovering));
     }
@@ -757,10 +816,194 @@ public class PlayingCardDrawer : MonoBehaviour
         }
     }
     
+    // NEW: Load cards from the central CardManager so this drawer uses the same
+    // card assets / definitions as the rest of the UI (e.g. HandUIManager).
+    private bool LoadCardsFromCardManager()
+    {
+        if (CardManager.Instance == null || CardManager.Instance.allCards == null || CardManager.Instance.allCards.Count == 0)
+            return false;
+
+        foreach (var c in CardManager.Instance.allCards)
+        {
+            if (c == null || c.CardImage == null) continue;
+
+            PlayingCardSuit mappedSuit = MapCardSuit(c.suit);
+
+            allCards.Add(new PlayingCard
+            {
+                // "value" is not meaningful for our custom cards – just use 1 so it is valid.
+                value = 1,
+                suit = mappedSuit,
+                cardSprite = c.CardImage,
+                customName = c.cardName
+            });
+        }
+
+        // We intentionally leave cardBackSprite untouched here – it will be set by the
+        // existing loading logic or fallbacks later on.
+        return allCards.Count > 0;
+    }
+
+    // NEW: Load cards directly from DeckManager's CardInformation assets.
+    private bool LoadCardsFromDeckManager()
+    {
+        if (DeckManager.Instance == null || DeckManager.Instance.allCards == null || DeckManager.Instance.allCards.Count == 0)
+            return false;
+
+        foreach (var info in DeckManager.Instance.allCards)
+        {
+            if (info == null || info.cardSprite == null) continue;
+
+            // Determine suit from the first CardType entry (if any)
+            PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            if (info.cardType != null && info.cardType.Count > 0)
+            {
+                ps = info.cardType[0] switch
+                {
+                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+                    _ => PlayingCardSuit.Clubs
+                };
+            }
+
+            allCards.Add(new PlayingCard
+            {
+                value = 1,
+                suit = ps,
+                cardSprite = info.cardSprite,
+                customName = info.cardName
+            });
+        }
+
+        return allCards.Count > 0;
+    }
+
+    // NEW: Load card textures directly from Resources/Cards/<Suit> folders that match our gameplay suits.
+    private bool LoadCardsFromSuitResources()
+    {
+        string[] suitFolders = { "Brains", "Bones", "Blood", "RottenFlesh" };
+        PlayingCardSuit[] mappedSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+
+        bool loadedAny = false;
+
+        for (int i = 0; i < suitFolders.Length; i++)
+        {
+            string folder = $"Cards/{suitFolders[i]}"; // Resources path
+            Sprite[] sprites = Resources.LoadAll<Sprite>(folder);
+
+            if (sprites == null || sprites.Length == 0) {
+                Debug.LogWarning($"No sprites found in Resources/{folder}");
+                continue;
+            }
+
+            foreach (var sprite in sprites)
+            {
+                if (sprite == null) continue;
+
+                allCards.Add(new PlayingCard {
+                    value = 1,
+                    suit = mappedSuits[i],
+                    cardSprite = sprite,
+                    customName = sprite.name
+                });
+                loadedAny = true;
+            }
+        }
+
+        // Attempt to load card back if not yet set
+        if (cardBackSprite == null)
+        {
+            cardBackSprite = Resources.Load<Sprite>("Cards/card_back"); // Optional
+        }
+
+        return loadedAny;
+    }
+
+    // NEW: Directly load CardInformation scriptable objects from Resources/Cards and use their sprites.
+    private bool LoadCardsFromCardAssets()
+    {
+        var infos = Resources.LoadAll<CardData.CardInformation>("Cards");
+        if (infos == null || infos.Length == 0) return false;
+
+        foreach (var info in infos)
+        {
+            if (info == null || info.cardSprite == null) continue;
+
+            PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            if (info.cardType != null && info.cardType.Count > 0)
+            {
+                ps = info.cardType[0] switch
+                {
+                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+                    _ => PlayingCardSuit.Clubs
+                };
+            }
+
+            allCards.Add(new PlayingCard {
+                value = 1,
+                suit = ps,
+                cardSprite = info.cardSprite,
+                customName = info.cardName
+            });
+        }
+
+        return allCards.Count > 0;
+    }
+ 
+    private PlayingCardSuit MapCardSuit(CardSuit suit)
+    {
+        return suit switch
+        {
+            CardSuit.Brains => PlayingCardSuit.Clubs,
+            CardSuit.Bones => PlayingCardSuit.Hearts,
+            CardSuit.Blood => PlayingCardSuit.Diamonds,
+            CardSuit.RottenFlesh => PlayingCardSuit.Spades,
+            _ => PlayingCardSuit.Clubs
+        };
+    }
+
     private void LoadAllCards()
     {
         allCards.Clear();
-        
+
+        // FIRST: Try to load cards from the shared CardManager so we are in sync with
+        // HandUIManager and the rest of the card-based gameplay systems.
+        if (LoadCardsFromCardManager())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from CardManager!");
+            return;
+        }
+
+        // SECOND: Try to load from DeckManager's ScriptableObject deck
+        if (LoadCardsFromDeckManager())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} cards from DeckManager!");
+            return;
+        }
+
+        // THIRD: Try to load card assets directly
+        if (LoadCardsFromCardAssets())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} CardInformation assets from Resources/Cards!");
+            return;
+        }
+
+        // FOURTH: Try to load sprite assets directly from Resources/Cards/<Suit> folders
+        if (LoadCardsFromSuitResources())
+        {
+            loadedCardsCount = allCards.Count;
+            Debug.Log($"Loaded {allCards.Count} card textures from Resources/Cards folders!");
+            return;
+        }
+
         // Try manual assignments first
         if (LoadFromManualAssignments())
         {
@@ -768,18 +1011,10 @@ public class PlayingCardDrawer : MonoBehaviour
             Debug.Log($"Loaded {allCards.Count} cards from manual assignments!");
             return;
         }
-        
-        // Try loading from the same path structure
-        if (LoadCardsFromSamePath())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} cards from path structure!");
-            return;
-        }
-        
-        // Fallback to Resources
+
+        // Fallback to Resources (legacy standard deck lookup)
         LoadCardsFromResources();
-        
+
         loadedCardsCount = allCards.Count;
         Debug.Log($"Loaded {allCards.Count} cards successfully!");
     }
@@ -1214,6 +1449,7 @@ public class PlayingCardDrawer : MonoBehaviour
     
     public void SelectCard(int cardIndex)
     {
+        if (hasDrawnCard) return;
         if (cardIndex >= 0 && cardIndex < currentDrawnCards.Count)
         {
             // Deselect previous card
@@ -1473,23 +1709,13 @@ public class PlayingCardDrawer : MonoBehaviour
             yield break;
         }
         
-        // Check if we have room for more cards in hotbar
-        if (playerHand.Count >= maxCardsInHand)
-        {
-            Debug.Log($"Hotbar is full! Maximum {maxCardsInHand} cards allowed.");
-            yield break;
-        }
-        
-        // Get the selected card
-        PlayingCard selectedCard = currentDrawnCards[selectedCardIndex];
-        
-        // Add selected card to hotbar (or enter swap mode if full)
-        AddCardToHotbar(selectedCard);
-        
-        // If entering swap mode, store the card to be swapped
+        // Attempt to add selected card to hand or trigger swap mode
+        AddCardToHotbar(currentDrawnCards[selectedCardIndex]);
+
+        // If hand was full, AddCardToHotbar will set isSwapMode. In that case we remember the pending card.
         if (isSwapMode)
         {
-            SetPendingSwapCard(selectedCard);
+            SetPendingSwapCard(currentDrawnCards[selectedCardIndex]);
         }
         
         // Only turn card back and deselect if not in swap mode
@@ -1503,6 +1729,15 @@ public class PlayingCardDrawer : MonoBehaviour
             
             // Deselect the card
             DeselectAllCards();
+
+            // Disable further interaction
+            hasDrawnCard = true;
+            if (drawCardButton != null) drawCardButton.interactable = false;
+            // Disable card buttons
+            foreach (var slot in cardSlots)
+            {
+                if (slot.cardButton != null) slot.cardButton.interactable = false;
+            }
         }
         else
         {
@@ -1510,16 +1745,34 @@ public class PlayingCardDrawer : MonoBehaviour
             DeselectAllCards();
         }
         
-        Debug.Log($"Drew selected card: {selectedCard.GetCardName()}. Total cards in hotbar: {playerHand.Count}");
+        Debug.Log($"Drew selected card: {currentDrawnCards[selectedCardIndex].GetCardName()}. Total cards in hotbar: {playerHand.Count}");
         
         // Placeholder behavior - you can customize this
-        OnCardDrawn(selectedCard);
+        OnCardDrawn(currentDrawnCards[selectedCardIndex]);
     }
     
+    // Advances the game to the next round and returns the player to the primary gameplay scene that
+    // was active before opening the dealer UI. If, for some reason, there is no previous scene
+    // recorded, a safe fallback ("SampleScene") is used instead.
     private void GoToSampleScene()
     {
-        Debug.Log("Loading SampleScene...");
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        // Advance to the following round – this spawns the next wave, handles scene transitions,
+        // and performs any other round-initialisation logic inside GameManager.
+        GameManager.ProceedToNextRound();
+
+        // Return the player to the appropriate gameplay scene so they can face the new round.
+        string targetScene = GameManager.PreviousSceneName;
+
+        if (!string.IsNullOrEmpty(targetScene))
+        {
+            Debug.Log($"Loading {targetScene} for next round...");
+            SceneManager.LoadScene(targetScene);
+        }
+        else
+        {
+            Debug.LogWarning("Previous scene not found. Loading fallback scene 'SampleScene'.");
+            SceneManager.LoadScene("SampleScene");
+        }
     }
     
     private IEnumerator TurnCardToBack(int cardIndex)

@@ -5,21 +5,29 @@ using UnityEngine.UI;
 using Game.Entity;
 using UnityEngine.SceneManagement;
 
+
 namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        Rigidbody rb;
+        Animator animator;
+
+        AudioManager audioManager;
+
+       
         private bool _isSprinting = false;
         [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
 
         [SerializeField] private float _baseMovementSpeed = 7f;     //Base movement speed of the player
-        public float MovementSpeedMultiplier { get; set; } = 1f;    //Multiplier for the movement speed
-
+        public float MovementSpeedMultiplier { get; set; } = 1f;    //Multiplier for the movement speed 
+        private Transform aimTransform;                             //Transform of the aim gameobject
         [SerializeField] private GameObject _model;                 //Model of the player
         [SerializeField] private Animator _animator;
-
+        [SerializeField] private GameObject gun;                   //Gun of the player
         [SerializeField] private float _baseDamage = 5;             //Base damage dealt by the player
         [SerializeField] private LineRenderer line;                 //Line renderer for the player's attack
+        [SerializeField] private Transform bulletSpawn;              //Transform for the bullet spawn point
         public float DamageMultiplier { get; set; } = 1f;           //Multiplier for the damage dealt by the player
 
         [SerializeField] private float _baseMaxHealth = 5f;         //Base maximum health of the player
@@ -75,8 +83,14 @@ namespace Game.Player
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
+            audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
+
+            if (_model == null) _model = transform.Find("Model").gameObject;
             if (_model == null) _model = transform.Find("Sprite").gameObject;
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
+            if (aimTransform == null) aimTransform = transform.Find("Aim").transform;
 
             Flashlight = GetComponentInChildren<FlashlightManager>();
 
@@ -113,11 +127,12 @@ namespace Game.Player
                 _healthBarSlider.gameObject.SetActive(false);
             }
 
-            Vector2 moveDirection = _moveAction.ReadValue<Vector2>();
-            _animator.SetFloat("xVelocity", moveDirection.x);
-            _animator.SetFloat("zVelocity", moveDirection.y);
-            Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);
-            _controller.Move(velocity * Time.deltaTime);
+            
+            Vector2 moveDirection = _moveAction.ReadValue<Vector2>();       //Get the movement direction from the input system
+            _animator.SetFloat("xVelocity", moveDirection.x);               //Set the x velocity parameter in the animator
+            _animator.SetFloat("zVelocity", moveDirection.y);               //Set the z velocity parameter in the animator
+            Vector3 velocity = _baseMovementSpeed * MovementSpeedMultiplier * new Vector3(moveDirection.x, 0f, moveDirection.y);    //Calculate the velocity of the player based on the movement direction and the base movement speed
+            _controller.Move(velocity * Time.deltaTime);                    //Move the player based on the calculated velocity
 
             if (Flashlight.IsEnabled == false)
             {
@@ -130,12 +145,20 @@ namespace Game.Player
                 if (_timeInLight >= _healingDelay) Health += Time.deltaTime;
             }
 
-            Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();
-            Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition);
-            Plane lookPlane = new(Vector3.up, transform.position);
-            lookPlane.Raycast(cameraRay, out float distanceFromCamera);
-            _aimingAt = cameraRay.GetPoint(distanceFromCamera);
-            _aimingAt.y = 1f;
+            Vector2 pointerPosition = _lookAction.ReadValue<Vector2>();             //Get the pointer position from the input system
+            Ray cameraRay = Camera.main.ScreenPointToRay((Vector3)pointerPosition); //Gets the ray from the camera to the pointer position
+            Plane lookPlane = new(Vector3.up, transform.position);                  //Creates a plane at the player's position
+            lookPlane.Raycast(cameraRay, out float distanceFromCamera);             //Calculates the distance from the camera to the plane
+            _aimingAt = cameraRay.GetPoint(distanceFromCamera);                     //Gets the point on the plane where the ray intersects
+            _aimingAt.y = 1f;                                                       //Mouse position is always at y = 1f
+
+            Vector3 aimDirection = (_aimingAt - transform.position).normalized;        //Calculates the direction the player is aiming at
+            Debug.Log($"Aim Direction value {aimDirection}");
+
+            float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg; //Calculates the angle of the aim direction
+            aimTransform.eulerAngles = new Vector3(0, -angle, 0);                       //Sets the rotation of the aim transform to the calculated angle
+
+            Debug.Log($"Aim Transform value {aimTransform.eulerAngles}");
 
             line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
 
@@ -152,7 +175,6 @@ namespace Game.Player
         }
 
 
-
         private void OnDestroy()
         {
             if (_fireAction != null) _fireAction.performed -= Fire;
@@ -161,11 +183,13 @@ namespace Game.Player
         //[SerializeField] private LineRenderer line; // TEMPORARY
         private void Fire(InputAction.CallbackContext callbackContext)
         {
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, transform.position + 100f * (_aimingAt - transform.position).normalized);
+            audioManager.PlaySFX(audioManager.fire);
+            line.startColor = line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
 
-            if (Physics.BoxCast(transform.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - transform.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
+            line.SetPosition(0, bulletSpawn.position);
+            line.SetPosition(1, bulletSpawn.position + 200f * (_aimingAt - bulletSpawn.position).normalized);
+
+            if (Physics.BoxCast(bulletSpawn.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - bulletSpawn.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
                 line.SetPosition(1, new Vector3(hit.point.x, 1f, hit.point.z));
                 IDamageable target = hit.collider.GetComponent<IDamageable>();

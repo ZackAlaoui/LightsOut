@@ -18,6 +18,12 @@ namespace Game
 
         public static int CurrentRound { get; private set; } = 0;
 
+        // Tracks the currently loaded scene name as well as the previously active scene. This
+        // allows other systems (e.g. UI overlays such as the PlayingCardDrawer) to return the
+        // player back to the correct level after temporarily loading a different scene.
+        public static string CurrentSceneName { get; private set; }
+        public static string PreviousSceneName { get; private set; }
+
         private GameManager() { }   //Constructor for the GameManager
 
         private void Awake()
@@ -38,6 +44,13 @@ namespace Game
 
             EnemyManager = Instantiate(_enemyManagerPrefab, transform).GetComponent<EnemyManager>();
             BatteryManager = Instantiate(_batteryManagerPrefab, transform).GetComponent<BatteryManager>();
+
+            // Register for scene change callbacks so we can keep track of which scene the game
+            // is currently on and which one was active previously.
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+            // Initialize the scene tracking variables.
+            CurrentSceneName = SceneManager.GetActiveScene().name;
+            PreviousSceneName = CurrentSceneName;
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -126,6 +139,46 @@ namespace Game
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// Provides a public wrapper so that external systems (e.g. card-dealer overlay) can
+        /// trigger the next round without needing direct access to the GameManager instance or
+        /// knowing about the coroutine details.
+        /// </summary>
+        public static void ProceedToNextRound()
+        {
+            if (s_instance == null)
+            {
+                Debug.LogError("GameManager instance not yet initialised – cannot proceed to next round.");
+                return;
+            }
+
+            s_instance.StartCoroutine(NextRound());
+        }
+
+        /// <summary>
+        /// Unity callback when this GameManager is destroyed. Unsubscribe from events to avoid
+        /// dangling delegates if the singleton is ever torn down (e.g. when exiting play-mode in
+        /// the editor).
+        /// </summary>
+        private void OnDestroy()
+        {
+            if (s_instance == this)
+            {
+                SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+            }
+        }
+
+        /// <summary>
+        /// Keeps track of the current and previous scene names whenever Unity loads a new scene.
+        /// </summary>
+        /// <param name="previousScene">The scene that was active before the change.</param>
+        /// <param name="newScene">The scene that has just become active.</param>
+        private void OnActiveSceneChanged(Scene previousScene, Scene newScene)
+        {
+            PreviousSceneName = previousScene.name;
+            CurrentSceneName = newScene.name;
         }
 
         //This moves to the MainMenu scene and clears out all the enemies from the EnemyManager class
