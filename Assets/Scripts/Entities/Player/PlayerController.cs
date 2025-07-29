@@ -112,6 +112,10 @@ namespace Game.Player
             _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
+
+#if DEBUG
+            InputSystem.actions.FindAction("Attack").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
+#endif
         }
 
         // Update is called once per frame
@@ -224,6 +228,7 @@ namespace Game.Player
                 // TransitionManager.instance.LoadNextLevel();
                 //load into a new scene
                 //SceneManager.LoadScene(2); // Assuming scene index 2 is the next level
+                StartCoroutine(TransitionManager.LoadLevel("CardShopDungeon"));
             }
 
             if (other.gameObject.tag == "MagicBook")
