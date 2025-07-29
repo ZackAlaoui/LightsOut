@@ -5,36 +5,36 @@ public class flashlight_maze : MonoBehaviour
 {
     [Header("Flashlight Settings")]
     [SerializeField] private float lightRadius = 5f;
-    [SerializeField] private float lightAngle = 45f;
+    [SerializeField] private float lightAngle = 60f;
     [SerializeField] private LayerMask obstacleLayer = -1;
     
     [Header("Overlay Settings")]
     [SerializeField] private Color overlayColor = Color.black;
-    [SerializeField] private float overlayAlpha = 0.9f;
+    [SerializeField] private float overlayAlpha = 0.995f;
     
     [Header("References")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Camera mainCamera;
-    
-    [Header("Debug")]
-    [SerializeField] private bool showDebugInfo = true;
     
     [Header("Death Settings")]
     [SerializeField] private bool enableDeathDetection = true;
     [SerializeField] private float deathCheckInterval = 0.5f;
     [SerializeField] private int homeScreenSceneIndex = 0;
     
+    [Header("Player Visibility")]
+    [SerializeField] private bool alwaysShowPlayer = true;
+    [SerializeField] private LayerMask playerLayer = 1;
+    
     private GameObject overlayObject;
     private MeshRenderer overlayRenderer;
     private Material overlayMaterial;
     private Game.Player.PlayerController playerController;
     private float lastDeathCheckTime;
+    private Renderer playerRenderer;
+    private int originalPlayerLayer;
     
     void Start()
     {
-        if (showDebugInfo)
-            Debug.Log("Flashlight_maze script starting...");
-        
         // Set up camera if not assigned
         if (mainCamera == null)
         {
@@ -51,15 +51,15 @@ public class flashlight_maze : MonoBehaviour
             }
         }
         
-        if (showDebugInfo)
-            Debug.Log("Camera found: " + mainCamera.name);
-            
+        // This is the most likely fix. When rendering transparent objects that ignore the Z-buffer,
+        // some GPUs can incorrectly discard them if there's nothing else drawn behind them (i.e., the skybox is empty).
+        // Forcing the camera to clear to a solid color ensures there's always a background, which can prevent this issue.
+        mainCamera.clearFlags = CameraClearFlags.SolidColor;
+        mainCamera.backgroundColor = Color.black;
+        
         // Set player transform if not assigned
         if (playerTransform == null)
             playerTransform = transform;
-        
-        if (showDebugInfo)
-            Debug.Log("Player transform set to: " + playerTransform.name);
         
         // Find player controller for death detection
         if (enableDeathDetection)
@@ -70,24 +70,20 @@ public class flashlight_maze : MonoBehaviour
                 Debug.LogWarning("PlayerController not found! Death detection disabled.");
                 enableDeathDetection = false;
             }
-            else if (showDebugInfo)
-            {
-                Debug.Log("PlayerController found for death detection");
-            }
+        }
+        
+        // Set up player visibility
+        if (alwaysShowPlayer)
+        {
+            SetupPlayerVisibility();
         }
         
         // Create overlay using shader
         CreateOverlay();
-        
-        if (showDebugInfo)
-            Debug.Log("Flashlight_maze setup complete!");
     }
     
     void CreateOverlay()
     {
-        if (showDebugInfo)
-            Debug.Log("Creating overlay...");
-            
         // Create overlay GameObject
         overlayObject = new GameObject("FlashlightOverlay");
         
@@ -107,9 +103,6 @@ public class flashlight_maze : MonoBehaviour
         
         // Create material with custom shader
         CreateOverlayMaterial();
-        
-        if (showDebugInfo)
-            Debug.Log("Overlay created successfully!");
     }
     
     Mesh CreateScreenQuad()
@@ -173,9 +166,6 @@ public class flashlight_maze : MonoBehaviour
             // Set aspect ratio for proper cone scaling
             float aspectRatio = (float)Screen.width / Screen.height;
             overlayMaterial.SetFloat("_AspectRatio", aspectRatio);
-            
-            if (showDebugInfo)
-                Debug.Log("Using custom flashlight shader successfully!");
         }
         else
         {
@@ -189,9 +179,6 @@ public class flashlight_maze : MonoBehaviour
             overlayMaterial.DisableKeyword("_ALPHATEST_ON");
             overlayMaterial.EnableKeyword("_ALPHABLEND_ON");
             overlayMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            
-            if (showDebugInfo)
-                Debug.Log("Using fallback shader: " + overlayShader.name);
         }
         
         // Set render queue to ensure it renders on top of everything
@@ -200,13 +187,18 @@ public class flashlight_maze : MonoBehaviour
         // Make sure the material is assigned to the renderer
         overlayRenderer.material = overlayMaterial;
         
-        if (showDebugInfo)
-            Debug.Log("Overlay material created with shader: " + overlayShader.name);
+        // Ensure overlay doesn't block player visibility
+        if (alwaysShowPlayer)
+        {
+            // Set overlay to ignore player layer
+            overlayMaterial.SetInt("_ZWrite", 0);
+            overlayMaterial.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+        }
     }
     
     void Update()
     {
-        if (mainCamera == null || overlayMaterial == null)
+        if (mainCamera == null)
             return;
             
         // Ensure the overlay is always active and visible
@@ -221,23 +213,11 @@ public class flashlight_maze : MonoBehaviour
             if (!overlayObject.activeInHierarchy)
             {
                 overlayObject.SetActive(true);
-                if (showDebugInfo)
-                    Debug.LogWarning("Overlay was deactivated - reactivating!");
             }
             
             if (!overlayRenderer.enabled)
             {
                 overlayRenderer.enabled = true;
-                if (showDebugInfo)
-                    Debug.LogWarning("Overlay renderer was disabled - re-enabling!");
-            }
-            
-            // Debug info every 60 frames
-            if (showDebugInfo && Time.frameCount % 60 == 0)
-            {
-                Debug.Log($"Overlay active: {overlayObject.activeInHierarchy}, Renderer enabled: {overlayRenderer.enabled}");
-                Debug.Log($"Overlay position: {overlayObject.transform.position}, Scale: {overlayObject.transform.localScale}");
-                Debug.Log($"Camera position: {mainCamera.transform.position}");
             }
         }
             
@@ -249,6 +229,12 @@ public class flashlight_maze : MonoBehaviour
         {
             CheckPlayerDeath();
             lastDeathCheckTime = Time.time;
+        }
+        
+        // Ensure player stays visible
+        if (alwaysShowPlayer)
+        {
+            EnsurePlayerVisibility();
         }
     }
     
@@ -286,11 +272,6 @@ public class flashlight_maze : MonoBehaviour
             
             // Also pass the aspect ratio to the shader for proper scaling
             overlayMaterial.SetFloat("_AspectRatio", aspectRatio);
-            
-            if (showDebugInfo && Time.frameCount % 60 == 0)
-            {
-                Debug.Log($"Light pos: {normalizedPos}, Angle: {angle}, Aspect Ratio: {aspectRatio}");
-            }
         }
     }
     
@@ -308,13 +289,101 @@ public class flashlight_maze : MonoBehaviour
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, 0, endAngle) * direction * lightRadius);
     }
     
+    void SetupPlayerVisibility()
+    {
+        if (playerTransform != null)
+        {
+            // Find player renderer
+            playerRenderer = playerTransform.GetComponent<Renderer>();
+            if (playerRenderer == null)
+            {
+                // Try to find renderer in children
+                playerRenderer = playerTransform.GetComponentInChildren<Renderer>();
+            }
+            
+            if (playerRenderer != null)
+            {
+                // Create a new, dedicated material for the player to avoid conflicts with shared default materials.
+                Shader playerShader = Shader.Find("Sprites/Default");
+                if (playerShader == null)
+                {
+                    playerShader = Shader.Find("Standard"); // Last resort fallback
+                }
+
+                Material newPlayerMaterial = new Material(playerShader);
+                playerRenderer.material = newPlayerMaterial; // Assign the new material
+                
+                // Store original layer
+                originalPlayerLayer = playerTransform.gameObject.layer;
+                
+                // Set player to a high render queue to ensure it renders on top
+                if (playerRenderer.material != null)
+                {
+                    playerRenderer.material.renderQueue = 6000; // Higher than overlay and tilemap
+                    
+                    // Use a simple color, assuming the player might not have a texture
+                    playerRenderer.material.color = Color.white;
+                    
+                    // Completely disable depth testing for player to ensure it always renders on top
+                    playerRenderer.material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                    playerRenderer.material.SetInt("_ZWrite", 0);
+                    
+                    // Enable alpha blending for proper transparency
+                    playerRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    playerRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    playerRenderer.material.EnableKeyword("_ALPHABLEND_ON");
+                    playerRenderer.material.DisableKeyword("_ALPHATEST_ON");
+                    playerRenderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    
+                    // Force the material to render on top of everything
+                    playerRenderer.material.SetOverrideTag("RenderType", "Transparent");
+                    playerRenderer.material.SetOverrideTag("Queue", "Transparent");
+                    
+                    // Ensure the material ignores all depth testing
+                    playerRenderer.material.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No renderer found on player! Player visibility may not work correctly.");
+            }
+        }
+    }
+    
+    void EnsurePlayerVisibility()
+    {
+        if (playerRenderer != null && playerRenderer.material != null)
+        {
+            // Ensure player material has highest render queue
+            if (playerRenderer.material.renderQueue < 6000)
+            {
+                playerRenderer.material.renderQueue = 6000;
+            }
+            
+            // Ensure depth testing is completely disabled for player
+            if (playerRenderer.material.GetInt("_ZTest") != (int)UnityEngine.Rendering.CompareFunction.Always)
+            {
+                playerRenderer.material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                playerRenderer.material.SetInt("_ZWrite", 0);
+                playerRenderer.material.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+            }
+            
+            // Force transparent rendering tags
+            playerRenderer.material.SetOverrideTag("RenderType", "Transparent");
+            playerRenderer.material.SetOverrideTag("Queue", "Transparent");
+            
+            // Make sure player renderer is enabled
+            if (!playerRenderer.enabled)
+            {
+                playerRenderer.enabled = true;
+            }
+        }
+    }
+    
     void CheckPlayerDeath()
     {
         if (playerController != null && playerController.Health <= 0)
         {
-            if (showDebugInfo)
-                Debug.Log("Player died! Transitioning to home screen...");
-            
             // Transition to home screen
             TransitionToHomeScreen();
         }
@@ -326,16 +395,11 @@ public class flashlight_maze : MonoBehaviour
         var transitionManager = FindObjectOfType<TransitionManager>();
         if (transitionManager != null)
         {
-            if (showDebugInfo)
-                Debug.Log("Using TransitionManager to go to home screen");
             // You might need to add a method to TransitionManager for this
             // For now, we'll use SceneManager
         }
         
         // Use SceneManager as fallback
-        if (showDebugInfo)
-            Debug.Log($"Loading home screen scene (index: {homeScreenSceneIndex})");
-        
         SceneManager.LoadScene(homeScreenSceneIndex);
     }
     
