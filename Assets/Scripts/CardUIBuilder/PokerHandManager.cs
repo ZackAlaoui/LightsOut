@@ -12,7 +12,7 @@ public class PokerHandManager : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerController>();
+        player = PlayerController.Instance;
         if (player == null)
         {
             Debug.LogError("PlayerController not found in scene!");

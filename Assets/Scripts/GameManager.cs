@@ -9,8 +9,7 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager s_instance;      //Singleton instance for the GameManager
-
+        private static GameManager s_instance;                                  //Singleton instance for the GameManager
         [SerializeField] private GameObject _enemyManagerPrefab;                //EnemyManager prefab 
         public static EnemyManager EnemyManager { get; private set; }           //Getter and setter for the EnemyManager
         [SerializeField] private GameObject _batteryManagerPrefab;              //Gameobject for the battery manager
@@ -108,6 +107,10 @@ namespace Game
                     break;
                 case 4:
                     // Dungeon
+                    //Transition to the dungeon scene
+                    TransitionManager.LoadLevel("Dungeon");
+
+                    //Make sure the current player gameobect is sent to the dungeon scene
                     break;
                 case 5:
                     // FirstMap
@@ -150,7 +153,7 @@ namespace Game
         {
             if (s_instance == null)
             {
-                Debug.LogError("GameManager instance not yet initialised – cannot proceed to next round.");
+                Debug.LogError("GameManager instance not yet initialized – cannot proceed to next round.");
                 return;
             }
 

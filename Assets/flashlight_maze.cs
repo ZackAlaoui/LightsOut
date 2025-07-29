@@ -1,3 +1,4 @@
+using Game.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,7 +29,7 @@ public class flashlight_maze : MonoBehaviour
     private GameObject overlayObject;
     private MeshRenderer overlayRenderer;
     private Material overlayMaterial;
-    private Game.Player.PlayerController playerController;
+    private PlayerController playerController;
     private float lastDeathCheckTime;
     private Renderer playerRenderer;
     private int originalPlayerLayer;
@@ -64,7 +65,7 @@ public class flashlight_maze : MonoBehaviour
         // Find player controller for death detection
         if (enableDeathDetection)
         {
-            playerController = FindObjectOfType<Game.Player.PlayerController>();
+            playerController = PlayerController.Instance;
             if (playerController == null)
             {
                 Debug.LogWarning("PlayerController not found! Death detection disabled.");

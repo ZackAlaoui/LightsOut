@@ -67,6 +67,20 @@ namespace Game.Player
 
         private Vector3 _aimingAt;
 
+        public static PlayerController Instance;
+
+        public void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject); // This one is the duplicate
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         //This decreases the Remaining battery life of the player based on the damage taken
         public void Damage(MonoBehaviour source, float damage)
         {
@@ -127,7 +141,7 @@ namespace Game.Player
                 _healthBarSlider.gameObject.SetActive(false);
             }
 
-            
+
             Vector2 moveDirection = _moveAction.ReadValue<Vector2>();       //Get the movement direction from the input system
             _animator.SetFloat("xVelocity", moveDirection.x);               //Set the x velocity parameter in the animator
             _animator.SetFloat("zVelocity", moveDirection.y);               //Set the z velocity parameter in the animator
@@ -209,8 +223,8 @@ namespace Game.Player
             }
         }
 
-    
-        
+
+
         private InputAction _runAction;
 
         private void OnEnable()

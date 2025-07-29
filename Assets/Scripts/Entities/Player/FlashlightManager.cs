@@ -12,8 +12,8 @@ namespace Game.Player
     {
         [SerializeField] private Light _spotLight;
 
-        [SerializeField] private NavMeshModifierVolume _brightVolume;
-        [SerializeField] private NavMeshModifierVolume[] _dimVolumes;
+        [SerializeField] private NavMeshModifierVolume _brightVolume;       //Bright area of the flashlight
+        [SerializeField] private NavMeshModifierVolume[] _dimVolumes;       //Dim areas of the flashlight
 
         private float _baseIntensity;
         public float IntensityMultiplier { get; set; } = 1;
