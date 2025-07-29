@@ -12,9 +12,14 @@ public class DeckManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
+            
     }
  
  
@@ -31,22 +36,17 @@ public class DeckManager : MonoBehaviour
         ShuffleDeck();
     }
 
-    public static void DrawCard(HandManager handManager)
+    public void DrawCard(HandManager handManager)
     {
-        if (Instance.allCards.Count == 0) return;
-    
-        for (int attempts = 0; attempts < Instance.allCards.Count; attempts++)
+        if (allCards.Count == 0)
         {
-            CardInformation nextCard = Instance.allCards[Instance.currentIndex];
-            int previousIndex = Instance.currentIndex;
-    
-            Instance.currentIndex = (Instance.currentIndex + 1) % Instance.allCards.Count;
-    
-            bool success = handManager.TryAddCardToHand(nextCard);
-            if (success) break;
+            return;
         }
-    }
 
+        CardInformation nextCard = allCards[currentIndex];
+        handManager.AddCardToHand(nextCard);
+        currentIndex = (currentIndex + 1) % allCards.Count;
+    }
 
     private void ShuffleDeck()
     {
