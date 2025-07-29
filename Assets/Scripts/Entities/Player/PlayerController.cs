@@ -12,7 +12,6 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
-        AudioManager audioManager;
         public TextMeshProUGUI spookyText; // Text to display spooky messages
         public float fadeDuration = 2f; // Duration for fading text
         private Coroutine _fadeCoroutine; // Coroutine for fading text
@@ -95,8 +94,6 @@ namespace Game.Player
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
-            audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
-
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
             if (_aimTransform == null) _aimTransform = transform.Find("Aim")?.transform;
 
@@ -205,7 +202,7 @@ namespace Game.Player
 
         private void Fire(InputAction.CallbackContext callbackContext)
         {
-            audioManager.PlaySFX(audioManager.fire);
+            AudioManager.PlaySFX(AudioManager.Fire);
             _line.startColor = _line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
 
             _line.SetPosition(0, _bulletSpawn.position);

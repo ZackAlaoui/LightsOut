@@ -14,7 +14,9 @@ namespace Game
         [SerializeField] private GameObject _enemyManagerPrefab;                //EnemyManager prefab 
         public static EnemyManager EnemyManager { get; private set; }           //Getter and setter for the EnemyManager
         [SerializeField] private GameObject _batteryManagerPrefab;              //Gameobject for the battery manager
-        public static BatteryManager BatteryManager { get; private set; }       //Getter and setter for the BatteryManager           
+        public static BatteryManager BatteryManager { get; private set; }       //Getter and setter for the BatteryManager
+        [SerializeField] private GameObject _audioManagerPrefab;
+        public static AudioManager AudioManager { get; private set; }
 
         public static int CurrentRound { get; private set; } = 0;
 
@@ -41,9 +43,11 @@ namespace Game
 
             if (_enemyManagerPrefab == null) throw new NullReferenceException("EnemyManager prefab is null.");
             if (_batteryManagerPrefab == null) throw new NullReferenceException("BatteryManager prefab is null.");
+            if (_audioManagerPrefab == null) throw new NullReferenceException("AudioManager prefab is null.");
 
             EnemyManager = Instantiate(_enemyManagerPrefab, transform).GetComponent<EnemyManager>();
             BatteryManager = Instantiate(_batteryManagerPrefab, transform).GetComponent<BatteryManager>();
+            AudioManager = Instantiate(_audioManagerPrefab, transform).GetComponent<AudioManager>();
 
             // Register for scene change callbacks so we can keep track of which scene the game
             // is currently on and which one was active previously.
