@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using Game.Enemy;
 using static Game.Enemy.EnemyManager;
 using System.Collections;
+using Game.Player;
 
 namespace Game
 {
@@ -106,10 +107,11 @@ namespace Game
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
-                    // Dungeon
                     //Transition to the dungeon scene
-                    TransitionManager.LoadLevel("Dungeon");
-
+                    yield return TransitionManager.LoadLevel("Dungeon");
+                    //Set the player health to unlimited in the dungeon
+                    PlayerController playerController = Game.Player.PlayerController.Instance;
+                    playerController.Health = 5f; // Set to a high value for the dungeon
                     //Make sure the current player gameobect is sent to the dungeon scene
                     break;
                 case 5:

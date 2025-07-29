@@ -4,18 +4,17 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Game.Entity;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 
 
 namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
-        Rigidbody rb;
-        Animator animator;
-
-        AudioManager audioManager;
-
-       
+        public TextMeshProUGUI spookyText; // Text to display spooky messages
+        public float fadeDuration = 2f; // Duration for fading text
+        private Coroutine fadeCoroutine; // Coroutine for fading text
         private bool _isSprinting = false;
         [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
 
@@ -56,7 +55,7 @@ namespace Game.Player
         }
         [SerializeField] private float _healingDelay = 3f;          //Healing delay for the player 
         private float _timeInLight = 0f;                            //Seconds in the Light
-        [SerializeField] private Slider _healthBarSlider;
+        [SerializeField] private Slider _healthBarSlider;           //Health bar slider for the player
 
         public FlashlightManager Flashlight { get; private set; }       //Flashlight controller for the player
 
@@ -131,14 +130,18 @@ namespace Game.Player
                 return;
             }
 
-            if (Health < _baseMaxHealth * MaxHealthMultiplier)
+            if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard")
             {
-                _healthBarSlider.gameObject.SetActive(true);
-                _healthBarSlider.value = Health;
+                return; // Do not update player in the dungeon scene
+            }
+            else if (Health < _baseMaxHealth * MaxHealthMultiplier)
+            {
+                    _healthBarSlider.gameObject.SetActive(true);
+                    _healthBarSlider.value = Health;
             }
             else
             {
-                _healthBarSlider.gameObject.SetActive(false);
+                    _healthBarSlider.gameObject.SetActive(false);
             }
 
 
@@ -221,10 +224,43 @@ namespace Game.Player
                 //load into a new scene
                 //SceneManager.LoadScene(2); // Assuming scene index 2 is the next level
             }
+
+            if (other.gameObject.tag == "MagicBook")
+            {
+                // Cancel any ongoing fade-out and start fade-in
+                if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+                fadeCoroutine = StartCoroutine(FadeText(0f, 1f));   
+            }
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            
+            if (other.gameObject.tag != "MagicBook")
+            {
+                GameObject.Find("SpookyText").SetActive(false);
+            }
+        }
 
-
+        public IEnumerator FadeText(float startAlpha, float endAlpha)
+        {
+            float time = 0f;
+            spookyText = GameObject.Find("SpookyText").GetComponent<TextMeshProUGUI>();
+            if (spookyText == null)
+            {
+                Debug.LogError("SpookyText not found in the scene.");
+                yield break; // Exit if the text is not found
+            }
+            while (time < fadeDuration)
+            {
+                float alpha = Mathf.Lerp(startAlpha, endAlpha, time / fadeDuration);
+                spookyText.color = new Color(spookyText.color.r, spookyText.color.g, spookyText.color.b, alpha);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            spookyText.color = new Color(spookyText.color.r, spookyText.color.g, spookyText.color.b, endAlpha);
+        }
+        
         private InputAction _runAction;
 
         private void OnEnable()
