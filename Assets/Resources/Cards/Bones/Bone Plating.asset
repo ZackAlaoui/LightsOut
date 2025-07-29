@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 01000000
   abilityDesc: Flat Damage Reduction
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 1186301918, guid: 414bad1d368ea62478c380a06d113466, type: 3}
   cooldownDuration: 30

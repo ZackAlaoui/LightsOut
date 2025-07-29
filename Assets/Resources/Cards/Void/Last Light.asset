@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: If flashlight battery hits 0, instantly recharge to 10% and discard
     the card
   usageType: 01000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 1614359844, guid: abb3b8631fd4d3046ad81f15948d75c6, type: 3}
   cooldownDuration: 0

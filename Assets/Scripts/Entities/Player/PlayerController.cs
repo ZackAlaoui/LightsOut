@@ -132,6 +132,13 @@ namespace Game.Player
                 GameManager.Unload();
                 return;
             }
+            
+            if (Flashlight == null)
+            {
+                Debug.LogWarning("Flashlight is null in Update — check Player prefab or scene setup.");
+                return;
+            }
+
 
             if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard")
             {

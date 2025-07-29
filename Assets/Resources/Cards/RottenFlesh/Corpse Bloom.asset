@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 03000000
   abilityDesc: For 8 seconds, heal 0.5 HP every time an enemy dies nearby (3m radius).
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: -1699209800, guid: 922d816cc0313ee449c7ab1fe0e9d1ef, type: 3}
   cooldownDuration: 30

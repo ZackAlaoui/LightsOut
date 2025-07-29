@@ -29,6 +29,9 @@ public class CardAbilityUI : MonoBehaviour
     {
         cardInfo = info;
 
+        if (backgroundImage != null)
+            originalColor = backgroundImage.color; // ✅ Always save original color
+
         if (cardInfo.usageType.Contains(CardInformation.CardUsageType.Passive))
         {
             if (durationBar != null)
@@ -39,11 +42,9 @@ public class CardAbilityUI : MonoBehaviour
         else
         {
             currentDuration = cardInfo.cooldownDuration;
-
-            if (backgroundImage != null)
-                originalColor = backgroundImage.color;
         }
     }
+
 
     public void StartCooldown()
     {

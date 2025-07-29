@@ -11,21 +11,19 @@ public class AbilityManager : MonoBehaviour
     
     private IEnumerator Start()
     {
-        yield return null; // wait one frame
+        // Wait until PlayerController.Instance is assigned
+        while (PlayerController.Instance == null)
+            yield return null;
 
         _player = PlayerController.Instance;
-        if (_player == null)
-        {
-            Debug.LogError("PlayerController not found.");
-            yield break;
-        }
+
+        // Wait until Flashlight is set up
+        while (_player.Flashlight == null)
+            yield return null;
 
         _flashlight = _player.Flashlight;
-        if (_flashlight == null)
-        {
-            Debug.LogError("FlashlightManager is null! Make sure it's attached to a child of the Player.");
-        }
     }
+
     
     public void ActivateAbility(string cardName)
     {
@@ -154,10 +152,14 @@ public class AbilityManager : MonoBehaviour
 
     private IEnumerator BatteryFreeze()
     {
+        // ✅ Wait until flashlight is ready
+        yield return new WaitUntil(() => _flashlight != null);
+
         _flashlight.BatteryFrozen = true;
         yield return new WaitForSeconds(8f);
         _flashlight.BatteryFrozen = false;
     }
+
 
     private IEnumerator SynapticReflex()
     {
@@ -224,6 +226,9 @@ public class AbilityManager : MonoBehaviour
 
     private IEnumerator BonePlating()
     {
+        // ✅ Ensure everything is initialized
+        yield return new WaitUntil(() => _player != null && _player.Flashlight != null);
+
         float duration = 10f;
         float tickRate = 0.5f;
         int ticks = Mathf.FloorToInt(duration / tickRate);
@@ -235,6 +240,7 @@ public class AbilityManager : MonoBehaviour
             yield return new WaitForSeconds(tickRate);
         }
     }
+
 
     private IEnumerator IvoryGuard()
     {

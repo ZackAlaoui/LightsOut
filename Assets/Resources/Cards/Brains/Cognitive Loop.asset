@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: "Rapidly refresh your card cooldowns (cooldowns tick 3\xD7 faster
     for 6s), but flashlight is dimmer."
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: -1225126333, guid: d5a474c2f8e5a6f4b8dadee7f8739789, type: 3}
   cooldownDuration: 30

@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: When you're surrounded (3+ enemies within close range), unleash a
     shockwave that pushes enemies back and gives you +50% attack speed for 5 seconds
   usageType: 01000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 1278231782, guid: 4b984e7fa052c004a8192ab05c1f0f5a, type: 3}
   cooldownDuration: 0

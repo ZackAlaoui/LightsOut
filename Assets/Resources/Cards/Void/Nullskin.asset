@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 04000000
   abilityDesc: Take no damage from the next hit within 8 seconds
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 14464460, guid: e9718c18413fa4043ba3ff93e447a8fb, type: 3}
   cooldownDuration: 20

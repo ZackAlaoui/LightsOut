@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 00000000
   abilityDesc: Replays the last card you used instantly
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 33780757, guid: f801e2133d8676442a370f7d74b38453, type: 3}
   cooldownDuration: 20

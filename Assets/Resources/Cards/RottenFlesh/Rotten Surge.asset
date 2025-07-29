@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 03000000
   abilityDesc: Instantly restore 50% HP, but take 2 damage over the next 10 seconds.
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 441915288, guid: 6293b69dbf39fd14b914c04dc2cd2acc, type: 3}
   cooldownDuration: 30

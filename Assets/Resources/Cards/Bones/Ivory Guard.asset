@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 01000000
   abilityDesc: Reduces incoming damage by 40% for 8s.
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 968557736, guid: b691f8941ec261045b465e0c0f1a40de, type: 3}
   cooldownDuration: 25

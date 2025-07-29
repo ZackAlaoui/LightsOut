@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: Reduce all damage taken by 70%, but your movement is halved for 6
     seconds.
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: -1168984969, guid: 638f219a07540b34885a7e077652f005, type: 3}
   cooldownDuration: 30

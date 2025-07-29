@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: Heals 2HP instantly and increases max HP by 1 for the rest of the
     run
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 472299693, guid: 1d47e0df522fb434eab11a728b451a71, type: 3}
   cooldownDuration: 30

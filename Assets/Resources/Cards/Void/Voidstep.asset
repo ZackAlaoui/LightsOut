@@ -16,5 +16,5 @@ MonoBehaviour:
   cardType: 04000000
   abilityDesc: Become invulnerable for 1.5 seconds
   usageType: 00000000
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 747140282, guid: 1e5d4bfba1d65ab4e8268f409e73887f, type: 3}
   cooldownDuration: 20

@@ -17,5 +17,5 @@ MonoBehaviour:
   abilityDesc: For 6 seconds, each time the player takes damage, nearby enemies take
     AoE retaliatory damage
   usageType: 00000000
-  cardSprite: {fileID: 0}
-  cooldownDuration: 15
+  cardSprite: {fileID: -1803833089, guid: e8aeba56bd08c4048b47992d4a979163, type: 3}
+  cooldownDuration: 20
