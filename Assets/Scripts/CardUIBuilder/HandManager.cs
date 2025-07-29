@@ -164,17 +164,7 @@ public class HandManager : MonoBehaviour
                     if (count >= 3)
                         triggered = true;
                     break;
-
-                    //Ask Angelo about this one
-
-                // PlayerController player = Game.Player.PlayerController.Instance;
-                    // if (player != null && player.Flashlight.RemainingBatteryLife <= 2f)
-                    // {
-                    //     Debug.Log("Passive Trigger: Last Light activated");
-                    //     player.Flashlight.RemainingBatteryLife = 30f;
-                    //     DiscardCard(index);
-                    //     break; // exit so we don't change collection while iterating
-                    // }
+                
             }
 
             if (triggered)

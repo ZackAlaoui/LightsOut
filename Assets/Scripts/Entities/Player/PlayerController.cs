@@ -12,6 +12,9 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        Animator animator;
+
+        AudioManager audioManager;
         public TextMeshProUGUI spookyText; // Text to display spooky messages
         public float fadeDuration = 2f; // Duration for fading text
         private Coroutine fadeCoroutine; // Coroutine for fading text
@@ -96,7 +99,7 @@ namespace Game.Player
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
-            rb = GetComponent<Rigidbody>();
+            //rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
 
