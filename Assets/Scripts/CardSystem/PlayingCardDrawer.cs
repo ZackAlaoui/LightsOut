@@ -1771,7 +1771,7 @@ public class PlayingCardDrawer : MonoBehaviour
         else
         {
             Debug.LogWarning("Previous scene not found. Loading fallback scene 'SampleScene'.");
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("MainMenu");
         }
     }
     

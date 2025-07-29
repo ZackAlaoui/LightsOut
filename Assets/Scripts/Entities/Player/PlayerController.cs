@@ -105,6 +105,14 @@ namespace Game.Player
             animator = GetComponent<Animator>();
             audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
 
+            spookyTextObject = GameObject.Find("SpookyText");
+
+            if (spookyTextObject != null)
+            {
+                spookyTextObject.SetActive(false); // Initially hide the spooky text object
+            }
+
+
             if (_model == null) _model = transform.Find("Model").gameObject;
             if (_model == null) _model = transform.Find("Sprite").gameObject;
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
