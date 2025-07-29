@@ -153,14 +153,14 @@ namespace Game.Player
             _aimingAt.y = 1f;                                                       //Mouse position is always at y = 1f
 
             Vector3 aimDirection = (_aimingAt - transform.position).normalized;        //Calculates the direction the player is aiming at
-            Debug.Log($"Aim Direction value {aimDirection}");
+            //Debug.Log($"Aim Direction value {aimDirection}");
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg; //Calculates the angle of the aim direction
             aimTransform.eulerAngles = new Vector3(0, -angle, 0);                       //Sets the rotation of the aim transform to the calculated angle
 
-            Debug.Log($"Aim Transform value {aimTransform.eulerAngles}");
+            //Debug.Log($"Aim Transform value {aimTransform.eulerAngles}");
 
-            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
+            line.startColor = line.endColor = new Color(1f, 0f, 0f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
 
             if (_isSprinting && Flashlight.IsEnabled && Flashlight.RemainingBatteryLife > 0)
             {
