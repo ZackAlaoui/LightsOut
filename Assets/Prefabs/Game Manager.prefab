@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyManagerPrefab: {fileID: 3221644034308463510, guid: 576005981520ba442922256faf4f5174, type: 3}
   _batteryManagerPrefab: {fileID: 3206529058688674439, guid: 836d7d136c6d04f4b84f3f3072879472, type: 3}
+  _audioManagerPrefab: {fileID: 3844562705976917380, guid: f9614ac155ad2ac4bb650e5323952db7, type: 3}
