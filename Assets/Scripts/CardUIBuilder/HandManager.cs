@@ -28,6 +28,11 @@ public class HandManager : MonoBehaviour
     {
         _player = PlayerController.Instance;
         deckManager = DeckManager.Instance;
+
+        if (deckManager == null)
+        {
+            Debug.LogError("DeckManager.Instance was not initialized. Check scene hierarchy and script execution order.");
+        }
     }
 
 
@@ -72,7 +77,7 @@ public class HandManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             deckManager.DrawCard(this);
         }
