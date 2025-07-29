@@ -10,6 +10,12 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        Rigidbody rb;
+        Animator animator;
+
+        AudioManager audioManager;
+
+       
         private bool _isSprinting = false;
         [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
 
@@ -56,10 +62,32 @@ namespace Game.Player
             Flashlight.RemainingBatteryLife -= damage;
         }
 
+        //[SerializeField] private LineRenderer line; // TEMPORARY
+        private void Fire()
+        {
+            audioManager.PlaySFX(audioManager.fire);
+            line.startColor = line.endColor = new Color(0.5f, 0.5f, 0.5f);
+            line.startWidth = line.endWidth = 0.05f;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, _aimingAt + 100f * (_aimingAt - transform.position).normalized);
+
+            if (Physics.Raycast(transform.position, _aimingAt - transform.position, out RaycastHit hit, Mathf.Infinity, ~4)) // evil bit level hacking
+            {
+                line.SetPosition(1, hit.point);
+                IDamageable target = hit.collider.GetComponent<IDamageable>();
+                if (target != null) target.Damage(this, _baseDamage * DamageMultiplier);
+            }
+        }
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
+            audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
+
+            if (_model == null) _model = transform.Find("Model").gameObject;
             if (_model == null) _model = transform.Find("Sprite").gameObject;
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
             if (aimTransform == null) aimTransform = transform.Find("Aim").transform;
