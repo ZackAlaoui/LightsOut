@@ -13,7 +13,7 @@ public class AbilityManager : MonoBehaviour
     {
         yield return null; // wait one frame
 
-        _player = FindObjectOfType<PlayerController>();
+        _player = PlayerController.Instance;
         if (_player == null)
         {
             Debug.LogError("PlayerController not found.");

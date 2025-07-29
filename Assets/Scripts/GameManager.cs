@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 using Game.Enemy;
 using static Game.Enemy.EnemyManager;
 using System.Collections;
+using Game.Player;
 
 namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager s_instance;      //Singleton instance for the GameManager
-
+        private static GameManager s_instance;                                  //Singleton instance for the GameManager
         [SerializeField] private GameObject _enemyManagerPrefab;                //EnemyManager prefab 
         public static EnemyManager EnemyManager { get; private set; }           //Getter and setter for the EnemyManager
         [SerializeField] private GameObject _batteryManagerPrefab;              //Gameobject for the battery manager
@@ -107,7 +107,12 @@ namespace Game
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
-                    // Dungeon
+                    //Transition to the dungeon scene
+                    yield return TransitionManager.LoadLevel("Dungeon");
+                    //Set the player health to unlimited in the dungeon
+                    PlayerController playerController = Game.Player.PlayerController.Instance;
+                    playerController.Health = 5f; // Set to a high value for the dungeon
+                    //Make sure the current player gameobect is sent to the dungeon scene
                     break;
                 case 5:
                     // FirstMap
@@ -150,7 +155,7 @@ namespace Game
         {
             if (s_instance == null)
             {
-                Debug.LogError("GameManager instance not yet initialised – cannot proceed to next round.");
+                Debug.LogError("GameManager instance not yet initialized – cannot proceed to next round.");
                 return;
             }
 
