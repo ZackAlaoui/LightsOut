@@ -111,7 +111,7 @@ namespace Game.Player
             Health = _baseMaxHealth;
 
 #if DEBUG
-            InputSystem.actions.FindAction("Attack").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
+            InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
 #endif
         }
 
