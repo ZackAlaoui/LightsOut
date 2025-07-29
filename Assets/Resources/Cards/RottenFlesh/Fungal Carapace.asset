@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Skeletal Adaptation
+  m_Name: Fungal Carapace
   m_EditorClassIdentifier: 
-  cardName: Skeletal Adaptation
-  cardType: 01000000
-  abilityDesc: Increase max HP and heal over time
+  cardName: Fungal Carapace
+  cardType: 03000000
+  abilityDesc: Reduce all damage taken by 70%, but your movement is halved for 6
+    seconds.
   usageType: 00000000
   cardSprite: {fileID: 0}
   cooldownDuration: 30

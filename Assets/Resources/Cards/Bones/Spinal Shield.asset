@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Ossified Core
+  m_Name: Spinal Shield
   m_EditorClassIdentifier: 
-  cardName: Ossified Core
+  cardName: Spinal Shield
   cardType: 01000000
-  abilityDesc: For 10s, healing instead grants damage resistance
-  usageType: 00000000
+  abilityDesc: When HP drops below 30% negate all damage for 3 seconds
+  usageType: 01000000
   cardSprite: {fileID: 0}
-  cooldownDuration: 25
+  cooldownDuration: 0

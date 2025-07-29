@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardData;
 using Game.Player;
+using Game.Enemy;
 
 public class HandManager : MonoBehaviour
 {
@@ -19,6 +20,15 @@ public class HandManager : MonoBehaviour
 
     // Track passive cards separately
     private List<int> passiveCardIndexes = new List<int>();
+    
+    private PlayerController _player;
+    private bool _slipstreamTriggered = false;
+
+    private void Awake()
+    {
+        _player = FindObjectOfType<PlayerController>();
+    }
+
 
     public void AddCardToHand(CardInformation cardData)
     {
@@ -106,9 +116,9 @@ public class HandManager : MonoBehaviour
                 }
             }
         }
-
-        // 🔹 Passive card condition monitoring (example: "Last Light")
-        foreach (int index in passiveCardIndexes.ToArray()) // clone list to avoid mod error
+        
+        // 🔹 Passive card condition monitoring (generalized for all passive cards)
+        foreach (int index in passiveCardIndexes.ToArray())
         {
             GameObject card = cardsInHand[index];
             if (card == null) continue;
@@ -116,29 +126,55 @@ public class HandManager : MonoBehaviour
             CardDisplay display = card.GetComponent<CardDisplay>();
             if (display == null) continue;
 
-            CardInformation cardData = display.cardData;
+            string name = display.cardData.cardName;
+            bool triggered = false;
 
-            if (cardData.cardName == "Last Light") // Example passive
+            switch (name)
             {
-                PlayerController player = FindObjectOfType<PlayerController>();
-                if (player != null && player.Flashlight.RemainingBatteryLife <= 2f)
-                {
-                    Debug.Log("Passive Trigger: Last Light activated");
-                    player.Flashlight.RemainingBatteryLife = 30f;
-                    DiscardCard(index);
-                    break; // exit so we don't change collection while iterating
-                }
+                case "Last Light":
+                    if (_player.Flashlight.RemainingBatteryLife <= 2f)
+                        triggered = true;
+                    break;
+
+                case "Decay Bloom":
+                    if (_player.Health / _player.MaxHealth <= 0.25f)
+                        triggered = true;
+                    break;
+
+                case "Slipstream Echo":
+                    if (!_player.IsSprinting && !_slipstreamTriggered)
+                    {
+                        _slipstreamTriggered = true;
+                        triggered = true;
+                    }
+                    break;
+                case "Adrenaline Spike":
+                    if (_player.Health / _player.MaxHealth < 0.5f)
+                        triggered = true;
+                    break;
+
+                case "Crimson Howl":
+                    EnemyController[] nearbyEnemies = FindObjectsOfType<EnemyController>();
+                    int count = 0;
+                    foreach (var enemy in nearbyEnemies)
+                    {
+                        if (Vector3.Distance(enemy.transform.position, _player.transform.position) <= 3f)
+                            count++;
+                    }
+                    if (count >= 3)
+                        triggered = true;
+                    break;
+                
             }
 
-            // Add more passive conditions here if needed
+            if (triggered)
+            {
+                Debug.Log($"Passive Trigger: {name}");
+                FindObjectOfType<AbilityManager>()?.TriggerPassive(name);
+                break;
+            }
         }
 
-        // Discard keys
-        if (Input.GetKeyDown(KeyCode.Q)) DiscardCard(0);
-        if (Input.GetKeyDown(KeyCode.W)) DiscardCard(1);
-        if (Input.GetKeyDown(KeyCode.E)) DiscardCard(2);
-        if (Input.GetKeyDown(KeyCode.R)) DiscardCard(3);
-        if (Input.GetKeyDown(KeyCode.T)) DiscardCard(4);
     }
 
     public List<CardInformation> GetCurrentHand()

@@ -105,4 +105,26 @@ public class CardAbilityUI : MonoBehaviour
             UpdateImage(true);
         }
     }
+    
+    public void ResetCooldown()
+    {
+        abilityActive = false;
+        currentDuration = 0f;
+
+        if (durationBar != null)
+            durationBar.SetActive(false);
+
+        UpdateImage(true);
+    }
+
+    public bool IsOnCooldown()
+    {
+        return abilityActive;
+    }
+
+    public void ApplyTemporaryCooldownMultiplier(float multiplier)
+    {
+        currentDuration *= multiplier;
+    }
+
 }

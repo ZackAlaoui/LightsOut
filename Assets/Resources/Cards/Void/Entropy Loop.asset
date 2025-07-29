@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Radiant Overload
+  m_Name: Entropy Loop
   m_EditorClassIdentifier: 
-  cardName: Radiant Overload
-  cardType: 00000000
-  abilityDesc: Temporarily max flashlight intensity and damage nearby enemies with
-    pulses
+  cardName: Entropy Loop
+  cardType: 04000000
+  abilityDesc: Restore 2 HP but randomly discard 1 other card
   usageType: 00000000
   cardSprite: {fileID: 0}
-  cooldownDuration: 0
+  cooldownDuration: 20

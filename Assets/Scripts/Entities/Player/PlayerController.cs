@@ -24,7 +24,18 @@ namespace Game.Player
 
         [SerializeField] private float _baseMaxHealth = 5f;         //Base maximum health of the player
         public float MaxHealthMultiplier { get; set; } = 1f;        //Multiplier for the maximum health of the player
+        public float MaxHealth => _baseMaxHealth * MaxHealthMultiplier;
         private float _health;
+        
+        public float DamageResistanceMultiplier { get; set; } = 1f; // For Ivory Guard
+        public bool IsInvincible { get; set; } = false;             // For Spinal Shield
+
+        public delegate void PlayerHit();                           // For Fractured Payback
+        public event PlayerHit OnHit;
+        
+        public bool IsSprinting => _isSprinting;
+
+
         public float Health
         {
             get => _health;
@@ -51,8 +62,14 @@ namespace Game.Player
         //This decreases the Remaining battery life of the player based on the damage taken
         public void Damage(MonoBehaviour source, float damage)
         {
-            Flashlight.RemainingBatteryLife -= damage;
+            if (IsInvincible) return;
+
+            float finalDamage = damage * DamageResistanceMultiplier;
+            Flashlight.RemainingBatteryLife -= finalDamage;
+
+            OnHit?.Invoke(); // For Fractured Payback
         }
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         // This Start function initializes all the controls and variables for the player.
@@ -127,6 +144,13 @@ namespace Game.Player
                 Flashlight.RemainingBatteryLife -= _sprintBatteryDrainRate * Time.deltaTime;
             }
         }
+        
+        public void IncreaseBaseMaxHealth(float amount)
+        {
+            _baseMaxHealth += amount;
+            Health = Health; // re-apply clamping
+        }
+
 
 
         private void OnDestroy()
@@ -202,6 +226,7 @@ namespace Game.Player
         }
 
     }
+    
 
 
 

@@ -23,6 +23,9 @@ namespace Game.Player
 
         [SerializeField] private Slider _batteryLifeSlider;
         private float _remainingBatteryLife;
+        
+        public bool BatteryFrozen { get; set; } = false;
+
         public float RemainingBatteryLife
         {
             get => _remainingBatteryLife;
@@ -109,7 +112,7 @@ namespace Game.Player
         private void UpdateBatteryLife()
         {
             if (RemainingBatteryLife <= 0f)  IsEnabled = false;
-            if (IsEnabled)
+            if (IsEnabled && !BatteryFrozen)
             {
                 RemainingBatteryLife -= Time.deltaTime;
                 _spotLight.intensity = _baseIntensity * IntensityMultiplier * RemainingBatteryLife / (_baseMaxBattery * MaxBatteryLifeMultiplier);

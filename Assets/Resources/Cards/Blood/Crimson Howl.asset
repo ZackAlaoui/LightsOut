@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Necrotic Burst
+  m_Name: Crimson Howl
   m_EditorClassIdentifier: 
-  cardName: Rotten Surge
-  cardType: 03000000
-  abilityDesc: Instantly restore 50% HP, but take 2 damage over the next 10 seconds.
-  usageType: 00000000
+  cardName: Crimson Howl
+  cardType: 02000000
+  abilityDesc: When you're surrounded (3+ enemies within close range), unleash a
+    shockwave that pushes enemies back and gives you +50% attack speed for 5 seconds
+  usageType: 01000000
   cardSprite: {fileID: 0}
-  cooldownDuration: 30
+  cooldownDuration: 0

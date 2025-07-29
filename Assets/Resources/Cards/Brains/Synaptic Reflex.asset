@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b42570d90aaf754da643d42252617a8, type: 3}
-  m_Name: Necrotic Burst
+  m_Name: Synaptic Reflex
   m_EditorClassIdentifier: 
-  cardName: Rotten Surge
-  cardType: 03000000
-  abilityDesc: Instantly restore 50% HP, but take 2 damage over the next 10 seconds.
+  cardName: Synaptic Reflex
+  cardType: 00000000
+  abilityDesc: Slow time for 4 seconds. You move and shoot at normal speed while
+    enemies are slowed.
   usageType: 00000000
   cardSprite: {fileID: 0}
   cooldownDuration: 30

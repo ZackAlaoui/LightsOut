@@ -9,6 +9,8 @@ namespace Game.Enemy
 {
 	public class EnemyManager : MonoBehaviour
 	{
+
+		public static event Action<Vector3> OnEnemyDied;
 		public enum EnemyType
 		{
 			Zombie,
@@ -141,6 +143,9 @@ namespace Game.Enemy
 					break;
 			}
 			EnemyList.Remove(enemy);
+			
+			OnEnemyDied?.Invoke(enemy.transform.position);
+
 			Destroy(enemy.gameObject);
 
 			s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
