@@ -165,7 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1493990980076390861}
   - component: {fileID: 2561172025971045384}
-  m_Layer: 2
+  m_Layer: 13
   m_Name: Bright Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6444406613710964026}
   - component: {fileID: 4508034962770863994}
-  m_Layer: 2
+  m_Layer: 13
   m_Name: Dim Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1553,7 +1553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9018114555703990243}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NavMesh Modifier Volumes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1677,7 +1677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1456259314807344554}
   - component: {fileID: 2623102933441800748}
-  m_Layer: 2
+  m_Layer: 13
   m_Name: Dim Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
