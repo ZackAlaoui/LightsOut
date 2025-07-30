@@ -172,14 +172,15 @@ public class AbilityManager : MonoBehaviour
 
     private IEnumerator CognitiveLoop()
     {
-        // Dim flashlight
+        // Wait until _flashlight is assigned
+        yield return new WaitUntil(() => _flashlight != null);
+
         _flashlight.IntensityMultiplier *= 0.75f;
 
-        // Find all card UI components
         CardAbilityUI[] allCards = FindObjectsOfType<CardAbilityUI>();
         foreach (var card in allCards)
         {
-            card.gameObject.AddComponent<CooldownScaler>().ApplyMultiplier(0.33f); // 3x faster cooldown
+            card.gameObject.AddComponent<CooldownScaler>().ApplyMultiplier(0.33f);
         }
 
         yield return new WaitForSeconds(6f);
@@ -187,11 +188,12 @@ public class AbilityManager : MonoBehaviour
         foreach (var card in allCards)
         {
             CooldownScaler scaler = card.GetComponent<CooldownScaler>();
-            if (scaler != null) Destroy(scaler); // Remove effect after duration
+            if (scaler != null) Destroy(scaler);
         }
 
         _flashlight.IntensityMultiplier /= 0.75f;
     }
+
 
 
     private string _lastCardUsed = null;

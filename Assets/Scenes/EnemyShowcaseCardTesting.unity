@@ -2818,7 +2818,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1088251664}
     m_Modifications:
     - target: {fileID: 735897927844277503, guid: 8638d53723e92144da84ae2786e4db63, type: 3}
       propertyPath: unavailableColor.a
@@ -4423,6 +4423,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6a4c39ee90a884492e4fcbcc4306e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1088251664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7963208223502555494, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
+  m_PrefabInstance: {fileID: 9147452600333747117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1107998813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5827,6 +5832,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347052051}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!224 &1384245907 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3964259987279938375, guid: 8638d53723e92144da84ae2786e4db63, type: 3}
+  m_PrefabInstance: {fileID: 643419654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1416689526
 GameObject:
   m_ObjectHideFlags: 0
@@ -8970,7 +8980,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7963208223502555494, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1384245907}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5786970277474797423, guid: 6c1f0eb5be642214a8c6b0219eae6437, type: 3}
       insertIndex: -1
@@ -8990,4 +9003,3 @@ SceneRoots:
   - {fileID: 1579330867}
   - {fileID: 1548877691}
   - {fileID: 5336635824706510045}
-  - {fileID: 643419654}

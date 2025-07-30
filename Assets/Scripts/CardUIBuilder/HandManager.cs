@@ -231,4 +231,19 @@ public class HandManager : MonoBehaviour
 
         Debug.Log($"Activated card in slot {index + 1}: {display.cardData.cardName}");
     }
+    
+    public bool TryAddCardToHand(CardInformation cardData)
+    {
+        for (int i = 0; i < cardsInHand.Length; i++)
+        {
+            if (cardsInHand[i] == null)
+            {
+                AddCardToHand(cardData); // Reuse existing method
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

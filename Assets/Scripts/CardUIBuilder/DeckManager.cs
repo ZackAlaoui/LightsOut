@@ -33,15 +33,20 @@ public class DeckManager : MonoBehaviour
 
     public static void DrawCard(HandManager handManager)
     {
-        if (Instance.allCards.Count == 0)
+        if (Instance.allCards.Count == 0) return;
+    
+        for (int attempts = 0; attempts < Instance.allCards.Count; attempts++)
         {
-            return;
+            CardInformation nextCard = Instance.allCards[Instance.currentIndex];
+            int previousIndex = Instance.currentIndex;
+    
+            Instance.currentIndex = (Instance.currentIndex + 1) % Instance.allCards.Count;
+    
+            bool success = handManager.TryAddCardToHand(nextCard);
+            if (success) break;
         }
-
-        CardInformation nextCard = Instance.allCards[Instance.currentIndex];
-        HandManager.AddCardToHand(nextCard);
-        Instance.currentIndex = (Instance.currentIndex + 1) % Instance.allCards.Count;
     }
+
 
     private void ShuffleDeck()
     {
