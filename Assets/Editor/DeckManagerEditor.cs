@@ -9,11 +9,10 @@ public class DeckManagerEditor : Editor{
     public override void OnInspectorGUI(){
         DrawDefaultInspector();
 
-        DeckManager deckManager = (DeckManager)target;
         if(GUILayout.Button("Draw Next Card")){
             HandManager handManager = FindObjectOfType<HandManager>();
             if(handManager != null){
-                deckManager.DrawCard(handManager);
+                DeckManager.DrawCard(handManager);
             }
         }
     }

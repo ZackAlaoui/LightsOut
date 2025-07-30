@@ -31,16 +31,16 @@ public class DeckManager : MonoBehaviour
         ShuffleDeck();
     }
 
-    public void DrawCard(HandManager handManager)
+    public static void DrawCard(HandManager handManager)
     {
-        if (allCards.Count == 0)
+        if (Instance.allCards.Count == 0)
         {
             return;
         }
 
-        CardInformation nextCard = allCards[currentIndex];
-        handManager.AddCardToHand(nextCard);
-        currentIndex = (currentIndex + 1) % allCards.Count;
+        CardInformation nextCard = Instance.allCards[Instance.currentIndex];
+        HandManager.AddCardToHand(nextCard);
+        Instance.currentIndex = (Instance.currentIndex + 1) % Instance.allCards.Count;
     }
 
     private void ShuffleDeck()

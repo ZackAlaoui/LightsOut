@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5153734029969291093
+--- !u!1 &5219365248157064217
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6719581373737117545}
-  - component: {fileID: 4498853974641506461}
+  - component: {fileID: 8458405050432033475}
+  - component: {fileID: 1316890417372878302}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Hand Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6719581373737117545
+--- !u!4 &8458405050432033475
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5153734029969291093}
+  m_GameObject: {fileID: 5219365248157064217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4498853974641506461
+--- !u!114 &1316890417372878302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5153734029969291093}
+  m_GameObject: {fileID: 5219365248157064217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f5d7d367c989d2428f2edf68e29f198, type: 3}
+  m_Script: {fileID: 11500000, guid: a0946ef98e02d9a40a092bb660c4ff9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyManagerPrefab: {fileID: 3221644034308463510, guid: 576005981520ba442922256faf4f5174, type: 3}
-  _batteryManagerPrefab: {fileID: 3206529058688674439, guid: 836d7d136c6d04f4b84f3f3072879472, type: 3}
-  _audioManagerPrefab: {fileID: 3844562705976917380, guid: f9614ac155ad2ac4bb650e5323952db7, type: 3}
-  _deckManagerPrefab: {fileID: 7731290455747897767, guid: bfed73528b704e4478d90247382a4470, type: 3}
-  _handManagerPrefab: {fileID: 5219365248157064217, guid: 4bb3d30b3312cf74bb0c41e3513be009, type: 3}
+  pokerHandManager: {fileID: 0}
+  cardPrefab: {fileID: 6953982017557780813, guid: 2fdedd9acb6fac24aa417cbc20928527, type: 3}
+  handTransform: {fileID: 0}
+  fanSpread: 5
+  cardSpacing: 100
+  verticalSpacing: 100
+  cardSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

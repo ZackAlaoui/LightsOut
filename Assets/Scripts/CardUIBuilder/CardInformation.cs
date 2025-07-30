@@ -28,5 +28,17 @@ namespace CardData
             Passive
         }
 
+        public static CardInformation FromPlayingCard(PlayingCard card)
+        {
+            CardInformation cardInfo = new CardInformation();
+            cardInfo.name = card.customName;
+            cardInfo.cardType = new List<CardType>(1);
+            cardInfo.cardType.Add(CardType.Brains);
+            cardInfo.abilityDesc = "";
+            cardInfo.usageType = new List<CardUsageType>(1);
+            cardInfo.usageType.Add(CardUsageType.Passive);
+            cardInfo.cardSprite = card.cardSprite;
+            return cardInfo;
+        }
     }
 }

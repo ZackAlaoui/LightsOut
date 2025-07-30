@@ -6,6 +6,8 @@ using Game;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CardData;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -193,7 +195,7 @@ public class PlayingCardDrawer : MonoBehaviour
     private void CreateModernUI()
     {
         // Find or create Canvas with modern settings
-        mainCanvas = FindObjectOfType<Canvas>();
+        mainCanvas = null; // FindObjectOfType<Canvas>();
         if (mainCanvas == null)
         {
             GameObject canvasGO = new GameObject("Modern Card Canvas");
@@ -1506,7 +1508,8 @@ public class PlayingCardDrawer : MonoBehaviour
         }
         
         playerHand.Add(card);
-        CreateHotbarCard(card, playerHand.Count - 1);
+        // CreateHotbarCard(card, playerHand.Count - 1);
+        HandManager.AddCardToHand(CardInformation.FromPlayingCard(card));
         Debug.Log($"Added {card.GetCardName()} to hotbar. Total cards: {playerHand.Count}");
     }
     
@@ -1696,6 +1699,7 @@ public class PlayingCardDrawer : MonoBehaviour
     
     private IEnumerator DrawSingleCard()
     {
+
         if (allCards.Count == 0)
         {
             Debug.LogWarning("No cards loaded! Check the cards base path and make sure sprites exist.");
@@ -1708,14 +1712,16 @@ public class PlayingCardDrawer : MonoBehaviour
             Debug.Log("No card selected! Please select a card first.");
             yield break;
         }
-        
+
+        PlayingCard drawnCard = currentDrawnCards[selectedCardIndex];
+
         // Attempt to add selected card to hand or trigger swap mode
-        AddCardToHotbar(currentDrawnCards[selectedCardIndex]);
+        AddCardToHotbar(drawnCard);
 
         // If hand was full, AddCardToHotbar will set isSwapMode. In that case we remember the pending card.
         if (isSwapMode)
         {
-            SetPendingSwapCard(currentDrawnCards[selectedCardIndex]);
+            SetPendingSwapCard(drawnCard);
         }
         
         // Only turn card back and deselect if not in swap mode
@@ -1744,11 +1750,11 @@ public class PlayingCardDrawer : MonoBehaviour
             // In swap mode, just deselect the card but keep it available
             DeselectAllCards();
         }
-        
-        Debug.Log($"Drew selected card: {currentDrawnCards[selectedCardIndex].GetCardName()}. Total cards in hotbar: {playerHand.Count}");
+
+            Debug.Log($"Drew selected card: {drawnCard.GetCardName()}. Total cards in hotbar: {playerHand.Count}");
         
         // Placeholder behavior - you can customize this
-        OnCardDrawn(currentDrawnCards[selectedCardIndex]);
+        OnCardDrawn(drawnCard);
     }
     
     // Advances the game to the next round and returns the player to the primary gameplay scene that
@@ -1761,18 +1767,18 @@ public class PlayingCardDrawer : MonoBehaviour
         GameManager.ProceedToNextRound();
 
         // Return the player to the appropriate gameplay scene so they can face the new round.
-        string targetScene = GameManager.PreviousSceneName;
+        // string targetScene = GameManager.PreviousSceneName;
 
-        if (!string.IsNullOrEmpty(targetScene))
-        {
-            Debug.Log($"Loading {targetScene} for next round...");
-            SceneManager.LoadScene(targetScene);
-        }
-        else
-        {
-            Debug.LogWarning("Previous scene not found. Loading fallback scene 'SampleScene'.");
-            SceneManager.LoadScene("SampleScene");
-        }
+        // if (!string.IsNullOrEmpty(targetScene))
+        // {
+        //     Debug.Log($"Loading {targetScene} for next round...");
+        //     SceneManager.LoadScene(targetScene);
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("Previous scene not found. Loading fallback scene 'SampleScene'.");
+        //     SceneManager.LoadScene("SampleScene");
+        // }
     }
     
     private IEnumerator TurnCardToBack(int cardIndex)

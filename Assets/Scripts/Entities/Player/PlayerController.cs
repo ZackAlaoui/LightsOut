@@ -109,10 +109,6 @@ namespace Game.Player
             _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
-
-#if DEBUG
-            InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
-#endif
         }
 
         // Update is called once per frame

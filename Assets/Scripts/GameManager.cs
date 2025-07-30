@@ -6,6 +6,8 @@ using static Game.Enemy.EnemyManager;
 using System.Collections;
 using Game.Player;
 
+using UnityEngine.InputSystem;
+
 namespace Game
 {
     public class GameManager : MonoBehaviour
@@ -17,6 +19,10 @@ namespace Game
         public static BatteryManager BatteryManager { get; private set; }       //Getter and setter for the BatteryManager
         [SerializeField] private GameObject _audioManagerPrefab;
         public static AudioManager AudioManager { get; private set; }
+        [SerializeField] private GameObject _deckManagerPrefab;
+        public static DeckManager DeckManager { get; private set; }
+        [SerializeField] private GameObject _handManagerPrefab;
+        public static HandManager HandManager { get; private set; } 
 
         public static int CurrentRound { get; private set; } = 0;
 
@@ -44,10 +50,14 @@ namespace Game
             if (_enemyManagerPrefab == null) throw new NullReferenceException("EnemyManager prefab is null.");
             if (_batteryManagerPrefab == null) throw new NullReferenceException("BatteryManager prefab is null.");
             if (_audioManagerPrefab == null) throw new NullReferenceException("AudioManager prefab is null.");
+            if (_deckManagerPrefab == null) throw new NullReferenceException("DeckManager prefab is null.");
+            if (_handManagerPrefab == null) throw new NullReferenceException("HandManager prefab is null.");
 
             EnemyManager = Instantiate(_enemyManagerPrefab, transform).GetComponent<EnemyManager>();
             BatteryManager = Instantiate(_batteryManagerPrefab, transform).GetComponent<BatteryManager>();
             AudioManager = Instantiate(_audioManagerPrefab, transform).GetComponent<AudioManager>();
+            DeckManager = Instantiate(_deckManagerPrefab, transform).GetComponent<DeckManager>();
+            HandManager = Instantiate(_handManagerPrefab, transform).GetComponent<HandManager>();
 
             // Register for scene change callbacks so we can keep track of which scene the game
             // is currently on and which one was active previously.
@@ -76,6 +86,10 @@ namespace Game
                 EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
                 BatteryManager.SpawnBatteries(7);
             }
+
+#if DEBUG
+            InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
+#endif
         }
 
         public static void StartGame()
@@ -111,15 +125,23 @@ namespace Game
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
-                    //Transition to the dungeon scene
-                    yield return TransitionManager.LoadLevel("CardShopDungeon");
-                    //Set the player health to unlimited in the dungeon
-                    PlayerController playerController = Game.Player.PlayerController.Instance;
-                    playerController.Health = 5f; // Set to a high value for the dungeon
-                    //Make sure the current player gameobect is sent to the dungeon scene
+                    // //Transition to the dungeon scene
+                    // yield return TransitionManager.LoadLevel("CardShopDungeon");
+                    // //Set the player health to unlimited in the dungeon
+                    // PlayerController playerController = Game.Player.PlayerController.Instance;
+                    // playerController.Health = 5f; // Set to a high value for the dungeon
+                    // //Make sure the current player gameobect is sent to the dungeon scene
+
+                    yield return TransitionManager.LoadLevel("DrawCard");
+                    PlayerController.Instance.gameObject.SetActive(false);
                     break;
                 case 5:
-                    // FirstMap
+                    PlayerController.Instance.gameObject.SetActive(true);
+                    yield return TransitionManager.LoadLevel("FirstMap");
+                    EnemyManager.BuildNavMeshes();
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 6:
                     // FirstMap

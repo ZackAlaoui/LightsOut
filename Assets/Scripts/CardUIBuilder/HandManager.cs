@@ -4,11 +4,13 @@ using UnityEngine;
 using CardData;
 using Game.Player;
 using Game.Enemy;
+using Unity.VisualScripting;
 
 public class HandManager : MonoBehaviour
 {
+    private static HandManager s_instance;
+
     public PokerHandManager pokerHandManager;
-    public DeckManager deckManager;
     public GameObject cardPrefab;
     public Transform handTransform;
     public float fanSpread = 5f;
@@ -26,18 +28,29 @@ public class HandManager : MonoBehaviour
 
     private void Awake()
     {
-        _player = FindObjectOfType<PlayerController>();
+        if (s_instance != null && s_instance != this)
+        {
+            Debug.LogWarning("HandManager has already been instantiated. Deleting duplicate HandManager.");
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            s_instance = this;
+        }
+
+        _player = PlayerController.Instance;
     }
 
 
-    public void AddCardToHand(CardInformation cardData)
+    public static void AddCardToHand(CardInformation cardData)
     {
-        for (int i = 0; i < cardsInHand.Length; i++)
+        for (int i = 0; i < s_instance.cardsInHand.Length; i++)
         {
-            if (cardsInHand[i] == null)
+            if (s_instance.cardsInHand[i] == null)
             {
-                GameObject newCard = Instantiate(cardPrefab);
-                newCard.transform.SetParent(cardSlots[i], false);
+                GameObject newCard = Instantiate(s_instance.cardPrefab);
+                newCard.transform.SetParent(s_instance.cardSlots[i], false);
 
                 RectTransform rt = newCard.GetComponent<RectTransform>();
                 rt.anchorMin = Vector2.zero;
@@ -46,7 +59,7 @@ public class HandManager : MonoBehaviour
                 rt.offsetMax = Vector2.zero;
                 rt.localScale = Vector3.one;
 
-                cardsInHand[i] = newCard;
+                s_instance.cardsInHand[i] = newCard;
 
                 CardDisplay display = newCard.GetComponent<CardDisplay>();
                 display.cardData = cardData;
@@ -58,10 +71,10 @@ public class HandManager : MonoBehaviour
                 // Track passive cards
                 if (cardData.usageType.Contains(CardInformation.CardUsageType.Passive))
                 {
-                    passiveCardIndexes.Add(i);
+                    s_instance.passiveCardIndexes.Add(i);
                 }
 
-                pokerHandManager?.EvaluateHandAndApplyBuffs();
+                s_instance.pokerHandManager?.EvaluateHandAndApplyBuffs();
                 return;
             }
         }
@@ -73,7 +86,7 @@ public class HandManager : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            deckManager.DrawCard(this);
+            DeckManager.DrawCard(this);
         }
     }
 
@@ -132,24 +145,24 @@ public class HandManager : MonoBehaviour
             switch (name)
             {
                 case "Last Light":
-                    if (_player.Flashlight.RemainingBatteryLife <= 2f)
+                    if (_player != null && _player.Flashlight.RemainingBatteryLife <= 2f)
                         triggered = true;
                     break;
 
                 case "Decay Bloom":
-                    if (_player.Health / _player.MaxHealth <= 0.25f)
+                    if (_player != null && _player.Health / _player.MaxHealth <= 0.25f)
                         triggered = true;
                     break;
 
                 case "Slipstream Echo":
-                    if (!_player.IsSprinting && !_slipstreamTriggered)
+                    if (_player != null && !_player.IsSprinting && !_slipstreamTriggered)
                     {
                         _slipstreamTriggered = true;
                         triggered = true;
                     }
                     break;
                 case "Adrenaline Spike":
-                    if (_player.Health / _player.MaxHealth < 0.5f)
+                    if (_player != null && _player.Health / _player.MaxHealth < 0.5f)
                         triggered = true;
                     break;
 
