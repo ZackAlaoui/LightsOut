@@ -4,13 +4,13 @@ using UnityEngine;
 using CardData;
 using Game.Player;
 using Game.Enemy;
-using Unity.VisualScripting;
 
 public class HandManager : MonoBehaviour
 {
     private static HandManager s_instance;
 
     public PokerHandManager pokerHandManager;
+    public DeckManager deckManager;
     public GameObject cardPrefab;
     public Transform handTransform;
     public float fanSpread = 5f;
@@ -23,7 +23,7 @@ public class HandManager : MonoBehaviour
     // Track passive cards separately
     private List<int> passiveCardIndexes = new List<int>();
     
-    private PlayerController _player;
+    private PlayerController _player;                                   //PlayerController reference
     private bool _slipstreamTriggered = false;
 
     private void Awake()
@@ -114,9 +114,9 @@ public class HandManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
-            DeckManager.DrawCard(this);
+            DeckManager.DrawCard();
         }
     }
 
@@ -175,24 +175,24 @@ public class HandManager : MonoBehaviour
             switch (name)
             {
                 case "Last Light":
-                    if (_player != null && _player.Flashlight.RemainingBatteryLife <= 2f)
+                    if (_player.Flashlight.RemainingBatteryLife <= 2f)
                         triggered = true;
                     break;
 
                 case "Decay Bloom":
-                    if (_player != null && _player.Health / _player.MaxHealth <= 0.25f)
+                    if (_player.Health / _player.MaxHealth <= 0.25f)
                         triggered = true;
                     break;
 
                 case "Slipstream Echo":
-                    if (_player != null && !_player.IsSprinting && !_slipstreamTriggered)
+                    if (!_player.IsSprinting && !_slipstreamTriggered)
                     {
                         _slipstreamTriggered = true;
                         triggered = true;
                     }
                     break;
                 case "Adrenaline Spike":
-                    if (_player != null && _player.Health / _player.MaxHealth < 0.5f)
+                    if (_player.Health / _player.MaxHealth < 0.5f)
                         triggered = true;
                     break;
 

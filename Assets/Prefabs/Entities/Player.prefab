@@ -1210,7 +1210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed35c1e77206e5244a344c52e253599e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spookyText: {fileID: 0}
+  SpookyText: {fileID: 0}
   fadeDuration: 2
   _sprintBatteryDrainRate: 1.5
   _baseMovementSpeed: 7
@@ -1219,6 +1219,7 @@ MonoBehaviour:
   _baseDamage: 5
   _line: {fileID: 724815308814910586}
   _bulletSpawn: {fileID: 6045274275704572225}
+  _spookyTextObject: {fileID: 0}
   _baseMaxHealth: 5
   _healingDelay: 3
   _healthBarSlider: {fileID: 2618771559832211134}

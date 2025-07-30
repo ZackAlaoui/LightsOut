@@ -10,10 +10,7 @@ public class DeckManagerEditor : Editor{
         DrawDefaultInspector();
 
         if(GUILayout.Button("Draw Next Card")){
-            HandManager handManager = FindObjectOfType<HandManager>();
-            if(handManager != null){
-                DeckManager.DrawCard(handManager);
-            }
+            DeckManager.DrawCard();
         }
     }
 }

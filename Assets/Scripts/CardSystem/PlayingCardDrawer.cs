@@ -608,7 +608,7 @@ public class PlayingCardDrawer : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            var info = HandManager.CardsInHand[i].GetComponentInChildren<CardDisplay>().cardData;
+            var info = HandManager.CardsInHand[i]?.GetComponentInChildren<CardDisplay>().cardData;
             if (info == null || info.cardSprite == null) continue;
 
             PlayingCardSuit ps = PlayingCardSuit.Clubs;

@@ -25,13 +25,6 @@ public class TransitionManager : MonoBehaviour
             return;
         }
 
-        levelLoader = GameObject.Find("LevelLoader");
-        if (levelLoader == null)
-        {
-            Debug.LogError("LevelLoader GameObject not found in the scene.");
-            return;
-        }
-
         Transform parent = GameObject.Find("CrossFade").transform;
         Transform child = parent.Find("Image");
         obj = child.gameObject;
@@ -60,11 +53,14 @@ public class TransitionManager : MonoBehaviour
         //Play Animation
         instance.transition.SetTrigger("Start");
 
-        //Wait     
-        yield return new WaitForSeconds(instance.transitionTime);
-
         //Load Scene
         AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(name);
+        loadingOperation.allowSceneActivation = false; // Prevent automatic activation
+
+        //Wait     
+        yield return new WaitForSeconds(instance.transitionTime);
+        loadingOperation.allowSceneActivation = true; // Allow scene activation after the wait
+    
         while (!loadingOperation.isDone) yield return null; // wait until scene has loaded
         instance.HideLoadingUI();              // Hide canvas group
         instance.transition.enabled = false;   // Optional: stop animator from doing anything else
