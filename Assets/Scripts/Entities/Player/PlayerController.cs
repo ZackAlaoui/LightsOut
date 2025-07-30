@@ -12,24 +12,19 @@ namespace Game.Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
-        Animator animator;
-
-        AudioManager audioManager;
         public TextMeshProUGUI spookyText; // Text to display spooky messages
         public float fadeDuration = 2f; // Duration for fading text
-        private Coroutine fadeCoroutine; // Coroutine for fading text
+        private Coroutine _fadeCoroutine; // Coroutine for fading text
         private bool _isSprinting = false;
         [SerializeField] private float _sprintBatteryDrainRate = 1.5f; // units per second
 
         [SerializeField] private float _baseMovementSpeed = 7f;     //Base movement speed of the player
         public float MovementSpeedMultiplier { get; set; } = 1f;    //Multiplier for the movement speed 
-        private Transform aimTransform;                             //Transform of the aim gameobject
-        [SerializeField] private GameObject _model;                 //Model of the player
+        [SerializeField] private Transform _aimTransform;                             //Transform of the aim gameobject
         [SerializeField] private Animator _animator;
-        [SerializeField] private GameObject gun;                   //Gun of the player
         [SerializeField] private float _baseDamage = 5;             //Base damage dealt by the player
-        [SerializeField] private LineRenderer line;                 //Line renderer for the player's attack
-        [SerializeField] private Transform bulletSpawn;              //Transform for the bullet spawn point
+        [SerializeField] private LineRenderer _line;                 //Line renderer for the player's attack
+        [SerializeField] private Transform _bulletSpawn;              //Transform for the bullet spawn point
         public float DamageMultiplier { get; set; } = 1f;           //Multiplier for the damage dealt by the player
 
         [SerializeField] private float _baseMaxHealth = 5f;         //Base maximum health of the player
@@ -99,14 +94,8 @@ namespace Game.Player
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
-            //rb = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
-            audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
-
-            if (_model == null) _model = transform.Find("Model").gameObject;
-            if (_model == null) _model = transform.Find("Sprite").gameObject;
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
-            if (aimTransform == null) aimTransform = transform.Find("Aim").transform;
+            if (_aimTransform == null) _aimTransform = transform.Find("Aim")?.transform;
 
             Flashlight = GetComponentInChildren<FlashlightManager>();
 
@@ -120,6 +109,10 @@ namespace Game.Player
             _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
+
+#if DEBUG
+            InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
+#endif
         }
 
         // Update is called once per frame
@@ -183,11 +176,11 @@ namespace Game.Player
             //Debug.Log($"Aim Direction value {aimDirection}");
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg; //Calculates the angle of the aim direction
-            aimTransform.eulerAngles = new Vector3(0, -angle, 0);                       //Sets the rotation of the aim transform to the calculated angle
+            _aimTransform.eulerAngles = new Vector3(0, -angle, 0);                       //Sets the rotation of the aim transform to the calculated angle
 
-            //Debug.Log($"Aim Transform value {aimTransform.eulerAngles}");
+            //Debug.Log($"Aim Transform value {_aimTransform.eulerAngles}");
 
-            line.startColor = line.endColor = new Color(1f, 0f, 0f, Math.Max(0, line.startColor.a - 2.25f * Time.deltaTime));
+            _line.startColor = _line.endColor = new Color(1f, 0f, 0f, Math.Max(0, _line.startColor.a - 2.25f * Time.deltaTime));
 
             if (_isSprinting && Flashlight.IsEnabled && Flashlight.RemainingBatteryLife > 0)
             {
@@ -207,18 +200,17 @@ namespace Game.Player
             if (_fireAction != null) _fireAction.performed -= Fire;
         }
 
-        //[SerializeField] private LineRenderer line; // TEMPORARY
         private void Fire(InputAction.CallbackContext callbackContext)
         {
-            audioManager.PlaySFX(audioManager.fire);
-            line.startColor = line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
+            AudioManager.PlaySFX(AudioManager.Fire);
+            _line.startColor = _line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
 
-            line.SetPosition(0, bulletSpawn.position);
-            line.SetPosition(1, bulletSpawn.position + 200f * (_aimingAt - bulletSpawn.position).normalized);
+            _line.SetPosition(0, _bulletSpawn.position);
+            _line.SetPosition(1, _bulletSpawn.position + 200f * (_aimingAt - _bulletSpawn.position).normalized);
 
-            if (Physics.BoxCast(bulletSpawn.position, new Vector3(line.startWidth, line.startWidth, 4f), _aimingAt - bulletSpawn.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
+            if (Physics.BoxCast(_bulletSpawn.position, new Vector3(_line.startWidth, _line.startWidth, 4f), _aimingAt - _bulletSpawn.position, out RaycastHit hit, Camera.main.transform.rotation, Mathf.Infinity, ~LayerMask.GetMask("Ignore Raycast")))
             {
-                line.SetPosition(1, new Vector3(hit.point.x, 1f, hit.point.z));
+                _line.SetPosition(1, new Vector3(hit.point.x, 1f, hit.point.z));
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
                 target?.Damage(this, _baseDamage * DamageMultiplier);
             }
@@ -233,13 +225,14 @@ namespace Game.Player
                 // TransitionManager.instance.LoadNextLevel();
                 //load into a new scene
                 //SceneManager.LoadScene(2); // Assuming scene index 2 is the next level
+                StartCoroutine(TransitionManager.LoadLevel("CardShopDungeon"));
             }
 
             if (other.gameObject.tag == "MagicBook")
             {
                 // Cancel any ongoing fade-out and start fade-in
-                if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-                fadeCoroutine = StartCoroutine(FadeText(0f, 1f));   
+                if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
+                _fadeCoroutine = StartCoroutine(FadeText(0f, 1f));   
             }
         }
 

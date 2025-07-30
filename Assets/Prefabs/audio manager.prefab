@@ -45,7 +45,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.025
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -175,10 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bbf4865a651a147af48cc8d566db9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 915517345889481746}
-  SFXSource: {fileID: 2510795397676549516}
-  background: {fileID: 8300000, guid: 3d5ac02c270c0f04fbbef7a227dbdc58, type: 3}
-  fire: {fileID: 8300000, guid: 20de866e8e504eb4cbc7ac4514370436, type: 3}
+  _musicSource: {fileID: 915517345889481746}
+  _SFXSource: {fileID: 2510795397676549516}
+  _background: {fileID: 8300000, guid: 3d5ac02c270c0f04fbbef7a227dbdc58, type: 3}
+  _fire: {fileID: 8300000, guid: 20de866e8e504eb4cbc7ac4514370436, type: 3}
 --- !u!1 &4442085902846072039
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

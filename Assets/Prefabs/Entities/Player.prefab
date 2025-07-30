@@ -1210,14 +1210,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed35c1e77206e5244a344c52e253599e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spookyText: {fileID: 0}
+  fadeDuration: 2
   _sprintBatteryDrainRate: 1.5
   _baseMovementSpeed: 7
-  _model: {fileID: 6852537536943190384}
+  _aimTransform: {fileID: 1393089302598895294}
   _animator: {fileID: 5617555475282814417}
-  gun: {fileID: 9070236644606607492}
   _baseDamage: 5
-  line: {fileID: 724815308814910586}
-  bulletSpawn: {fileID: 6045274275704572225}
+  _line: {fileID: 724815308814910586}
+  _bulletSpawn: {fileID: 6045274275704572225}
   _baseMaxHealth: 5
   _healingDelay: 3
   _healthBarSlider: {fileID: 2618771559832211134}
