@@ -21,8 +21,8 @@ namespace Game
         public static AudioManager AudioManager { get; private set; }
         [SerializeField] private GameObject _deckManagerPrefab;
         public static DeckManager DeckManager { get; private set; }
-        [SerializeField] private GameObject _handManagerPrefab;
-        public static HandManager HandManager { get; private set; } 
+        [SerializeField] private GameObject _handUIPrefab;
+        public static GameObject HandUI { get; private set; } 
 
         public static int CurrentRound { get; private set; } = 0;
 
@@ -51,13 +51,12 @@ namespace Game
             if (_batteryManagerPrefab == null) throw new NullReferenceException("BatteryManager prefab is null.");
             if (_audioManagerPrefab == null) throw new NullReferenceException("AudioManager prefab is null.");
             if (_deckManagerPrefab == null) throw new NullReferenceException("DeckManager prefab is null.");
-            if (_handManagerPrefab == null) throw new NullReferenceException("HandManager prefab is null.");
+            if (_handUIPrefab == null) throw new NullReferenceException("HandManager prefab is null.");
 
             EnemyManager = Instantiate(_enemyManagerPrefab, transform).GetComponent<EnemyManager>();
             BatteryManager = Instantiate(_batteryManagerPrefab, transform).GetComponent<BatteryManager>();
             AudioManager = Instantiate(_audioManagerPrefab, transform).GetComponent<AudioManager>();
             DeckManager = Instantiate(_deckManagerPrefab, transform).GetComponent<DeckManager>();
-            HandManager = Instantiate(_handManagerPrefab, transform).GetComponent<HandManager>();
 
             // Register for scene change callbacks so we can keep track of which scene the game
             // is currently on and which one was active previously.
@@ -110,6 +109,7 @@ namespace Game
                     {
                         yield return TransitionManager.LoadLevel("FirstMap");
                     }
+                    HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform);
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                     BatteryManager.SpawnBatteries(10);

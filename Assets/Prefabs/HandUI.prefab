@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokerHandManager: {fileID: 7661112693367719142}
-  deckManager: {fileID: 4200535189503226770}
   cardPrefab: {fileID: 6953982017557780813, guid: 2fdedd9acb6fac24aa417cbc20928527, type: 3}
   handTransform: {fileID: 8805245357074817554}
   fanSpread: 0

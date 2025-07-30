@@ -587,12 +587,12 @@ public class PlayingCardDrawer : MonoBehaviour
 
         // After creating the hotbar layout, populate it with the player's current active cards
         // that live inside DeckManager so the UI reflects the latest state.
-        PopulateHotbarFromDeckManager();
+        PopulateHotbarFromHandUI();
     }
 
-    private void PopulateHotbarFromDeckManager()
+    private void PopulateHotbarFromHandUI()
     {
-        if (DeckManager.Instance == null) return;
+        if (GameManager.HandUI == null) return;
 
         // Clear any existing local list / visual children
         playerHand.Clear();
@@ -604,11 +604,11 @@ public class PlayingCardDrawer : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        int count = Mathf.Min(maxCardsInHand, DeckManager.Instance.allCards.Count);
+        int count = HandManager.CardsInHand.Length;
 
         for (int i = 0; i < count; i++)
         {
-            var info = DeckManager.Instance.allCards[i];
+            var info = HandManager.CardsInHand[i].GetComponentInChildren<CardDisplay>().cardData;
             if (info == null || info.cardSprite == null) continue;
 
             PlayingCardSuit ps = PlayingCardSuit.Clubs;
@@ -626,6 +626,7 @@ public class PlayingCardDrawer : MonoBehaviour
 
             PlayingCard pc = new PlayingCard
             {
+                customName = info.cardName,
                 value = 1,
                 suit = ps,
                 cardSprite = info.cardSprite
@@ -1352,8 +1353,9 @@ public class PlayingCardDrawer : MonoBehaviour
                 StartCoroutine(FadeCard(i, 1f, 0.2f));
                 
                 yield return new WaitForSeconds(0.1f);
-                
+
                 // Flip to reveal card with enhanced animation
+                Debug.Log(randomCard);
                 yield return StartCoroutine(FlipCardWithEffects(i, randomCard.cardSprite));
                 
                 Debug.Log($"Drew: {randomCard.GetCardName()}");
@@ -1526,6 +1528,8 @@ public class PlayingCardDrawer : MonoBehaviour
         
         // Replace the card in the list
         playerHand[hotbarIndex] = newCard;
+
+        HandManager.SwapCardInHand(CardInformation.FromPlayingCard(newCard), hotbarIndex);
         
         // Update the visual representation
         UpdateHotbarCardVisual(hotbarIndex, newCard);

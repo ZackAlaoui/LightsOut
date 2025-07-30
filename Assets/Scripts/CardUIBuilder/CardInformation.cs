@@ -31,7 +31,7 @@ namespace CardData
         public static CardInformation FromPlayingCard(PlayingCard card)
         {
             CardInformation cardInfo = new CardInformation();
-            cardInfo.name = card.customName;
+            cardInfo.cardName = card.customName;
             cardInfo.cardType = new List<CardType>(1);
             cardInfo.cardType.Add(CardType.Brains);
             cardInfo.abilityDesc = "";

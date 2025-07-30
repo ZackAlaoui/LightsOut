@@ -52,35 +52,35 @@ public class PokerHandManager : MonoBehaviour
 
         if (counts.Contains(4))
         {
-            Debug.Log("Four of a Kind (Suit): Damage Buff Applied");
+            // Debug.Log("Four of a Kind (Suit): Damage Buff Applied");
             player.DamageMultiplier = 2f;
         }
         else if (counts.Contains(3) && counts.Contains(2))
         {
-            Debug.Log("Full House (Suit): Max Health Buff Applied");
+            // Debug.Log("Full House (Suit): Max Health Buff Applied");
             player.MaxHealthMultiplier = 2f;
         }
         else if (counts.Contains(3))
         {
-            Debug.Log("Three of a Kind (Suit): Damage Buff Applied");
+            // Debug.Log("Three of a Kind (Suit): Damage Buff Applied");
             player.DamageMultiplier = 1.5f;
         }
         else if (counts.Count(c => c == 2) == 2)
         {
-            Debug.Log("Two Pair (Suit): Max Health Buff Applied");
+            // Debug.Log("Two Pair (Suit): Max Health Buff Applied");
             player.MaxHealthMultiplier = 1.5f;
         }
         else if (counts.Contains(2))
         {
-            Debug.Log("Pair (Suit): Speed Buff Applied");
+            // Debug.Log("Pair (Suit): Speed Buff Applied");
             player.MovementSpeedMultiplier = 1.5f;
         }
         else
         {
-            Debug.Log("No matching poker hand found.");
+            // Debug.Log("No matching poker hand found.");
         }
 
-        Debug.Log($"Evaluating hand with {currentHand.Count} cards.");
+        // Debug.Log($"Evaluating hand with {currentHand.Count} cards.");
     }
 
     void ResetPlayerBuffs()
