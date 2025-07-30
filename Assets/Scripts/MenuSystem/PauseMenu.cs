@@ -1,65 +1,91 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using CardData;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static bool GameIsPaused = false;
+
     public GameObject pauseMenuUI;
-    public Button resumeButton;
-    public Button restartButton;
-    public Button quitButton;
-
-    private bool isPaused = false;
-
-    private void Start()
-    {
-        pauseMenuUI.SetActive(false);
-
-        resumeButton.onClick.AddListener(Resume);
-        restartButton.onClick.AddListener(Restart);
-        quitButton.onClick.AddListener(QuitGame);
-    }
+    public GameObject cardInfoPanel;
+    public TMP_Text cardInfoText;
+    public GameObject resumeButton;
+    public GameObject currentCardsButton;
+    public GameObject quitButton;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused) Resume();
-            else Pause();
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
         }
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+        cardInfoPanel.SetActive(false); // Hide extra info
         Time.timeScale = 1f;
-        isPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        GameIsPaused = false;
     }
 
-    private void Pause()
+    void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameIsPaused = true;
     }
 
-    private void Restart()
+    public void CurrentCardInformation()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("Current Card Information loading...");
+
+        var handManager = FindObjectOfType<HandManager>();
+        if (handManager == null || cardInfoText == null) return;
+
+        List<CardInformation> cards = handManager.GetCurrentHand();
+
+        if (cards == null || cards.Count == 0)
+        {
+            cardInfoText.text = "You are not holding any cards.";
+        }
+        else
+        {
+            cardInfoText.text = "";
+            foreach (CardInformation card in cards)
+            {
+                cardInfoText.text += $"<b>{card.cardName}</b>\n{card.abilityDesc}\n\n";
+            }
+        }
+        resumeButton.SetActive(false);
+        currentCardsButton.SetActive(false);
+        quitButton.SetActive(false);
+        cardInfoPanel.SetActive(true);
+        
     }
 
-    private void QuitGame()
+
+    public void Quit()
     {
-        Time.timeScale = 1f;
+        Debug.Log("Quitting Game");
         Application.Quit();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // In editor
-#endif
     }
+    
+    public void BackToPauseMenu()
+    {
+        cardInfoPanel.SetActive(false);
+        resumeButton.SetActive(true);
+        currentCardsButton.SetActive(true);
+        quitButton.SetActive(true);
+    }
+
 }
