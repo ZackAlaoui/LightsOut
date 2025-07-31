@@ -17,11 +17,6 @@ public class PokerHandManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        EvaluateHandAndApplyBuffs();
-    }
-
     public void EvaluateHandAndApplyBuffs()
     {
         if (player == null) return;
