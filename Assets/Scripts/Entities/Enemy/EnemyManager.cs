@@ -4,6 +4,7 @@ using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace Game.Enemy
 {
@@ -15,6 +16,7 @@ namespace Game.Enemy
 		{
 			Zombie,
 			Ghost,
+			Dealer,
 		}
 
 		public static List<EnemyController> EnemyList { get; private set; } = new();
@@ -25,16 +27,23 @@ namespace Game.Enemy
 		public static List<GhostController> GhostList { get; private set; } = new();
 		public static int GhostCount { get => GhostList.Count; }
 		private static GameObject GhostsObject { get; set; }
+		public static List<DealerController> DealerList { get; private set; } = new();
+		public static int DealerCount { get => DealerList.Count; }
+		private static GameObject DealersObject { get; set; }
 
 		[SerializeField] private GameObject _zombiePrefab;
 		[SerializeField] private GameObject _ghostPrefab;
+		[SerializeField] private GameObject _dealerPrefab;
 
 		[SerializeField]
 		private NavMeshSurface _defaultNavMeshSurfacePrefab;
 		[SerializeField]
 		private NavMeshSurface _ghostNavMeshSurfacePrefab;
+		[SerializeField]
+		private NavMeshSurface _dealerNavMeshSurfacePrefab;
 		public static NavMeshSurface DefaultNavMeshSurface { get; private set; }
 		private static NavMeshSurface s_ghostNavMeshSurface;
+		private static NavMeshSurface s_dealerNavMeshSurface;
 
 		private static EnemyManager s_instance;
 
@@ -47,12 +56,15 @@ namespace Game.Enemy
 
 			if (_zombiePrefab == null) throw new NullReferenceException("Zombie prefab is null.");
 			if (_ghostPrefab == null) throw new NullReferenceException("Ghost prefab is null.");
+			if (_dealerPrefab == null) throw new NullReferenceException("Dealer prefab is null.");
 
 			if (_defaultNavMeshSurfacePrefab == null) throw new NullReferenceException("Default NavMesh Surface prefab is null.");
 			if (_ghostNavMeshSurfacePrefab == null) throw new NullReferenceException("Ghost NavMesh Surface prefab is null.");
+			if (_dealerNavMeshSurfacePrefab == null) throw new NullReferenceException("Dealer NavMesh Surface prefab is null.");
 
 			DefaultNavMeshSurface = Instantiate(s_instance._defaultNavMeshSurfacePrefab, transform);
 			s_ghostNavMeshSurface = Instantiate(s_instance._ghostNavMeshSurfacePrefab, transform);
+			s_dealerNavMeshSurface = Instantiate(s_instance._dealerNavMeshSurfacePrefab, transform);
 		}
 
 		[SerializeField] private TMP_Text _textComponent; // TEMPORARY
@@ -123,15 +135,86 @@ namespace Game.Enemy
 						EnemyList.Add(ghost);
 					}
 					break;
+				case EnemyType.Dealer:
+					if (DealersObject == null) DealersObject = new GameObject("Dealers");
+					proximityLayerMask = LayerMask.GetMask("Player") | LayerMask.GetMask("Ghost");
+					navMeshLayerMask = 1 << NavMesh.GetAreaFromName("Walkable");
+					for (int i = 0; i < count; ++i)
+					{
+						Vector3 spawnPoint = new Vector3(0, 1f, 25);
+						DealerController dealer = Instantiate(s_instance._dealerPrefab, spawnPoint, Quaternion.identity).GetComponent<DealerController>();
+						dealer.transform.parent = DealersObject.transform;
+						DealerList.Add(dealer);
+						EnemyList.Add(dealer);
+					}
+					break;
 				default:
 					throw new InvalidOperationException($"Unable to spawn enemy type {type}.");
 			}
-
-			s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
+			if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("BossFight"))
+			{
+				s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
+			}
+			else{
+				s_instance._textComponent.text = $"";
+			}
 		}
 
 		public static void Kill(EnemyController enemy)
 		{
+			if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
+			{
+				static Vector3 ChooseSpawnPoint(Bounds bounds, float minDistance, int proximityLayerMask, int navMeshLayerMask)
+				{
+					Vector3 spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+					int numTries;
+					bool isTooClose = false;
+					bool isNearNavMesh = true;
+					for (numTries = 0; numTries < 15; ++numTries)
+					{
+						isTooClose = Physics.CheckSphere(spawnPoint, minDistance, proximityLayerMask);
+						isNearNavMesh = NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 4f, navMeshLayerMask) && navMeshHit.position.y < 2f;
+						if (isNearNavMesh) spawnPoint = navMeshHit.position;
+						if (!isTooClose && isNearNavMesh) break;
+						spawnPoint = new(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), 1f, UnityEngine.Random.Range(bounds.min.z, bounds.max.z));
+					}
+					if (isTooClose) Debug.LogWarning("Spawning enemies in close proximity.");
+					if (!isNearNavMesh) Debug.LogWarning("Spawning enemy in unreachable location.");
+
+					return spawnPoint;
+				}
+				switch (enemy.Type)
+				{
+					case EnemyType.Zombie:
+						ZombieList.Remove((ZombieController)enemy);
+						Vector3 zombieSpawnPoint = ChooseSpawnPoint(DefaultNavMeshSurface.navMeshData.sourceBounds, 15f, 
+							LayerMask.GetMask("Player") | LayerMask.GetMask("Ghost"),
+							1 << NavMesh.GetAreaFromName("Walkable"));
+						ZombieController newZombie = Instantiate(s_instance._zombiePrefab, zombieSpawnPoint, Quaternion.identity).GetComponent<ZombieController>();
+						newZombie.transform.parent = ZombiesObject.transform;
+						ZombieList.Add(newZombie);
+						EnemyList.Add(newZombie);
+						break;
+					case EnemyType.Ghost:
+						GhostList.Remove((GhostController)enemy);
+						Vector3 ghostSpawnPoint = ChooseSpawnPoint(s_ghostNavMeshSurface.navMeshData.sourceBounds, 15f,
+							LayerMask.GetMask("Player") | LayerMask.GetMask("Zombie") | LayerMask.GetMask("Ghost"),
+							1 << NavMesh.GetAreaFromName("Ethereal"));
+						GhostController newGhost = Instantiate(s_instance._ghostPrefab, ghostSpawnPoint, Quaternion.identity).GetComponent<GhostController>();
+						newGhost.transform.parent = GhostsObject.transform;
+						GhostList.Add(newGhost);
+						EnemyList.Add(newGhost);
+						break;
+					case EnemyType.Dealer:
+						DealerList.Remove((DealerController)enemy);
+						SceneManager.LoadScene("Victory");
+						Debug.Log("Victory");
+						break;
+				}
+				Destroy(enemy.gameObject);
+				return;
+
+			} else {
 			switch (enemy.Type)
 			{
 				case EnemyType.Zombie:
@@ -140,6 +223,9 @@ namespace Game.Enemy
 				case EnemyType.Ghost:
 					GhostList.Remove((GhostController)enemy);
 					break;
+				case EnemyType.Dealer:
+					DealerList.Remove((DealerController)enemy);
+					break;
 			}
 			EnemyList.Remove(enemy);
 			
@@ -147,8 +233,14 @@ namespace Game.Enemy
 
 			Destroy(enemy.gameObject);
 
-			s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
-
+			if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("BossFight"))
+			{
+				s_instance._textComponent.text = $"Enemy Count: {EnemyCount}";
+			}
+			else{
+				s_instance._textComponent.text = $"";
+			}
+			}
 			if (EnemyCount <= 0) s_instance.StartCoroutine(GameManager.NextRound());
 		}
 
@@ -156,11 +248,14 @@ namespace Game.Enemy
 		{
 			if (ZombiesObject != null) Destroy(ZombiesObject);
 			if (GhostsObject != null) Destroy(GhostsObject);
+			if (DealersObject != null) Destroy(DealersObject);
 			ZombiesObject = null;
 			GhostsObject = null;
+			DealersObject = null;
 			EnemyList = new();
 			ZombieList = new();
 			GhostList = new();
+			DealerList = new();
 		}
 
 		public static void Unload()
@@ -168,12 +263,14 @@ namespace Game.Enemy
 			KillAll();
 			DefaultNavMeshSurface.RemoveData();
 			s_ghostNavMeshSurface.RemoveData();
+			s_dealerNavMeshSurface.RemoveData();
 		}
 
 		public static void BuildNavMeshes()
 		{
 			DefaultNavMeshSurface.BuildNavMesh();
 			s_ghostNavMeshSurface.BuildNavMesh();
+			s_dealerNavMeshSurface.BuildNavMesh();
 		}
 	}
 }
