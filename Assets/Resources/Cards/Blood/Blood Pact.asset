@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Blood Pact
   cardType: 02000000
-  abilityDesc: Sacrifice 25% of your current HP to gain double damage for 10 seconds
+  abilityDesc: Sacrifice 25% of your (maximum) flashlight battery to gain double
+    damage for 10 seconds
   usageType: 00000000
   cardSprite: {fileID: 1300380311, guid: 0d676600c334efe458deb1e1be9e9ee2, type: 3}
   cooldownDuration: 5

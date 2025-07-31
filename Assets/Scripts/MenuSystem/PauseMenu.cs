@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardData;
 using TMPro;
+using Game.Player;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static bool IsPausingEnabled = false;
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
@@ -17,7 +19,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (IsPausingEnabled && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)
             {
@@ -32,6 +34,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        PlayerController.Instance.IsGunEnabled = true;
         pauseMenuUI.SetActive(false);
         cardInfoPanel.SetActive(false); // Hide extra info
         Time.timeScale = 1f;
@@ -40,7 +43,13 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        PlayerController.Instance.IsGunEnabled = false;
         pauseMenuUI.SetActive(true);
+        cardInfoPanel.SetActive(false); // Hide card info if it was left open
+        resumeButton.SetActive(true);
+        currentCardsButton.SetActive(true);
+        quitButton.SetActive(true);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
@@ -49,10 +58,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Current Card Information loading...");
 
-        var handManager = FindObjectOfType<HandManager>();
-        if (handManager == null || cardInfoText == null) return;
-
-        List<CardInformation> cards = handManager.GetCurrentHand();
+        List<CardInformation> cards = HandManager.GetCurrentHand();
 
         if (cards == null || cards.Count == 0)
         {
@@ -65,6 +71,13 @@ public class PauseMenu : MonoBehaviour
             {
                 cardInfoText.text += $"<b>{card.cardName}</b>\n{card.abilityDesc}\n\n";
             }
+            
+            PokerHandManager poker = FindObjectOfType<PokerHandManager>();
+            if (poker != null)
+            {
+                cardInfoText.text += $"<b>Current Poker Hand:</b>\n{poker.CurrentPokerHandDescription}";
+            }
+
         }
         resumeButton.SetActive(false);
         currentCardsButton.SetActive(false);

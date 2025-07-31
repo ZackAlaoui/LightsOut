@@ -26,7 +26,7 @@ namespace Game.Player
         public float MovementSpeedMultiplier { get; set; } = 1f;    //Multiplier for the movement speed 
         [SerializeField] private Transform _aimTransform;                             //Transform of the aim gameobject
         [SerializeField] private Animator _animator;
-        [SerializeField] private float _baseDamage = 5;             //Base damage dealt by the player
+        [SerializeField] private float _baseDamage = 5f;             //Base damage dealt by the player
         [SerializeField] private LineRenderer _line;                 //Line renderer for the player's attack
         [SerializeField] private Transform _bulletSpawn;              //Transform for the bullet spawn point
         [SerializeField] private GameObject _spookyTextObject;       // GameObject for spooky text
@@ -44,6 +44,8 @@ namespace Game.Player
         public event PlayerHit OnHit;
 
         public bool IsSprinting => _isSprinting;
+
+        public bool IsGunEnabled { get; set; } = true;
 
 
         public float Health
@@ -217,6 +219,8 @@ namespace Game.Player
 
         private void Fire(InputAction.CallbackContext callbackContext)
         {
+            if (!IsGunEnabled) return;
+
             AudioManager.PlaySFX(AudioManager.Fire);
             _line.startColor = _line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
 

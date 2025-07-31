@@ -6,9 +6,9 @@ using Game.Player;
 
 public class PokerHandManager : MonoBehaviour
 {
-    public HandManager handManager;
-
     private PlayerController player;
+    public string CurrentPokerHandDescription { get; private set; } = "No poker hand active.";
+
 
     private void Start()
     {
@@ -19,18 +19,14 @@ public class PokerHandManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        EvaluateHandAndApplyBuffs();
-    }
-
     public void EvaluateHandAndApplyBuffs()
     {
         if (player == null) return;
 
         ResetPlayerBuffs();
+        CurrentPokerHandDescription = "No poker hand active."; // default
 
-        List<CardInformation> currentHand = handManager.GetCurrentHand();
+        List<CardInformation> currentHand = HandManager.GetCurrentHand();
         if (currentHand == null || currentHand.Count == 0) return;
 
         Dictionary<CardInformation.CardType, int> suitCounts = new Dictionary<CardInformation.CardType, int>();
@@ -52,36 +48,31 @@ public class PokerHandManager : MonoBehaviour
 
         if (counts.Contains(4))
         {
-            // Debug.Log("Four of a Kind (Suit): Damage Buff Applied");
             player.DamageMultiplier = 2f;
+            CurrentPokerHandDescription = "Four of a Kind: +100% Damage";
         }
         else if (counts.Contains(3) && counts.Contains(2))
         {
-            // Debug.Log("Full House (Suit): Max Health Buff Applied");
             player.MaxHealthMultiplier = 2f;
+            CurrentPokerHandDescription = "Full House: +100% Max Health";
         }
         else if (counts.Contains(3))
         {
-            // Debug.Log("Three of a Kind (Suit): Damage Buff Applied");
             player.DamageMultiplier = 1.5f;
+            CurrentPokerHandDescription = "Three of a Kind: +50% Damage";
         }
         else if (counts.Count(c => c == 2) == 2)
         {
-            // Debug.Log("Two Pair (Suit): Max Health Buff Applied");
             player.MaxHealthMultiplier = 1.5f;
+            CurrentPokerHandDescription = "Two Pair: +50% Max Health";
         }
         else if (counts.Contains(2))
         {
-            // Debug.Log("Pair (Suit): Speed Buff Applied");
             player.MovementSpeedMultiplier = 1.5f;
+            CurrentPokerHandDescription = "One Pair: +50% Movement Speed";
         }
-        else
-        {
-            // Debug.Log("No matching poker hand found.");
-        }
-
-        // Debug.Log($"Evaluating hand with {currentHand.Count} cards.");
     }
+
 
     void ResetPlayerBuffs()
     {
