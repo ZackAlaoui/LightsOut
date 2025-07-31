@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardData;
 using TMPro;
+using UnityEngine.UI; // For Image
 using Game.Player;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool IsPausingEnabled = false;
+    public static bool IsPausingEnabled = true;
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
@@ -17,38 +18,71 @@ public class PauseMenu : MonoBehaviour
     public GameObject currentCardsButton;
     public GameObject quitButton;
 
+    private void Start()
+    {
+        Debug.Log("PauseMenu initialized.");
+
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false); // Force it visible for testing
+            Debug.Log("pauseMenuUI forced visible in Start().");
+        }
+        else
+        {
+            Debug.LogWarning("pauseMenuUI is not assigned in Inspector.");
+        }
+
+        if (cardInfoPanel != null)
+            cardInfoPanel.SetActive(false);
+
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log($"Escape pressed. IsPausingEnabled: {IsPausingEnabled}, GameIsPaused: {GameIsPaused}");
+        }
+
         if (IsPausingEnabled && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)
-            {
                 Resume();
-            }
             else
-            {
                 Pause();
-            }
         }
     }
 
     public void Resume()
     {
+        Debug.Log("Resuming game...");
         PlayerController.Instance.IsGunEnabled = true;
-        pauseMenuUI.SetActive(false);
-        cardInfoPanel.SetActive(false); // Hide extra info
+
+        if (pauseMenuUI != null) pauseMenuUI.SetActive(false);
+        if (cardInfoPanel != null) cardInfoPanel.SetActive(false);
+
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
-    void Pause()
+    private void Pause()
     {
+        Debug.Log("Pausing game...");
         PlayerController.Instance.IsGunEnabled = false;
-        pauseMenuUI.SetActive(true);
-        cardInfoPanel.SetActive(false); // Hide card info if it was left open
-        resumeButton.SetActive(true);
-        currentCardsButton.SetActive(true);
-        quitButton.SetActive(true);
+
+        if (pauseMenuUI != null) pauseMenuUI.SetActive(true);
+        else Debug.LogWarning("pauseMenuUI is null!");
+
+        if (cardInfoPanel != null) cardInfoPanel.SetActive(false);
+
+        if (resumeButton != null) resumeButton.SetActive(true);
+        else Debug.LogWarning("resumeButton is null!");
+        if (currentCardsButton != null) currentCardsButton.SetActive(true);
+        else Debug.LogWarning("currentCardsButton is null!");
+        if (quitButton != null) quitButton.SetActive(true);
+        else Debug.LogWarning("quitButton is null!");
 
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -71,28 +105,26 @@ public class PauseMenu : MonoBehaviour
             {
                 cardInfoText.text += $"<b>{card.cardName}</b>\n{card.abilityDesc}\n\n";
             }
-            
+
             PokerHandManager poker = FindObjectOfType<PokerHandManager>();
             if (poker != null)
             {
                 cardInfoText.text += $"<b>Current Poker Hand:</b>\n{poker.CurrentPokerHandDescription}";
             }
-
         }
+
         resumeButton.SetActive(false);
         currentCardsButton.SetActive(false);
         quitButton.SetActive(false);
         cardInfoPanel.SetActive(true);
-        
     }
-
 
     public void Quit()
     {
         Debug.Log("Quitting Game");
         Application.Quit();
     }
-    
+
     public void BackToPauseMenu()
     {
         cardInfoPanel.SetActive(false);
@@ -100,5 +132,4 @@ public class PauseMenu : MonoBehaviour
         currentCardsButton.SetActive(true);
         quitButton.SetActive(true);
     }
-
 }
