@@ -258,7 +258,11 @@ public class HandManager : MonoBehaviour
 
         AbilityManager abilityManager = FindObjectOfType<AbilityManager>();
         if (abilityManager != null)
+        {
             abilityManager.ActivateAbility(display.cardData.cardName);
+            abilityManager.RegisterCardUse(display.cardData.cardName);
+        }
+
 
         Debug.Log($"Activated card in slot {index + 1}: {display.cardData.cardName}");
     }

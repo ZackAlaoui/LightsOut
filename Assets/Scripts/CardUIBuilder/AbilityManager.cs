@@ -226,14 +226,29 @@ public class AbilityManager : MonoBehaviour
         if (!string.IsNullOrEmpty(_lastCardUsed) && _lastCardUsed != "Eidetic Recall")
         {
             Debug.Log("Replaying: " + _lastCardUsed);
-            ActivateAbility(_lastCardUsed);
+
+            HandManager hand = FindObjectOfType<HandManager>();
+            if (hand != null)
+            {
+                var currentHand = HandManager.GetCurrentHand();
+                for (int i = 0; i < currentHand.Count; i++)
+                {
+                    if (currentHand[i].cardName == _lastCardUsed)
+                    {
+                        HandManager.ActivateCard(i); // Ensures cooldown + ability + RegisterCardUse
+                        break;
+                    }
+                }
+            }
         }
         else
         {
             Debug.Log("No valid card to recall.");
         }
+
         yield return null;
     }
+
 
 
     private IEnumerator BonePlating()
