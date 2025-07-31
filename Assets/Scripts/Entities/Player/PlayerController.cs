@@ -45,6 +45,8 @@ namespace Game.Player
 
         public bool IsSprinting => _isSprinting;
 
+        public bool IsGunEnabled { get; set; } = true;
+
 
         public float Health
         {
@@ -217,6 +219,8 @@ namespace Game.Player
 
         private void Fire(InputAction.CallbackContext callbackContext)
         {
+            if (!IsGunEnabled) return;
+
             AudioManager.PlaySFX(AudioManager.Fire);
             _line.startColor = _line.endColor = new Color(1f, 0f, 0f, 1f); // Solid red
 

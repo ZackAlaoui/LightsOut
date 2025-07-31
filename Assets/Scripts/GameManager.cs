@@ -131,12 +131,13 @@ namespace Game
                     // PlayerController playerController = Game.Player.PlayerController.Instance;
                     // playerController.Health = 5f; // Set to a high value for the dungeon
                     // //Make sure the current player gameobect is sent to the dungeon scene
-
                     yield return TransitionManager.LoadLevel("DrawCard");
+                    PlayerController.Instance.IsGunEnabled = false;
                     PlayerController.Instance.gameObject.SetActive(false);
                     break;
                 case 5:
                     PlayerController.Instance.gameObject.SetActive(true);
+                    PlayerController.Instance.IsGunEnabled = true;
                     yield return TransitionManager.LoadLevel("FirstMap");
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardData;
 using TMPro;
+using Game.Player;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        PlayerController.Instance.IsGunEnabled = true;
         pauseMenuUI.SetActive(false);
         cardInfoPanel.SetActive(false); // Hide extra info
         Time.timeScale = 1f;
@@ -40,6 +42,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        PlayerController.Instance.IsGunEnabled = false;
         pauseMenuUI.SetActive(true);
         cardInfoPanel.SetActive(false); // Hide card info if it was left open
         resumeButton.SetActive(true);
