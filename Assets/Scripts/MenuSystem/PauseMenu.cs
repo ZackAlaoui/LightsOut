@@ -41,6 +41,11 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         pauseMenuUI.SetActive(true);
+        cardInfoPanel.SetActive(false); // Hide card info if it was left open
+        resumeButton.SetActive(true);
+        currentCardsButton.SetActive(true);
+        quitButton.SetActive(true);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
