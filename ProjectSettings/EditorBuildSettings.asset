@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FirstMap.unity
     guid: a108a6363a0b5ba43b3f38ecb0b5c5de
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CardShopDungeon.unity
     guid: 19ffcb249ef0e5d47ab3d26f6625addd
   - enabled: 0

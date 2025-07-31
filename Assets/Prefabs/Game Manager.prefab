@@ -50,6 +50,7 @@ MonoBehaviour:
   _audioManagerPrefab: {fileID: 3844562705976917380, guid: f9614ac155ad2ac4bb650e5323952db7, type: 3}
   _deckManagerPrefab: {fileID: 7731290455747897767, guid: bfed73528b704e4478d90247382a4470, type: 3}
   _handUIPrefab: {fileID: 6520925566713164316, guid: 8638d53723e92144da84ae2786e4db63, type: 3}
+  _portalPrefab: {fileID: 463884301497142544, guid: 88fa563611f728647ab07dc32a41834b, type: 3}
 --- !u!1001 &3241036662676893690
 PrefabInstance:
   m_ObjectHideFlags: 0

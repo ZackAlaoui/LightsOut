@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 using UnityEngine.Analytics;
+using Unity.VisualScripting;
 
 
 namespace Game.Player
@@ -96,18 +97,10 @@ namespace Game.Player
             OnHit?.Invoke(); // For Fractured Payback
         }
 
-
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         // This Start function initializes all the controls and variables for the player.
         void Start()
         {
-            _spookyTextObject = GameObject.Find("SpookyText");
-
-            if (_spookyTextObject != null)
-            {
-                _spookyTextObject.SetActive(false); // Initially hide the spooky text object
-            }
-
             if (_animator == null) _animator = GetComponentInChildren<Animator>();
             if (_aimTransform == null) _aimTransform = transform.Find("Aim")?.transform;
 
@@ -142,16 +135,19 @@ namespace Game.Player
             }
             if (_spookyTextObject != null && _spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                Debug.Log("Spacebar pressed while spooky text is active!");
-                if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-
-                StartCoroutine(TransitionManager.LoadLevel("DrawCard"));
-                //SpookyTextObject.SetActive(false); // Instantly disables the object
+                if (_spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
+                {
+                    Debug.Log("Spacebar pressed while spooky text is active!");
+                    if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
+                    StartCoroutine(TransitionManager.LoadLevel("DrawCard"));
+                    //SpookyTextObject.SetActive(false); // Instantly disables the object
+                }
             }
 
-            if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard")
+            if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard" || (GameManager.CurrentRound % 4) == 0)
             {
-                Health = MaxHealth; // Reset health in card shop or draw card scene
+                Health = MaxHealth;                                          // This ensures the player has max health in the Dungeon and Draw card scene
+                Flashlight.RemainingBatteryLife = Flashlight.MaxBatteryLife; // This ensures the player has max battery life in the Dungeon and Draw card scene
                 _healthBarSlider.gameObject.SetActive(false);
             }
             else if (Health < _baseMaxHealth * MaxHealthMultiplier)
@@ -190,7 +186,7 @@ namespace Game.Player
             _aimingAt.y = 1f;                                                       //Mouse position is always at y = 1f
 
             Vector3 aimDirection = (_aimingAt - transform.position).normalized;        //Calculates the direction the player is aiming at
-            //Debug.Log($"Aim Direction value {aimDirection}");
+                                                                                       //Debug.Log($"Aim Direction value {aimDirection}");
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg; //Calculates the angle of the aim direction
             _aimTransform.eulerAngles = new Vector3(0, -angle, 0);                       //Sets the rotation of the aim transform to the calculated angle
@@ -202,6 +198,48 @@ namespace Game.Player
             if (_isSprinting && Flashlight.IsEnabled && Flashlight.RemainingBatteryLife > 0)
             {
                 Flashlight.RemainingBatteryLife -= _sprintBatteryDrainRate * Time.deltaTime;
+            }
+        }
+
+
+        private void OnEnable()
+        {
+            if (_runAction == null)
+            {
+                _runAction = InputSystem.actions.FindAction("Sprint");
+                if (_runAction != null)
+                {
+                    _runAction.performed += OnRunPerformed;
+                    _runAction.canceled += OnRunCanceled;
+                    _runAction.Enable();
+                }
+            }
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            if (_runAction != null)
+            {
+                _runAction.performed -= OnRunPerformed;
+                _runAction.canceled -= OnRunCanceled;
+                _runAction.Disable();
+            }
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "CardShopDungeon")
+            {
+                _spookyTextObject = GameObject.Find("SpookyText");
+
+                if (_spookyTextObject != null)
+                {
+                    _spookyTextObject.SetActive(false); // Initially hide the spooky text object
+                }
             }
         }
 
@@ -241,9 +279,7 @@ namespace Game.Player
             //If the object that we collide with has a tag of LevelPortal then we will go to the new scene
             if (other.gameObject.tag == "LevelPortal")
             {
-                // TransitionManager.instance.LoadNextLevel();
                 //load into a new scene
-                //SceneManager.LoadScene(2); // Assuming scene index 2 is the next level
                 StartCoroutine(TransitionManager.LoadLevel("CardShopDungeon"));
             }
 
@@ -253,7 +289,7 @@ namespace Game.Player
                 Debug.Log("Entered Magic Book Trigger");
                 // Cancel any ongoing fade-out and start fade-in
                 if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-                _fadeCoroutine = StartCoroutine(FadeText(0f, 1f));   
+                _fadeCoroutine = StartCoroutine(FadeText(0f, 1f));
             }
         }
 
@@ -289,30 +325,6 @@ namespace Game.Player
         }
 
         private InputAction _runAction;
-
-        private void OnEnable()
-        {
-            if (_runAction == null)
-            {
-                _runAction = InputSystem.actions.FindAction("Sprint");
-                if (_runAction != null)
-                {
-                    _runAction.performed += OnRunPerformed;
-                    _runAction.canceled += OnRunCanceled;
-                    _runAction.Enable();
-                }
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (_runAction != null)
-            {
-                _runAction.performed -= OnRunPerformed;
-                _runAction.canceled -= OnRunCanceled;
-                _runAction.Disable();
-            }
-        }
 
         private void OnRunPerformed(InputAction.CallbackContext context)
         {

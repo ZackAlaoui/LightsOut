@@ -1768,6 +1768,7 @@ public class PlayingCardDrawer : MonoBehaviour
     {
         // Advance to the following round – this spawns the next wave, handles scene transitions,
         // and performs any other round-initialisation logic inside GameManager.
+        Debug.Log($"{GameManager.CurrentRound}");
         GameManager.ProceedToNextRound();
 
         // Return the player to the appropriate gameplay scene so they can face the new round.

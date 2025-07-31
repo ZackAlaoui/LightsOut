@@ -1,3 +1,5 @@
+//EnemyManager class
+
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -19,17 +21,17 @@ namespace Game.Enemy
 			Dealer,
 		}
 
-		public static List<EnemyController> EnemyList { get; private set; } = new();
-		public static int EnemyCount { get => EnemyList.Count; }
-		public static List<ZombieController> ZombieList { get; private set; } = new();
-		public static int ZombieCount { get => ZombieList.Count; }
-		private static GameObject ZombiesObject { get; set; }
-		public static List<GhostController> GhostList { get; private set; } = new();
-		public static int GhostCount { get => GhostList.Count; }
-		private static GameObject GhostsObject { get; set; }
-		public static List<DealerController> DealerList { get; private set; } = new();
-		public static int DealerCount { get => DealerList.Count; }
-		private static GameObject DealersObject { get; set; }
+		public static List<EnemyController> EnemyList { get; private set; } = new();	//List of Enemies
+		public static int EnemyCount { get => EnemyList.Count; }						//Enemy Count
+		public static List<ZombieController> ZombieList { get; private set; } = new();	//List of Zombies
+		public static int ZombieCount { get => ZombieList.Count; }						//Number of Zombie enemies
+		private static GameObject ZombiesObject { get; set; }							//Gameobject of the Zombie
+		public static List<GhostController> GhostList { get; private set; } = new();	//List Of GhostController
+		public static int GhostCount { get => GhostList.Count; }						//Number of Ghost enemies
+		private static GameObject GhostsObject { get; set; }							//Gameobject for the Ghost enemy
+		public static List<DealerController> DealerList { get; private set; } = new();	//Dealer list
+		public static int DealerCount { get => DealerList.Count; }						//Dealer count
+		private static GameObject DealersObject { get; set; }							//Dealer Gameobject
 
 		[SerializeField] private GameObject _zombiePrefab;
 		[SerializeField] private GameObject _ghostPrefab;
@@ -241,7 +243,10 @@ namespace Game.Enemy
 				s_instance._textComponent.text = $"";
 			}
 			}
-			if (EnemyCount <= 0) s_instance.StartCoroutine(GameManager.NextRound());
+			if (EnemyCount <= 0)
+			{
+				s_instance.StartCoroutine(GameManager.NextRound());
+			}
 		}
 
 		public static void KillAll()

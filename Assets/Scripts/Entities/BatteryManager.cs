@@ -61,7 +61,13 @@ namespace Game
 
 		public static void DeleteAll()
 		{
-			foreach (Battery battery in BatteryList) Destroy(battery.gameObject);
+			foreach (Battery battery in BatteryList)
+			{
+				if (battery != null)
+				{ 
+					Destroy(battery.gameObject);
+				}
+			} 
 			BatteryList = new();
 		}
 	}

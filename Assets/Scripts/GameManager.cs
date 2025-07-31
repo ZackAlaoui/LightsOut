@@ -12,7 +12,7 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager s_instance;                                  //Singleton instance for the GameManager
+        public static GameManager s_instance;                                  //Singleton instance for the GameManager
         [SerializeField] private GameObject _enemyManagerPrefab;                //EnemyManager prefab 
         public static EnemyManager EnemyManager { get; private set; }           //Getter and setter for the EnemyManager
         [SerializeField] private GameObject _batteryManagerPrefab;              //Gameobject for the battery manager
@@ -22,6 +22,7 @@ namespace Game
         [SerializeField] private GameObject _deckManagerPrefab;
         public static DeckManager DeckManager { get; private set; }
         [SerializeField] private GameObject _handUIPrefab;
+        [SerializeField] private GameObject _portalPrefab;
         public static GameObject HandUI { get; private set; } 
 
         public static int CurrentRound { get; private set; } = 0;
@@ -31,6 +32,8 @@ namespace Game
         // player back to the correct level after temporarily loading a different scene.
         public static string CurrentSceneName { get; private set; }
         public static string PreviousSceneName { get; private set; }
+
+        static bool allowActivation = false;
 
         private GameManager() { }   //Constructor for the GameManager
 
@@ -66,11 +69,46 @@ namespace Game
             PreviousSceneName = CurrentSceneName;
         }
 
+        
+        private void OnEnable()
+        {
+
+            //If we disable the portal then the portal will not be active
+            //If we enable the portal then the portal will be active
+            if (!allowActivation)
+            {
+                SceneManager.sceneLoaded += OnSceneLoaded;
+            }
+        }
+
+        private void OnDisable()
+        {
+            //Once we leave this will make sure the portal is deactivated
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "FirstMap")
+            {
+                //Deactivate portal
+                s_instance._portalPrefab = GameObject.Find("Portal");
+                if (s_instance._portalPrefab != null)
+                {
+                    allowActivation = false;
+                    s_instance._portalPrefab.SetActive(false);
+                }
+            }
+        }
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             DontDestroyOnLoad(gameObject);
-            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("FirstMap")) StartGame();
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("FirstMap"))
+            {
+                StartGame();
+            }
             else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
             {
                 EnemyManager.BuildNavMeshes();
@@ -108,6 +146,7 @@ namespace Game
         public static IEnumerator NextRound()
         {
             ++CurrentRound;
+            Debug.Log($"{GameManager.CurrentRound}");
             EnemyManager.KillAll();
             BatteryManager.DeleteAll();
             switch (CurrentRound)
@@ -117,60 +156,94 @@ namespace Game
                     {
                         yield return TransitionManager.LoadLevel("FirstMap");
                     }
-                    HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform);
+                    HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform); //This will hold the cards for the player
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                     BatteryManager.SpawnBatteries(10);
                     break;
                 case 2:
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 25);
-                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
                     BatteryManager.SpawnBatteries(10);
                     break;
                 case 3:
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
-                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 35);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 12);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
-                    // //Transition to the dungeon scene
-                    // yield return TransitionManager.LoadLevel("CardShopDungeon");
-                    // //Set the player health to unlimited in the dungeon
-                    // PlayerController playerController = Game.Player.PlayerController.Instance;
-                    // playerController.Health = 5f; // Set to a high value for the dungeon
-                    // //Make sure the current player gameobect is sent to the dungeon scene
-
-                    yield return TransitionManager.LoadLevel("DrawCard");
-                    PlayerController.Instance.gameObject.SetActive(false);
+                    allowActivation = true;                     //Allow the portal to be active
+                    s_instance._portalPrefab.SetActive(true);   //Activate portal when round 3 finishes
+                    //Set the player health to unlimited in the dungeon
+                    PlayerController playerController = PlayerController.Instance;
+                    playerController.Health = 5f; // Set to a high value for the dungeon
+                    //Make sure the current player gameobject is sent to the dungeon scene
                     break;
                 case 5:
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
-                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 6:
-                    // FirstMap
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 7:
-                    // FirstMap
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 8:
                     // Dungeon
+                    allowActivation = true;                     //Allow the portal to be active
+                    s_instance._portalPrefab.SetActive(true);   //Activate portal when round 3 finishes
+                    //Set the player health to unlimited in the dungeon
+                    playerController = PlayerController.Instance;
+                    playerController.Health = 5f; // Set to a high value for the dungeon
+                    //Make sure the current player gameobject is sent to the dungeon scene
                     break;
                 case 9:
                     // FirstMap
+                    PlayerController.Instance.gameObject.SetActive(true);
+                    yield return TransitionManager.LoadLevel("FirstMap");
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    EnemyManager.BuildNavMeshes();
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 10:
                     // FirstMap
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 11:
                     // FirstMap
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
+                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    BatteryManager.SpawnBatteries(7);
                     break;
                 case 12:
                     // Dungeon
+                    allowActivation = true;                     //Allow the portal to be active
+                    s_instance._portalPrefab.SetActive(true);   //Activate portal when round 3 finishes
+                    //Set the player health to unlimited in the dungeon
+                    playerController = PlayerController.Instance;
+                    playerController.Health = 5f; // Set to a high value for the dungeon
+                    //Make sure the current player gameobject is sent to the dungeon scene
                     break;
                 case 13:
                     // BossFight

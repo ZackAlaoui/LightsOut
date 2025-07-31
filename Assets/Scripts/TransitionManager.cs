@@ -34,24 +34,13 @@ public class TransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Persist across scenes
     }
 
-    // public void LoadNextLevel()
-    // {
-    //     //This gets the current build index from the build settings and adds 1
-    //     //to the current buildIndex to go to the next scene.
-    //     Debug.Log("Button Clicked in LoadNextLevel function");
-    //     levelLoader.SetActive(true);
-    //     StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
-    // }
-
-
     public static IEnumerator LoadLevel(string name)
     {
         instance.transition.enabled = true;       // Enable the animator to start the transition
 
-        instance.transition.Play("Idle", 0, 0f); // or "DefaultState"
+        instance.transition.Play("Idle", 0, 0f);  // Reset to "DefaultState"
 
-        //Play Animation
-        instance.transition.SetTrigger("Start");
+        instance.transition.SetTrigger("Start");  // Play Animation       
 
         //Load Scene
         AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(name);
