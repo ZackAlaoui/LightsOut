@@ -1511,7 +1511,7 @@ public class PlayingCardDrawer : MonoBehaviour
         
         playerHand.Add(card);
         // CreateHotbarCard(card, playerHand.Count - 1);
-        HandManager.AddCardToHand(CardInformation.FromPlayingCard(card));
+        HandManager.Instance.AddCardToHand(CardInformation.FromPlayingCard(card));
         Debug.Log($"Added {card.GetCardName()} to hotbar. Total cards: {playerHand.Count}");
     }
     

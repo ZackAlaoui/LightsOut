@@ -8,6 +8,7 @@ TagManager:
   - LevelPortal
   - audio
   - MagicBook
+  - LossPanel
   layers:
   - Default
   - TransparentFX

@@ -60,7 +60,7 @@ public class TransitionManager : MonoBehaviour
         //Wait     
         yield return new WaitForSeconds(instance.transitionTime);
         loadingOperation.allowSceneActivation = true; // Allow scene activation after the wait
-    
+
         while (!loadingOperation.isDone) yield return null; // wait until scene has loaded
         instance.HideLoadingUI();              // Hide canvas group
         instance.transition.enabled = false;   // Optional: stop animator from doing anything else
@@ -71,5 +71,17 @@ public class TransitionManager : MonoBehaviour
         loadingCanvasGroup.alpha = 0f;
         loadingCanvasGroup.blocksRaycasts = false;
         loadingCanvasGroup.interactable = false;
+    }
+
+    public void RetryGame()
+    {
+        //Reset the game state and reload the current scene
+        StartCoroutine(LoadLevel("FirstMap"));
+    }
+
+    public void GoToMainMenu()
+    { 
+        //Reset the game state and load the main menu scene
+        StartCoroutine(LoadLevel("MainMenu"));
     }
 }
