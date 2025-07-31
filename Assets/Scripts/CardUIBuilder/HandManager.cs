@@ -114,8 +114,7 @@ public class HandManager : MonoBehaviour
 
     private void Start()
     {
-        // AddCardToHand(DeckManager.Instance.allCards.Find((cardInfo) => cardInfo.cardName == "Blood Pact"));
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             DeckManager.DrawCard();
         }
@@ -184,14 +183,7 @@ public class HandManager : MonoBehaviour
                     if (_player.Health / _player.MaxHealth <= 0.25f)
                         triggered = true;
                     break;
-
-                case "Slipstream Echo":
-                    if (!_player.IsSprinting && !_slipstreamTriggered)
-                    {
-                        _slipstreamTriggered = true;
-                        triggered = true;
-                    }
-                    break;
+                
                 case "Adrenaline Spike":
                     if (_player.Health / _player.MaxHealth < 0.5f)
                         triggered = true;

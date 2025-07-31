@@ -477,32 +477,26 @@ public class AbilityManager : MonoBehaviour
 
     private IEnumerator SlipstreamEcho()
     {
-        _waitingForSprint = true;
+        // Wait until player starts sprinting
+        yield return new WaitUntil(() => _player.IsSprinting);
 
-        while (_waitingForSprint)
+        // Now wait until sprint ends
+        yield return new WaitUntil(() => !_player.IsSprinting);
+
+        // Apply cooldown reduction to next available card
+        CardAbilityUI[] cards = FindObjectsOfType<CardAbilityUI>();
+        foreach (var card in cards)
         {
-            if (!_player.IsSprinting)
+            if (!card.IsOnCooldown())
             {
-                _waitingForSprint = false;
-
-                // Apply cooldown reduction to next available card
-                CardAbilityUI[] cards = FindObjectsOfType<CardAbilityUI>();
-                foreach (var card in cards)
-                {
-                    // Make sure you have these methods implemented in CardAbilityUI
-                    if (!card.IsOnCooldown())
-                    {
-                        card.ApplyTemporaryCooldownMultiplier(0.5f);
-                        break;
-                    }
-                }
-
-                TryDiscardPassive("Slipstream Echo");
+                card.ApplyTemporaryCooldownMultiplier(0.5f);
+                break;
             }
-
-            yield return null;
         }
+
+        TryDiscardPassive("Slipstream Echo");
     }
+
     
     public void TriggerPassive(string cardName)
     {
