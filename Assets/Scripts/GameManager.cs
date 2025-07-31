@@ -157,8 +157,8 @@ namespace Game
                         yield return TransitionManager.LoadLevel("FirstMap");
                     }
                     HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform); //This will hold the cards for the player
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     EnemyManager.BuildNavMeshes();
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     // EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                     BatteryManager.SpawnBatteries(10);
                     break;
