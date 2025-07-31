@@ -62,6 +62,8 @@ public class AbilityManager : MonoBehaviour
             case "Spinal Shield": StartCoroutine(SpinalShield()); break;
             case "Decay Bloom": StartCoroutine(DecayBloom()); break;
             case "Slipstream Echo": StartCoroutine(SlipstreamEcho()); break;
+            case "Adrenaline Spike": StartCoroutine(AdrenalineSpike()); break;
+
 
             default:
                 Debug.LogWarning("Unknown ability: " + cardName);
@@ -94,6 +96,17 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
+
+    private IEnumerator AdrenalineSpike()
+    {
+        _player.MovementSpeedMultiplier *= 2f;
+        _player.DamageMultiplier *= 2f;
+
+        yield return new WaitForSeconds(5f);
+
+        _player.MovementSpeedMultiplier /= 2f;
+        _player.DamageMultiplier /= 2f;
+    }
 
     private IEnumerator BloodFrenzy()
     {
