@@ -76,7 +76,7 @@ namespace Game
                 EnemyManager.BuildNavMeshes();
                 EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                 EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
-                BatteryManager.SpawnBatteries(5);
+                BatteryManager.SpawnBatteries(10);
                 EnemyManager.SpawnEnemies(EnemyType.Dealer, 1);
             }
             else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("EnemyShowcase"))

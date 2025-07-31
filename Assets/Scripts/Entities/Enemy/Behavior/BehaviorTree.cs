@@ -83,6 +83,25 @@ namespace Game.Enemy.Behavior
 		}
 	}
 
+	public class BehaviorTreeParallel : BehaviorTreeNode
+	{
+		public BehaviorTreeParallel(string name) : base(name) { }
+
+		public override Status Process()
+		{
+			bool anyChildRunning = false;
+			foreach (BehaviorTreeNode child in children)
+			{
+				if (child.Process() == Status.Running)
+				{
+					anyChildRunning = true;
+				}
+			}
+
+			return anyChildRunning ? Status.Running : Status.Success;
+		}
+	}
+
 	public abstract class BehaviorTreeNode
 	{
 		public enum Status { Success, Failure, Running }

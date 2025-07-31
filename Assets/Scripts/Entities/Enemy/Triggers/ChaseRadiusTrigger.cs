@@ -15,6 +15,7 @@ namespace Game.Enemy.Trigger {
 
         private void OnTriggerEnter(Collider other)
         {
+            if(OnChaseRadiusUpdate == null) return;
             if (other.gameObject == Target)
             {
                 OnChaseRadiusUpdate(true);
@@ -23,6 +24,7 @@ namespace Game.Enemy.Trigger {
 
         private void OnTriggerExit(Collider other)
         {
+            if(OnChaseRadiusUpdate == null) return;
             if (other.gameObject == Target)
             {
                 OnChaseRadiusUpdate(false);

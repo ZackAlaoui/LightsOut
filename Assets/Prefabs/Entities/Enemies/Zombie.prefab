@@ -502,7 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 4535822758467189049}
   _animator: {fileID: 122775389566218378}
-  _zombie: {fileID: 7069022695784984624}
+  _enemy: {fileID: 7069022695784984624}
 --- !u!1 &7801131487434641075
 GameObject:
   m_ObjectHideFlags: 0
