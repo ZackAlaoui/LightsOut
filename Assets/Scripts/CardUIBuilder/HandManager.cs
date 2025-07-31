@@ -28,18 +28,17 @@ public class HandManager : MonoBehaviour
 
     private void Awake()
     {
+        _player = PlayerController.Instance;
+        deckManager = DeckManager.Instance;
+
         if (s_instance != null && s_instance != this)
         {
-            Debug.LogWarning("HandManager has already been instantiated. Deleting duplicate HandManager.");
-            Destroy(gameObject);
+            Destroy(gameObject); // Optional: Enforce singleton
             return;
         }
-        else
-        {
-            s_instance = this;
-        }
 
-        _player = PlayerController.Instance;
+        s_instance = this;
+
     }
 
 

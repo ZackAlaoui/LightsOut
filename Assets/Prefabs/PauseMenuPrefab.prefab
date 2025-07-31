@@ -1872,11 +1872,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 3875056441302675248}
-  cardInfoPanel: {fileID: 5402138685686604326}
-  cardInfoText: {fileID: 3631657405138123425}
-  resumeButton: {fileID: 824749422245985905}
-  currentCardsButton: {fileID: 8804626914309960788}
-  quitButton: {fileID: 4417485362815672947}
+  resumeButton: {fileID: 1536186995247148460}
+  restartButton: {fileID: 0}
+  quitButton: {fileID: 7275301351985823446}
 --- !u!1 &7536016882698097847
 GameObject:
   m_ObjectHideFlags: 0
