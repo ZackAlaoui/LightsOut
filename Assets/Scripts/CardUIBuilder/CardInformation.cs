@@ -28,17 +28,46 @@ namespace CardData
             Passive
         }
 
-        public static CardInformation FromPlayingCard(PlayingCard card)
-        {
-            CardInformation cardInfo = new CardInformation();
-            cardInfo.cardName = card.customName;
-            cardInfo.cardType = new List<CardType>(1);
-            cardInfo.cardType.Add(CardType.Brains);
-            cardInfo.abilityDesc = "";
-            cardInfo.usageType = new List<CardUsageType>(1);
-            cardInfo.usageType.Add(CardUsageType.Passive);
-            cardInfo.cardSprite = card.cardSprite;
-            return cardInfo;
-        }
+        // public static CardInformation FromPlayingCard(PlayingCard card)
+        // {
+        //     return new CardInformation()
+        //     {
+        //         cardName = card.customName,
+        //         cardType = new List<CardType>
+        //         {
+        //             card.suit switch
+        //             {
+        //                 PlayingCardSuit.Clubs => CardType.Brains,
+        //                 PlayingCardSuit.Hearts => CardType.Bones,
+        //                 PlayingCardSuit.Diamonds => CardType.Blood,
+        //                 PlayingCardSuit.Spades => CardType.RottenFlesh,
+        //                 PlayingCardSuit.Five => CardType.Void,
+        //                 _ => CardType.Brains
+        //             }
+        //         },
+        //         abilityDesc = "";
+        //         usageType = new List<CardUsageType>(1);
+        //         usageType.Add(CardUsageType.Passive);
+        //         cardSprite = card.cardSprite;
+        //     };
+        // }
+
+        // public static CardInformation FromCard(Card card)
+        // {
+        //     return new CardInformation()
+        //     {
+        //         cardName = card.cardName,
+        //         cardType = new List<CardType>
+        //         {
+        //             card.suit switch {
+        //                 CardSuit.Brains => CardType.Brains,
+        //                 CardSuit.Bones => CardType.Bones,
+        //                 CardSuit.Blood => CardType.Blood,
+        //                 CardSuit.RottenFlesh => CardType.RottenFlesh,
+        //                 CardSuit.
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
