@@ -8527,6 +8527,14 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1933746609210439688, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933746609210439688, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1974021863684657538, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 12
@@ -8581,7 +8589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359510805536089165, guid: 268548ac0b6f71d409fa8df8b971d436, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
