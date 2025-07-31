@@ -117,7 +117,7 @@ public class AbilityManager : MonoBehaviour
 
     private IEnumerator BloodPact()
     {
-        float batteryLoss = _player.Flashlight.MaxBatteryLife * 0.1f;
+        float batteryLoss = _player.Flashlight.MaxBatteryLife * 0.25f;
         _player.Flashlight.RemainingBatteryLife -= batteryLoss;
         _player.DamageMultiplier *= 2f;
         yield return new WaitForSeconds(10f);
