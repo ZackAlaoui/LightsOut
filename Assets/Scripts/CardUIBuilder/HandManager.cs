@@ -114,6 +114,7 @@ public class HandManager : MonoBehaviour
 
     private void Start()
     {
+        // AddCardToHand(DeckManager.Instance.allCards.Find((cardInfo) => cardInfo.cardName == "Blood Pact"));
         for (int i = 0; i < 3; i++)
         {
             DeckManager.DrawCard();
