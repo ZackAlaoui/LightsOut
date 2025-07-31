@@ -71,6 +71,13 @@ public class PauseMenu : MonoBehaviour
             {
                 cardInfoText.text += $"<b>{card.cardName}</b>\n{card.abilityDesc}\n\n";
             }
+            
+            PokerHandManager poker = FindObjectOfType<PokerHandManager>();
+            if (poker != null)
+            {
+                cardInfoText.text += $"<b>Current Poker Hand:</b>\n{poker.CurrentPokerHandDescription}";
+            }
+
         }
         resumeButton.SetActive(false);
         currentCardsButton.SetActive(false);
