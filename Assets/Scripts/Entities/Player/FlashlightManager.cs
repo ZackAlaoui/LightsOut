@@ -20,6 +20,7 @@ namespace Game.Player
 
         [SerializeField] private float _baseMaxBattery = 30f;
         public float MaxBatteryLifeMultiplier { get; set; } = 1;
+        public float MaxBatteryLife { get => _baseMaxBattery * MaxBatteryLifeMultiplier; }
 
         [SerializeField] private Slider _batteryLifeSlider;
         private float _remainingBatteryLife;
