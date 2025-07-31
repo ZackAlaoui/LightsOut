@@ -5287,7 +5287,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7802704735888382275, guid: 94fe9bc011a921343b64178000fce907, type: 3}
       propertyPath: maxHealth
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 122775389566218378, guid: 94fe9bc011a921343b64178000fce907, type: 3}
       propertyPath: m_Enabled
