@@ -142,8 +142,10 @@ namespace Game.Player
             }
             if (_spookyTextObject != null && _spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                Debug.Log("Spacebar pressed while spooky text is active!");
-                if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
+                if (_spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
+                {
+                    Debug.Log("Spacebar pressed while spooky text is active!");
+                    if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
 
                 StartCoroutine(TransitionManager.LoadLevel("DrawCard"));
                 //SpookyTextObject.SetActive(false); // Instantly disables the object
