@@ -6,8 +6,9 @@ using Game.Player;
 using Game.Enemy;
 
 public class HandManager : MonoBehaviour
-{   
-    public static HandManager Instance { get; private set; }
+{
+    private static HandManager s_instance;
+
     public PokerHandManager pokerHandManager;
     public DeckManager deckManager;
     public GameObject cardPrefab;
@@ -24,22 +25,10 @@ public class HandManager : MonoBehaviour
     
     private PlayerController _player;                                   //PlayerController reference
     private bool _slipstreamTriggered = false;
-    
 
     private void Awake()
     {
-        _player = PlayerController.Instance;
-        deckManager = DeckManager.Instance;
-
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // Optional: Enforce singleton
-            return;
-        }
-
-        Instance = this;
-        
-        if (deckManager == null)
+        if (s_instance != null && s_instance != this)
         {
             Debug.LogWarning("HandManager has already been instantiated. Deleting duplicate HandManager.");
             Destroy(gameObject);
