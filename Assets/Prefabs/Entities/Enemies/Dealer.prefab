@@ -139,15 +139,15 @@ RectTransform:
   m_GameObject: {fileID: 1618946998546283455}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3301432354047574307}
   m_Father: {fileID: 7312534071076215377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.2}
+  m_AnchoredPosition: {x: 0, y: 7}
   m_SizeDelta: {x: 1662, y: 814}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6184693872627548041
@@ -315,7 +315,6 @@ GameObject:
   - component: {fileID: 6653337983913996346}
   - component: {fileID: 984588612844280336}
   - component: {fileID: 122775389566218378}
-  - component: {fileID: 2724358963289955734}
   - component: {fileID: -7802704735888382275}
   m_Layer: 8
   m_Name: Dealer
@@ -334,7 +333,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: 1, z: 10}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2937734684571150369}
@@ -430,13 +429,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 2027896835, guid: b378f7d49ebaac441adb5a2599ef1cca, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: 948250153, guid: 3d08f508cbc30c94c865a7f80e69cd09, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.84, y: 3.8418748}
+  m_Size: {x: 0.32, y: 0.57}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -450,9 +449,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7359510805536089165}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f3ba4ed95048f1e42949a56f34e3b902, type: 2}
+  m_Controller: {fileID: 9100000, guid: ef260bb0005df64439d2b831919c4cc9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -464,21 +463,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2724358963289955734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7359510805536089165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9cc8907122fb54fa69274313b29a8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 4535822758467189049}
-  _animator: {fileID: 122775389566218378}
-  _enemy: {fileID: -7802704735888382275}
 --- !u!114 &-7802704735888382275
 MonoBehaviour:
   m_ObjectHideFlags: 0
