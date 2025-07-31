@@ -83,15 +83,12 @@ public class AbilityManager : MonoBehaviour
 
     private void TryDiscardPassive(string passiveName)
     {
-        HandManager hand = FindObjectOfType<HandManager>();
-        if (hand == null) return;
-
-        var handCards = hand.GetCurrentHand();
+        var handCards = HandManager.GetCurrentHand();
         for (int i = 0; i < handCards.Count; i++)
         {
             if (handCards[i].cardName == passiveName)
             {
-                hand.DiscardCard(i);
+                HandManager.DiscardCard(i);
                 break;
             }
         }
@@ -271,17 +268,13 @@ public class AbilityManager : MonoBehaviour
                 yield return new WaitForSeconds(3f);
                 _player.IsInvincible = false;
 
-                HandManager hand = FindObjectOfType<HandManager>();
-                if (hand != null)
+                var handCards = HandManager.GetCurrentHand();
+                for (int i = 0; i < handCards.Count; i++)
                 {
-                    var handCards = hand.GetCurrentHand();
-                    for (int i = 0; i < handCards.Count; i++)
+                    if (handCards[i].cardName == "Spinal Shield")
                     {
-                        if (handCards[i].cardName == "Spinal Shield")
-                        {
-                            hand.DiscardCard(i);
-                            break;
-                        }
+                        HandManager.DiscardCard(i);
+                        break;
                     }
                 }
             }
@@ -442,15 +435,11 @@ public class AbilityManager : MonoBehaviour
     {
         _player.Health += 2f;
 
-        HandManager hand = FindObjectOfType<HandManager>();
-        if (hand != null)
+        var cards = HandManager.GetCurrentHand();
+        if (cards.Count > 1) // Don’t discard the card you're using
         {
-            var cards = hand.GetCurrentHand();
-            if (cards.Count > 1) // Don’t discard the card you're using
-            {
-                int discardIndex = Random.Range(0, cards.Count);
-                hand.DiscardCard(discardIndex);
-            }
+            int discardIndex = Random.Range(0, cards.Count);
+            HandManager.DiscardCard(discardIndex);
         }
 
         yield return null;

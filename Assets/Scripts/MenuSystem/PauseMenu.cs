@@ -7,6 +7,7 @@ using Game.Player;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static bool IsPausingEnabled = false;
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
@@ -18,7 +19,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (IsPausingEnabled && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)
             {
@@ -57,10 +58,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Current Card Information loading...");
 
-        var handManager = FindObjectOfType<HandManager>();
-        if (handManager == null || cardInfoText == null) return;
-
-        List<CardInformation> cards = handManager.GetCurrentHand();
+        List<CardInformation> cards = HandManager.GetCurrentHand();
 
         if (cards == null || cards.Count == 0)
         {

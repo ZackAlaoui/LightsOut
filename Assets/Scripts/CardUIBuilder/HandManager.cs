@@ -120,7 +120,7 @@ public class HandManager : MonoBehaviour
         }
     }
 
-    public void DiscardCard(int cardIndex)
+    public static void DiscardCard(int cardIndex)
     {
         if (cardIndex < 0 || cardIndex >= CardsInHand.Length)
         {
@@ -136,10 +136,10 @@ public class HandManager : MonoBehaviour
 
         GameObject cardToRemove = CardsInHand[cardIndex];
         CardsInHand[cardIndex] = null;
-        passiveCardIndexes.Remove(cardIndex); // Remove from passive list if it was there
+        s_instance.passiveCardIndexes.Remove(cardIndex); // Remove from passive list if it was there
 
         Destroy(cardToRemove);
-        pokerHandManager?.EvaluateHandAndApplyBuffs();
+        s_instance.pokerHandManager?.EvaluateHandAndApplyBuffs();
     }
 
     void Update()
@@ -220,7 +220,7 @@ public class HandManager : MonoBehaviour
 
     }
 
-    public List<CardInformation> GetCurrentHand()
+    public static List<CardInformation> GetCurrentHand()
     {
         List<CardInformation> handData = new List<CardInformation>();
         foreach (GameObject card in CardsInHand)
@@ -235,7 +235,7 @@ public class HandManager : MonoBehaviour
         return handData;
     }
 
-    public void ActivateCard(int index)
+    public static void ActivateCard(int index)
     {
         if (index < 0 || index >= CardsInHand.Length) return;
 
@@ -262,7 +262,7 @@ public class HandManager : MonoBehaviour
         Debug.Log($"Activated card in slot {index + 1}: {display.cardData.cardName}");
     }
     
-    public bool TryAddCardToHand(CardInformation cardData)
+    public static bool TryAddCardToHand(CardInformation cardData)
     {
         for (int i = 0; i < CardsInHand.Length; i++)
         {

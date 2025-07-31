@@ -6,8 +6,6 @@ using Game.Player;
 
 public class PokerHandManager : MonoBehaviour
 {
-    public HandManager handManager;
-
     private PlayerController player;
 
     private void Start()
@@ -30,7 +28,7 @@ public class PokerHandManager : MonoBehaviour
 
         ResetPlayerBuffs();
 
-        List<CardInformation> currentHand = handManager.GetCurrentHand();
+        List<CardInformation> currentHand = HandManager.GetCurrentHand();
         if (currentHand == null || currentHand.Count == 0) return;
 
         Dictionary<CardInformation.CardType, int> suitCounts = new Dictionary<CardInformation.CardType, int>();

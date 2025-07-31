@@ -85,6 +85,15 @@ namespace Game
                 EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
                 BatteryManager.SpawnBatteries(7);
             }
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("EnemyShowcaseCardTesting"))
+            {
+                EnemyManager.BuildNavMeshes();
+                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
+                BatteryManager.SpawnBatteries(7);
+                PauseMenu.IsPausingEnabled = true;
+                HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform);
+            }
 
 #if DEBUG
             InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
@@ -110,6 +119,7 @@ namespace Game
                         yield return TransitionManager.LoadLevel("FirstMap");
                     }
                     HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform);
+                    PauseMenu.IsPausingEnabled = true;
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
                     BatteryManager.SpawnBatteries(10);
