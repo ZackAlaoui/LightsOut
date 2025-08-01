@@ -22,8 +22,17 @@ public class GameOverMenu : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); 
+
+        // 🔥 Destroy player if it exists
+        if (Game.Player.PlayerController.Instance != null)
+        {
+            Destroy(Game.Player.PlayerController.Instance.gameObject);
+            Game.Player.PlayerController.Instance = null;
+        }
+
+        SceneManager.LoadScene("MainMenu");
     }
+
 
     public void QuitGame()
     {
