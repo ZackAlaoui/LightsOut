@@ -428,6 +428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d8da33bfb8a9a488dfb33dbc0269a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 0}
+  _mesh: {fileID: 6987474204218358340}
   _agent: {fileID: 6605598374479424594}
   maxHealth: 5
   _healthSlider: {fileID: 7334501079880078004}

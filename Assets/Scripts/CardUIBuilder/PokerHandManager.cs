@@ -68,7 +68,7 @@ public class PokerHandManager : MonoBehaviour
         }
         else if (counts.Contains(2))
         {
-            player.MovementSpeedMultiplier = 1.5f;
+            player.MovementSpeedMultiplier = 1.25f;
             CurrentPokerHandDescription = "One Pair: +50% Movement Speed";
         }
     }

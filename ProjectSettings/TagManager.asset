@@ -8,6 +8,8 @@ TagManager:
   - LevelPortal
   - audio
   - MagicBook
+  - Light Enter
+  - Light Exit
   layers:
   - Default
   - TransparentFX
