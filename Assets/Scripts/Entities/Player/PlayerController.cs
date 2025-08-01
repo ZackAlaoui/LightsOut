@@ -339,8 +339,4 @@ namespace Game.Player
         }
 
     }
-
-
-
-
 }

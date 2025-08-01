@@ -1392,6 +1392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6520925566713164316, guid: 8638d53723e92144da84ae2786e4db63, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
