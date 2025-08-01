@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CardData;
+using TMPro;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -33,7 +35,7 @@ public class PlayingCard
         {
             1 => "Ace",
             11 => "Jack",
-            12 => "Queen", 
+            12 => "Queen",
             13 => "King",
             _ => value.ToString()
         };
@@ -46,6 +48,8 @@ public class CardSlot
 {
     [Header("Core Components")]
     public Image cardImage;
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardDesc;
     public Button cardButton;
     public CanvasGroup canvasGroup;
     public RectTransform rectTransform;
@@ -132,7 +136,7 @@ public class PlayingCardDrawer : MonoBehaviour
     public float hotbarCardSpacing = 15f;
     public Color hotbarBackgroundColor = new Color(0.1f, 0.1f, 0.15f, 0.9f);
     public Color hotbarBorderColor = new Color(0.3f, 0.3f, 0.4f, 0.8f);
-    public List<PlayingCard> playerHand = new List<PlayingCard>();
+    public List<CardInformation> playerHand = new List<CardInformation>();
     public int selectedHotbarCardIndex = -1;
     public bool isSwapMode = false;
     
@@ -149,8 +153,8 @@ public class PlayingCardDrawer : MonoBehaviour
     [SerializeField] private int loadedCardsCount = 0;
     private bool hasDrawnCard = false; // prevents multiple draws per visit
     
-    private List<PlayingCard> allCards = new List<PlayingCard>();
-    private List<PlayingCard> currentDrawnCards = new List<PlayingCard>();
+    private List<CardInformation> allCards = new List<CardInformation>();
+    private List<CardInformation> currentDrawnCards = new List<CardInformation>();
     private int selectedCardIndex = -1;
     
     // Modern UI components
@@ -406,6 +410,31 @@ public class PlayingCardDrawer : MonoBehaviour
         // Card image (main card)
         Image cardImage = cardGO.AddComponent<Image>();
         cardImage.sprite = cardBackSprite;
+
+        // Card information
+        GameObject nameGO = new GameObject("Name");
+        GameObject descGO = new GameObject("Description");
+        nameGO.transform.SetParent(cardGO.transform);
+        descGO.transform.SetParent(cardGO.transform);
+
+        RectTransform nameRect = nameGO.AddComponent<RectTransform>();
+        nameRect.anchorMin = new Vector2(0f, 1f);
+        nameRect.anchorMax = new Vector3(1f, 2f);
+        nameRect.offsetMax = nameRect.offsetMin = Vector2.zero;
+
+        TextMeshProUGUI cardName = nameGO.AddComponent<TextMeshProUGUI>();
+        cardName.alignment = TextAlignmentOptions.Bottom;
+        nameGO.SetActive(false);
+
+        RectTransform descRect = descGO.AddComponent<RectTransform>();
+        descRect.anchorMin = new Vector2(0f, -1f);
+        descRect.anchorMax = new Vector2(1f, 0f);
+        descRect.offsetMax = descRect.offsetMin = Vector2.zero;
+
+        TextMeshProUGUI cardDesc = descGO.AddComponent<TextMeshProUGUI>();
+        cardDesc.alignment = TextAlignmentOptions.Top;
+        cardDesc.fontSize = 24f;
+        descGO.SetActive(false);
         
         // Button (invisible, for interaction)
         Button button = cardGO.AddComponent<Button>();
@@ -418,6 +447,8 @@ public class PlayingCardDrawer : MonoBehaviour
         cardSlots[index] = new CardSlot
         {
             cardImage = cardImage,
+            cardName = cardName,
+            cardDesc = cardDesc,
             cardButton = button,
             canvasGroup = canvasGroup,
             rectTransform = rectTransform,
@@ -611,29 +642,30 @@ public class PlayingCardDrawer : MonoBehaviour
             var info = HandManager.CardsInHand[i]?.GetComponentInChildren<CardDisplay>().cardData;
             if (info == null || info.cardSprite == null) continue;
 
-            PlayingCardSuit ps = PlayingCardSuit.Clubs;
-            if (info.cardType != null && info.cardType.Count > 0)
-            {
-                ps = info.cardType[0] switch
-                {
-                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
-                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
-                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
-                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
-                    _ => PlayingCardSuit.Clubs
-                };
-            }
+            // PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            // if (info.cardType != null && info.cardType.Count > 0)
+            // {
+            //     ps = info.cardType[0] switch
+            //     {
+            //         CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+            //         CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+            //         CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+            //         CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+            //         CardData.CardInformation.CardType.Void => PlayingCardSuit.Five,
+            //         _ => PlayingCardSuit.Clubs
+            //     };
+            // }
 
-            PlayingCard pc = new PlayingCard
-            {
-                customName = info.cardName,
-                value = 1,
-                suit = ps,
-                cardSprite = info.cardSprite
-            };
+            // PlayingCard pc = new PlayingCard
+            // {
+            //     customName = info.cardName,
+            //     value = 1,
+            //     suit = ps,
+            //     cardSprite = info.cardSprite
+            // };
 
-            playerHand.Add(pc);
-            CreateHotbarCard(pc, i);
+            playerHand.Add(info);
+            CreateHotbarCard(info, i);
         }
     }
     
@@ -819,33 +851,33 @@ public class PlayingCardDrawer : MonoBehaviour
         }
     }
     
-    // NEW: Load cards from the central CardManager so this drawer uses the same
-    // card assets / definitions as the rest of the UI (e.g. HandUIManager).
-    private bool LoadCardsFromCardManager()
-    {
-        if (CardManager.Instance == null || CardManager.Instance.allCards == null || CardManager.Instance.allCards.Count == 0)
-            return false;
+    // // NEW: Load cards from the central CardManager so this drawer uses the same
+    // // card assets / definitions as the rest of the UI (e.g. HandUIManager).
+    // private bool LoadCardsFromCardManager()
+    // {
+    //     if (CardManager.Instance == null || CardManager.Instance.allCards == null || CardManager.Instance.allCards.Count == 0)
+    //         return false;
 
-        foreach (var c in CardManager.Instance.allCards)
-        {
-            if (c == null || c.CardImage == null) continue;
+    //     foreach (var c in CardManager.Instance.allCards)
+    //     {
+    //         if (c == null || c.CardImage == null) continue;
 
-            PlayingCardSuit mappedSuit = MapCardSuit(c.suit);
+    //         PlayingCardSuit mappedSuit = MapCardSuit(c.suit);
 
-            allCards.Add(new PlayingCard
-            {
-                // "value" is not meaningful for our custom cards – just use 1 so it is valid.
-                value = 1,
-                suit = mappedSuit,
-                cardSprite = c.CardImage,
-                customName = c.cardName
-            });
-        }
+    //         allCards.Add(new PlayingCard
+    //         {
+    //             // "value" is not meaningful for our custom cards – just use 1 so it is valid.
+    //             value = 1,
+    //             suit = mappedSuit,
+    //             cardSprite = c.CardImage,
+    //             customName = c.cardName
+    //         });
+    //     }
 
-        // We intentionally leave cardBackSprite untouched here – it will be set by the
-        // existing loading logic or fallbacks later on.
-        return allCards.Count > 0;
-    }
+    //     // We intentionally leave cardBackSprite untouched here – it will be set by the
+    //     // existing loading logic or fallbacks later on.
+    //     return allCards.Count > 0;
+    // }
 
     // NEW: Load cards directly from DeckManager's CardInformation assets.
     private bool LoadCardsFromDeckManager()
@@ -857,131 +889,131 @@ public class PlayingCardDrawer : MonoBehaviour
         {
             if (info == null || info.cardSprite == null) continue;
 
-            // Determine suit from the first CardType entry (if any)
-            PlayingCardSuit ps = PlayingCardSuit.Clubs;
-            if (info.cardType != null && info.cardType.Count > 0)
-            {
-                ps = info.cardType[0] switch
-                {
-                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
-                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
-                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
-                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
-                    _ => PlayingCardSuit.Clubs
-                };
-            }
+            // // Determine suit from the first CardType entry (if any)
+            // PlayingCardSuit ps = PlayingCardSuit.Clubs;
+            // if (info.cardType != null && info.cardType.Count > 0)
+            // {
+            //     ps = info.cardType[0] switch
+            //     {
+            //         CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+            //         CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+            //         CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+            //         CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+            //         _ => PlayingCardSuit.Clubs
+            //     };
+            // }
 
-            allCards.Add(new PlayingCard
-            {
-                value = 1,
-                suit = ps,
-                cardSprite = info.cardSprite,
-                customName = info.cardName
-            });
+            allCards.Add(info); // new PlayingCard
+            // {
+            //     value = 1,
+            //     suit = ps,
+            //     cardSprite = info.cardSprite,
+            //     customName = info.cardName
+            // });
         }
 
         return allCards.Count > 0;
     }
 
-    // NEW: Load card textures directly from Resources/Cards/<Suit> folders that match our gameplay suits.
-    private bool LoadCardsFromSuitResources()
-    {
-        string[] suitFolders = { "Brains", "Bones", "Blood", "RottenFlesh" };
-        PlayingCardSuit[] mappedSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+    // // NEW: Load card textures directly from Resources/Cards/<Suit> folders that match our gameplay suits.
+    // private bool LoadCardsFromSuitResources()
+    // {
+    //     string[] suitFolders = { "Brains", "Bones", "Blood", "RottenFlesh" };
+    //     PlayingCardSuit[] mappedSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
 
-        bool loadedAny = false;
+    //     bool loadedAny = false;
 
-        for (int i = 0; i < suitFolders.Length; i++)
-        {
-            string folder = $"Cards/{suitFolders[i]}"; // Resources path
-            Sprite[] sprites = Resources.LoadAll<Sprite>(folder);
+    //     for (int i = 0; i < suitFolders.Length; i++)
+    //     {
+    //         string folder = $"Cards/{suitFolders[i]}"; // Resources path
+    //         Sprite[] sprites = Resources.LoadAll<Sprite>(folder);
 
-            if (sprites == null || sprites.Length == 0) {
-                Debug.LogWarning($"No sprites found in Resources/{folder}");
-                continue;
-            }
+    //         if (sprites == null || sprites.Length == 0) {
+    //             Debug.LogWarning($"No sprites found in Resources/{folder}");
+    //             continue;
+    //         }
 
-            foreach (var sprite in sprites)
-            {
-                if (sprite == null) continue;
+    //         foreach (var sprite in sprites)
+    //         {
+    //             if (sprite == null) continue;
 
-                allCards.Add(new PlayingCard {
-                    value = 1,
-                    suit = mappedSuits[i],
-                    cardSprite = sprite,
-                    customName = sprite.name
-                });
-                loadedAny = true;
-            }
-        }
+    //             allCards.Add(new PlayingCard {
+    //                 value = 1,
+    //                 suit = mappedSuits[i],
+    //                 cardSprite = sprite,
+    //                 customName = sprite.name
+    //             });
+    //             loadedAny = true;
+    //         }
+    //     }
 
-        // Attempt to load card back if not yet set
-        if (cardBackSprite == null)
-        {
-            cardBackSprite = Resources.Load<Sprite>("Cards/card_back"); // Optional
-        }
+    //     // Attempt to load card back if not yet set
+    //     if (cardBackSprite == null)
+    //     {
+    //         cardBackSprite = Resources.Load<Sprite>("Cards/card_back"); // Optional
+    //     }
 
-        return loadedAny;
-    }
+    //     return loadedAny;
+    // }
 
-    // NEW: Directly load CardInformation scriptable objects from Resources/Cards and use their sprites.
-    private bool LoadCardsFromCardAssets()
-    {
-        var infos = Resources.LoadAll<CardData.CardInformation>("Cards");
-        if (infos == null || infos.Length == 0) return false;
+    // // NEW: Directly load CardInformation scriptable objects from Resources/Cards and use their sprites.
+    // private bool LoadCardsFromCardAssets()
+    // {
+    //     var infos = Resources.LoadAll<CardData.CardInformation>("Cards");
+    //     if (infos == null || infos.Length == 0) return false;
 
-        foreach (var info in infos)
-        {
-            if (info == null || info.cardSprite == null) continue;
+    //     foreach (var info in infos)
+    //     {
+    //         if (info == null || info.cardSprite == null) continue;
 
-            PlayingCardSuit ps = PlayingCardSuit.Clubs;
-            if (info.cardType != null && info.cardType.Count > 0)
-            {
-                ps = info.cardType[0] switch
-                {
-                    CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
-                    CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
-                    CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
-                    CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
-                    _ => PlayingCardSuit.Clubs
-                };
-            }
+    //         PlayingCardSuit ps = PlayingCardSuit.Clubs;
+    //         if (info.cardType != null && info.cardType.Count > 0)
+    //         {
+    //             ps = info.cardType[0] switch
+    //             {
+    //                 CardData.CardInformation.CardType.Brains => PlayingCardSuit.Clubs,
+    //                 CardData.CardInformation.CardType.Bones => PlayingCardSuit.Hearts,
+    //                 CardData.CardInformation.CardType.Blood => PlayingCardSuit.Diamonds,
+    //                 CardData.CardInformation.CardType.RottenFlesh => PlayingCardSuit.Spades,
+    //                 _ => PlayingCardSuit.Clubs
+    //             };
+    //         }
 
-            allCards.Add(new PlayingCard {
-                value = 1,
-                suit = ps,
-                cardSprite = info.cardSprite,
-                customName = info.cardName
-            });
-        }
+    //         allCards.Add(new PlayingCard {
+    //             value = 1,
+    //             suit = ps,
+    //             cardSprite = info.cardSprite,
+    //             customName = info.cardName
+    //         });
+    //     }
 
-        return allCards.Count > 0;
-    }
+    //     return allCards.Count > 0;
+    // }
  
-    private PlayingCardSuit MapCardSuit(CardSuit suit)
-    {
-        return suit switch
-        {
-            CardSuit.Brains => PlayingCardSuit.Clubs,
-            CardSuit.Bones => PlayingCardSuit.Hearts,
-            CardSuit.Blood => PlayingCardSuit.Diamonds,
-            CardSuit.RottenFlesh => PlayingCardSuit.Spades,
-            _ => PlayingCardSuit.Clubs
-        };
-    }
+    // private PlayingCardSuit MapCardSuit(CardSuit suit)
+    // {
+    //     return suit switch
+    //     {
+    //         CardSuit.Brains => PlayingCardSuit.Clubs,
+    //         CardSuit.Bones => PlayingCardSuit.Hearts,
+    //         CardSuit.Blood => PlayingCardSuit.Diamonds,
+    //         CardSuit.RottenFlesh => PlayingCardSuit.Spades,
+    //         _ => PlayingCardSuit.Clubs
+    //     };
+    // }
 
     private void LoadAllCards()
     {
         allCards.Clear();
 
-        // FIRST: Try to load cards from the shared CardManager so we are in sync with
-        // HandUIManager and the rest of the card-based gameplay systems.
-        if (LoadCardsFromCardManager())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} cards from CardManager!");
-            return;
-        }
+        // // FIRST: Try to load cards from the shared CardManager so we are in sync with
+        // // HandUIManager and the rest of the card-based gameplay systems.
+        // if (LoadCardsFromCardManager())
+        // {
+        //     loadedCardsCount = allCards.Count;
+        //     Debug.Log($"Loaded {allCards.Count} cards from CardManager!");
+        //     return;
+        // }
 
         // SECOND: Try to load from DeckManager's ScriptableObject deck
         if (LoadCardsFromDeckManager())
@@ -991,285 +1023,285 @@ public class PlayingCardDrawer : MonoBehaviour
             return;
         }
 
-        // THIRD: Try to load card assets directly
-        if (LoadCardsFromCardAssets())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} CardInformation assets from Resources/Cards!");
-            return;
-        }
+        // // THIRD: Try to load card assets directly
+        // if (LoadCardsFromCardAssets())
+        // {
+        //     loadedCardsCount = allCards.Count;
+        //     Debug.Log($"Loaded {allCards.Count} CardInformation assets from Resources/Cards!");
+        //     return;
+        // }
 
-        // FOURTH: Try to load sprite assets directly from Resources/Cards/<Suit> folders
-        if (LoadCardsFromSuitResources())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} card textures from Resources/Cards folders!");
-            return;
-        }
+        // // FOURTH: Try to load sprite assets directly from Resources/Cards/<Suit> folders
+        // if (LoadCardsFromSuitResources())
+        // {
+        //     loadedCardsCount = allCards.Count;
+        //     Debug.Log($"Loaded {allCards.Count} card textures from Resources/Cards folders!");
+        //     return;
+        // }
 
-        // Try manual assignments first
-        if (LoadFromManualAssignments())
-        {
-            loadedCardsCount = allCards.Count;
-            Debug.Log($"Loaded {allCards.Count} cards from manual assignments!");
-            return;
-        }
+        // // Try manual assignments first
+        // if (LoadFromManualAssignments())
+        // {
+        //     loadedCardsCount = allCards.Count;
+        //     Debug.Log($"Loaded {allCards.Count} cards from manual assignments!");
+        //     return;
+        // }
 
-        // Fallback to Resources (legacy standard deck lookup)
-        LoadCardsFromResources();
+        // // Fallback to Resources (legacy standard deck lookup)
+        // LoadCardsFromResources();
 
         loadedCardsCount = allCards.Count;
         Debug.Log($"Loaded {allCards.Count} cards successfully!");
     }
     
-    private void LoadCardsFromResources()
-    {
-        // First try to load from manual assignments
-        if (LoadFromManualAssignments())
-        {
-            return;
-        }
+    // private void LoadCardsFromResources()
+    // {
+    //     // First try to load from manual assignments
+    //     if (LoadFromManualAssignments())
+    //     {
+    //         return;
+    //     }
         
-        // Try to load cards from Resources folder
-        string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
-        string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
-        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+    //     // Try to load cards from Resources folder
+    //     string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
+    //     string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
+    //     PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
         
-        for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
-        {
-            for (int value = 1; value <= 13; value++)
-            {
-                // Convert value to proper card name
-                string valueName = value switch
-                {
-                    1 => "A",
-                    11 => "J",
-                    12 => "Q",
-                    13 => "K",
-                    _ => value.ToString()
-                };
+    //     for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
+    //     {
+    //         for (int value = 1; value <= 13; value++)
+    //         {
+    //             // Convert value to proper card name
+    //             string valueName = value switch
+    //             {
+    //                 1 => "A",
+    //                 11 => "J",
+    //                 12 => "Q",
+    //                 13 => "K",
+    //                 _ => value.ToString()
+    //             };
                 
-                string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}";
-                string resourcePath = $"Cards/{cardFileName}";
+    //             string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}";
+    //             string resourcePath = $"Cards/{cardFileName}";
                 
-                Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
+    //             Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
                 
-                if (cardSprite != null)
-                {
-                    PlayingCard card = new PlayingCard
-                    {
-                        value = value,
-                        suit = cardSuits[suitIndex],
-                        cardSprite = cardSprite
-                    };
-                    allCards.Add(card);
-                    Debug.Log($"Loaded: {card.GetCardName()} from Resources/{resourcePath}");
-                }
-                else
-                {
-                    Debug.LogWarning($"Could not load card sprite from Resources: {resourcePath}");
-                }
-            }
-        }
+    //             if (cardSprite != null)
+    //             {
+    //                 PlayingCard card = new PlayingCard
+    //                 {
+    //                     value = value,
+    //                     suit = cardSuits[suitIndex],
+    //                     cardSprite = cardSprite
+    //                 };
+    //                 allCards.Add(card);
+    //                 Debug.Log($"Loaded: {card.GetCardName()} from Resources/{resourcePath}");
+    //             }
+    //             else
+    //             {
+    //                 Debug.LogWarning($"Could not load card sprite from Resources: {resourcePath}");
+    //             }
+    //         }
+    //     }
         
-        // Load card back sprite from Resources
-        if (cardBackSprite == null)
-        {
-            cardBackSprite = Resources.Load<Sprite>("Cards/card_back");
-            if (cardBackSprite != null)
-            {
-                Debug.Log("Loaded card back from Resources/Cards/card_back");
-            }
-            else
-            {
-                Debug.LogWarning("Could not load card back from Resources/Cards/card_back");
-            }
-        }
+    //     // Load card back sprite from Resources
+    //     if (cardBackSprite == null)
+    //     {
+    //         cardBackSprite = Resources.Load<Sprite>("Cards/card_back");
+    //         if (cardBackSprite != null)
+    //         {
+    //             Debug.Log("Loaded card back from Resources/Cards/card_back");
+    //         }
+    //         else
+    //         {
+    //             Debug.LogWarning("Could not load card back from Resources/Cards/card_back");
+    //         }
+    //     }
         
-        // If no cards loaded, create fallback cards
-        if (allCards.Count == 0)
-        {
-            CreateFallbackCards();
-        }
-    }
+    //     // If no cards loaded, create fallback cards
+    //     if (allCards.Count == 0)
+    //     {
+    //         CreateFallbackCards();
+    //     }
+    // }
     
-    private bool LoadFromManualAssignments()
-    {
-        // Check if manual sprites are assigned
-        bool hasManualSprites = false;
-        for (int i = 0; i < manualCardSprites.Length; i++)
-        {
-            if (manualCardSprites[i] != null)
-            {
-                hasManualSprites = true;
-                break;
-            }
-        }
+    // private bool LoadFromManualAssignments()
+    // {
+    //     // Check if manual sprites are assigned
+    //     bool hasManualSprites = false;
+    //     for (int i = 0; i < manualCardSprites.Length; i++)
+    //     {
+    //         if (manualCardSprites[i] != null)
+    //         {
+    //             hasManualSprites = true;
+    //             break;
+    //         }
+    //     }
         
-        if (!hasManualSprites)
-        {
-            return false;
-        }
+    //     if (!hasManualSprites)
+    //     {
+    //         return false;
+    //     }
         
-        Debug.Log("Loading cards from manual assignments...");
+    //     Debug.Log("Loading cards from manual assignments...");
         
-        // Load from manual assignments
-        string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
-        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+    //     // Load from manual assignments
+    //     string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
+    //     PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
         
-        int spriteIndex = 0;
-        for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
-        {
-            for (int value = 1; value <= 13; value++)
-            {
-                if (spriteIndex < manualCardSprites.Length && manualCardSprites[spriteIndex] != null)
-                {
-                    PlayingCard card = new PlayingCard
-                    {
-                        value = value,
-                        suit = cardSuits[suitIndex],
-                        cardSprite = manualCardSprites[spriteIndex]
-                    };
-                    allCards.Add(card);
-                    Debug.Log($"Loaded: {card.GetCardName()} from manual assignment");
-                }
-                spriteIndex++;
-            }
-        }
+    //     int spriteIndex = 0;
+    //     for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
+    //     {
+    //         for (int value = 1; value <= 13; value++)
+    //         {
+    //             if (spriteIndex < manualCardSprites.Length && manualCardSprites[spriteIndex] != null)
+    //             {
+    //                 PlayingCard card = new PlayingCard
+    //                 {
+    //                     value = value,
+    //                     suit = cardSuits[suitIndex],
+    //                     cardSprite = manualCardSprites[spriteIndex]
+    //                 };
+    //                 allCards.Add(card);
+    //                 Debug.Log($"Loaded: {card.GetCardName()} from manual assignment");
+    //             }
+    //             spriteIndex++;
+    //         }
+    //     }
         
-        // Set manual card back
-        if (manualCardBackSprite != null)
-        {
-            cardBackSprite = manualCardBackSprite;
-            Debug.Log("Loaded card back from manual assignment");
-        }
+    //     // Set manual card back
+    //     if (manualCardBackSprite != null)
+    //     {
+    //         cardBackSprite = manualCardBackSprite;
+    //         Debug.Log("Loaded card back from manual assignment");
+    //     }
         
-        return allCards.Count > 0;
-    }
+    //     return allCards.Count > 0;
+    // }
     
-    private void CreateFallbackCards()
-    {
-        Debug.Log("Creating fallback cards for build...");
+    // private void CreateFallbackCards()
+    // {
+    //     Debug.Log("Creating fallback cards for build...");
         
-        // Create a simple colored rectangle as fallback
-        Texture2D fallbackTexture = new Texture2D(214, 227);
-        Color[] pixels = new Color[214 * 227];
-        for (int i = 0; i < pixels.Length; i++)
-        {
-            pixels[i] = Color.white;
-        }
-        fallbackTexture.SetPixels(pixels);
-        fallbackTexture.Apply();
+    //     // Create a simple colored rectangle as fallback
+    //     Texture2D fallbackTexture = new Texture2D(214, 227);
+    //     Color[] pixels = new Color[214 * 227];
+    //     for (int i = 0; i < pixels.Length; i++)
+    //     {
+    //         pixels[i] = Color.white;
+    //     }
+    //     fallbackTexture.SetPixels(pixels);
+    //     fallbackTexture.Apply();
         
-        Sprite fallbackSprite = Sprite.Create(fallbackTexture, new Rect(0, 0, 214, 227), new Vector2(0.5f, 0.5f));
+    //     Sprite fallbackSprite = Sprite.Create(fallbackTexture, new Rect(0, 0, 214, 227), new Vector2(0.5f, 0.5f));
         
-        // Create fallback cards for each suit and value
-        string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
-        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+    //     // Create fallback cards for each suit and value
+    //     string[] suitNames = { "Clubs", "Hearts", "Diamonds", "Spades" };
+    //     PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
         
-        for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
-        {
-            for (int value = 1; value <= 13; value++)
-            {
-                PlayingCard card = new PlayingCard
-                {
-                    value = value,
-                    suit = cardSuits[suitIndex],
-                    cardSprite = fallbackSprite
-                };
-                allCards.Add(card);
-            }
-        }
+    //     for (int suitIndex = 0; suitIndex < suitNames.Length; suitIndex++)
+    //     {
+    //         for (int value = 1; value <= 13; value++)
+    //         {
+    //             PlayingCard card = new PlayingCard
+    //             {
+    //                 value = value,
+    //                 suit = cardSuits[suitIndex],
+    //                 cardSprite = fallbackSprite
+    //             };
+    //             allCards.Add(card);
+    //         }
+    //     }
         
-        // Set fallback card back
-        if (cardBackSprite == null)
-        {
-            cardBackSprite = fallbackSprite;
-        }
+    //     // Set fallback card back
+    //     if (cardBackSprite == null)
+    //     {
+    //         cardBackSprite = fallbackSprite;
+    //     }
         
-        Debug.Log($"Created {allCards.Count} fallback cards");
-    }
+    //     Debug.Log($"Created {allCards.Count} fallback cards");
+    // }
     
-    private bool LoadCardsFromSamePath()
-    {
-        string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
-        string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
-        PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
+//     private bool LoadCardsFromSamePath()
+//     {
+//         string[] suitFolders = { "Clubs", "Hearts", "Diamonds", "Spades" };
+//         string[] suitSuffixes = { "club", "heart", "diamond", "spade" };
+//         PlayingCardSuit[] cardSuits = { PlayingCardSuit.Clubs, PlayingCardSuit.Hearts, PlayingCardSuit.Diamonds, PlayingCardSuit.Spades };
         
-        bool loadedAnyCards = false;
+//         bool loadedAnyCards = false;
         
-        for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
-        {
-            string suitFolderPath = $"{cardsBasePath}/{suitFolders[suitIndex]}";
+//         for (int suitIndex = 0; suitIndex < suitFolders.Length; suitIndex++)
+//         {
+//             string suitFolderPath = $"{cardsBasePath}/{suitFolders[suitIndex]}";
             
-            for (int value = 1; value <= 13; value++)
-            {
-                // Convert value to proper card name
-                string valueName = value switch
-                {
-                    1 => "A",
-                    11 => "J",
-                    12 => "Q",
-                    13 => "K",
-                    _ => value.ToString()
-                };
+//             for (int value = 1; value <= 13; value++)
+//             {
+//                 // Convert value to proper card name
+//                 string valueName = value switch
+//                 {
+//                     1 => "A",
+//                     11 => "J",
+//                     12 => "Q",
+//                     13 => "K",
+//                     _ => value.ToString()
+//                 };
                 
-                string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}.png";
-                string fullPath = $"{suitFolderPath}/{cardFileName}";
+//                 string cardFileName = $"{valueName}{suitSuffixes[suitIndex]}.png";
+//                 string fullPath = $"{suitFolderPath}/{cardFileName}";
                 
-                Sprite cardSprite = null;
+//                 Sprite cardSprite = null;
                 
-#if UNITY_EDITOR
-                cardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(fullPath);
-#else
-                // In builds, try to load from Resources with the same structure
-                string resourcePath = fullPath.Replace("Assets/", "").Replace(".png", "");
-                cardSprite = Resources.Load<Sprite>(resourcePath);
-#endif
+// #if UNITY_EDITOR
+//                 cardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(fullPath);
+// #else
+//                 // In builds, try to load from Resources with the same structure
+//                 string resourcePath = fullPath.Replace("Assets/", "").Replace(".png", "");
+//                 cardSprite = Resources.Load<Sprite>(resourcePath);
+// #endif
                 
-                if (cardSprite != null)
-                {
-                    PlayingCard card = new PlayingCard
-                    {
-                        value = value,
-                        suit = cardSuits[suitIndex],
-                        cardSprite = cardSprite
-                    };
-                    allCards.Add(card);
-                    loadedAnyCards = true;
-                    Debug.Log($"Loaded: {card.GetCardName()} from {fullPath}");
-                }
-                else
-                {
-                    Debug.LogWarning($"Could not load card sprite at path: {fullPath}");
-                }
-            }
-        }
+//                 if (cardSprite != null)
+//                 {
+//                     PlayingCard card = new PlayingCard
+//                     {
+//                         value = value,
+//                         suit = cardSuits[suitIndex],
+//                         cardSprite = cardSprite
+//                     };
+//                     allCards.Add(card);
+//                     loadedAnyCards = true;
+//                     Debug.Log($"Loaded: {card.GetCardName()} from {fullPath}");
+//                 }
+//                 else
+//                 {
+//                     Debug.LogWarning($"Could not load card sprite at path: {fullPath}");
+//                 }
+//             }
+//         }
         
-        // Load card back sprite automatically
-        if (cardBackSprite == null)
-        {
-            string cardBackPath = $"{cardsBasePath}/Card Back/card_back_rect_1.png";
+//         // Load card back sprite automatically
+//         if (cardBackSprite == null)
+//         {
+//             string cardBackPath = $"{cardsBasePath}/Card Back/card_back_rect_1.png";
             
-#if UNITY_EDITOR
-            cardBackSprite = AssetDatabase.LoadAssetAtPath<Sprite>(cardBackPath);
-#else
-            string resourcePath = cardBackPath.Replace("Assets/", "").Replace(".png", "");
-            cardBackSprite = Resources.Load<Sprite>(resourcePath);
-#endif
+// #if UNITY_EDITOR
+//             cardBackSprite = AssetDatabase.LoadAssetAtPath<Sprite>(cardBackPath);
+// #else
+//             string resourcePath = cardBackPath.Replace("Assets/", "").Replace(".png", "");
+//             cardBackSprite = Resources.Load<Sprite>(resourcePath);
+// #endif
             
-            if (cardBackSprite != null)
-            {
-                Debug.Log($"Loaded card back from: {cardBackPath}");
-            }
-            else
-            {
-                Debug.LogWarning($"Could not load card back from: {cardBackPath}");
-            }
-        }
+//             if (cardBackSprite != null)
+//             {
+//                 Debug.Log($"Loaded card back from: {cardBackPath}");
+//             }
+//             else
+//             {
+//                 Debug.LogWarning($"Could not load card back from: {cardBackPath}");
+//             }
+//         }
         
-        return loadedAnyCards;
-    }
+//         return loadedAnyCards;
+//     }
     
     private void InitializeCardSlots()
     {
@@ -1340,7 +1372,7 @@ public class PlayingCardDrawer : MonoBehaviour
         {
             if (cardSlots[i].cardImage != null)
             {
-                PlayingCard randomCard = GetRandomCard();
+                CardInformation randomCard = GetRandomCard();
                 currentDrawnCards.Add(randomCard);
                 
                 // Show card back first
@@ -1349,6 +1381,18 @@ public class PlayingCardDrawer : MonoBehaviour
                 if (cardSlots[i].glowEffect != null) cardSlots[i].glowEffect.sprite = cardBackSprite;
                 if (cardSlots[i].borderEffect != null) cardSlots[i].borderEffect.sprite = cardBackSprite;
                 if (cardSlots[i].highlightEffect != null) cardSlots[i].highlightEffect.sprite = cardBackSprite;
+
+                string suit = randomCard.cardType[0] switch
+                {
+                    CardInformation.CardType.Brains => "Brains",
+                    CardInformation.CardType.Bones => "Bones",
+                    CardInformation.CardType.Blood => "Blood",
+                    CardInformation.CardType.RottenFlesh => "Rotten Flesh",
+                    CardInformation.CardType.Void => "Void",
+                    _ => "Brains"
+                };
+                if (cardSlots[i].cardName != null) cardSlots[i].cardName.text = $"[{suit}]\n" + randomCard.cardName;
+                if (cardSlots[i].cardDesc != null) cardSlots[i].cardDesc.text = randomCard.abilityDesc;
                 
                 StartCoroutine(FadeCard(i, 1f, 0.2f));
                 
@@ -1358,7 +1402,7 @@ public class PlayingCardDrawer : MonoBehaviour
                 Debug.Log(randomCard);
                 yield return StartCoroutine(FlipCardWithEffects(i, randomCard.cardSprite));
                 
-                Debug.Log($"Drew: {randomCard.GetCardName()}");
+                Debug.Log($"Drew: {randomCard.cardName}");
             }
         }
     }
@@ -1420,6 +1464,9 @@ public class PlayingCardDrawer : MonoBehaviour
         if (slot.glowEffect != null) slot.glowEffect.sprite = newSprite;
         if (slot.borderEffect != null) slot.borderEffect.sprite = newSprite;
         if (slot.highlightEffect != null) slot.highlightEffect.sprite = newSprite;
+
+        if (slot.cardName != null) slot.cardName.gameObject.SetActive(true);
+        if (slot.cardDesc != null) slot.cardDesc.gameObject.SetActive(true);
         
         // Second half of flip - scale back up
         elapsed = 0;
@@ -1470,24 +1517,24 @@ public class PlayingCardDrawer : MonoBehaviour
             // Animate selection
             StartCoroutine(AnimateCardHover(cardIndex, cardSlots[cardIndex].isHovered));
             
-            PlayingCard selectedCard = currentDrawnCards[cardIndex];
-            Debug.Log($"Selected card: {selectedCard.GetCardName()}");
+            CardInformation selectedCard = currentDrawnCards[cardIndex];
+            Debug.Log($"Selected card: {selectedCard.cardName}");
             
             OnCardSelected(selectedCard);
         }
     }
     
-    private void OnCardSelected(PlayingCard card)
+    private void OnCardSelected(CardInformation card)
     {
-        Debug.Log($"Player selected: {card.GetCardName()}");
+        Debug.Log($"Player selected: {card.cardName}");
         // Add your game logic here
     }
     
-    private PlayingCard GetRandomCard()
+    private CardInformation GetRandomCard()
     {
         // Get all cards that haven't been drawn yet
-        List<PlayingCard> availableCards = allCards.Where(card => 
-            !playerHand.Any(handCard => handCard.value == card.value && handCard.suit == card.suit)).ToList();
+        List<CardInformation> availableCards = allCards.Where(card => 
+            !playerHand.Any(handCard => handCard.cardName == card.cardName)).ToList();
         
         if (availableCards.Count == 0)
         {
@@ -1499,23 +1546,23 @@ public class PlayingCardDrawer : MonoBehaviour
         return availableCards[randomIndex];
     }
     
-    private void AddCardToHotbar(PlayingCard card)
+    private void AddCardToHotbar(CardInformation card)
     {
         if (playerHand.Count >= maxCardsInHand)
         {
             // Enter swap mode
             isSwapMode = true;
-            Debug.Log($"Hand is full! Entering swap mode. Click a hotbar card to replace it with {card.GetCardName()}");
+            Debug.Log($"Hand is full! Entering swap mode. Click a hotbar card to replace it with {card.cardName}");
             return;
         }
         
         playerHand.Add(card);
         // CreateHotbarCard(card, playerHand.Count - 1);
-        HandManager.AddCardToHand(CardInformation.FromPlayingCard(card));
-        Debug.Log($"Added {card.GetCardName()} to hotbar. Total cards: {playerHand.Count}");
+        HandManager.AddCardToHand(card);
+        Debug.Log($"Added {card.cardName} to hotbar. Total cards: {playerHand.Count}");
     }
     
-    private void SwapHotbarCard(PlayingCard newCard, int hotbarIndex)
+    private void SwapHotbarCard(CardInformation newCard, int hotbarIndex)
     {
         if (hotbarIndex < 0 || hotbarIndex >= playerHand.Count)
         {
@@ -1524,24 +1571,24 @@ public class PlayingCardDrawer : MonoBehaviour
         }
         
         // Get the old card
-        PlayingCard oldCard = playerHand[hotbarIndex];
+        CardInformation oldCard = playerHand[hotbarIndex];
         
         // Replace the card in the list
         playerHand[hotbarIndex] = newCard;
 
-        HandManager.SwapCardInHand(CardInformation.FromPlayingCard(newCard), hotbarIndex);
+        HandManager.SwapCardInHand(newCard, hotbarIndex);
         
         // Update the visual representation
         UpdateHotbarCardVisual(hotbarIndex, newCard);
         
-        Debug.Log($"Swapped {oldCard.GetCardName()} with {newCard.GetCardName()} at position {hotbarIndex}");
+        Debug.Log($"Swapped {oldCard.cardName} with {newCard.cardName} at position {hotbarIndex}");
         
         // Exit swap mode
         isSwapMode = false;
         selectedHotbarCardIndex = -1;
     }
     
-    private void UpdateHotbarCardVisual(int index, PlayingCard card)
+    private void UpdateHotbarCardVisual(int index, CardInformation card)
     {
         Transform cardsContainer = hotbarContainer.transform.Find("Hotbar Cards Container");
         if (cardsContainer == null) return;
@@ -1567,10 +1614,10 @@ public class PlayingCardDrawer : MonoBehaviour
             }
         }
         
-        Debug.Log($"Updated hotbar card visual at index {index} to {card.GetCardName()}");
+        Debug.Log($"Updated hotbar card visual at index {index} to {card.cardName}");
     }
     
-    private void CreateHotbarCard(PlayingCard card, int index)
+    private void CreateHotbarCard(CardInformation card, int index)
     {
         if (hotbarContainer == null) return;
         
@@ -1606,7 +1653,7 @@ public class PlayingCardDrawer : MonoBehaviour
         cardButton.transition = Selectable.Transition.ColorTint;
         int cardIndex = index;
         cardButton.onClick.AddListener(() => {
-            Debug.Log($"Hotbar card clicked: {card.GetCardName()}");
+            Debug.Log($"Hotbar card clicked: {card.cardName}");
             OnHotbarCardClicked(card, cardIndex);
         });
         
@@ -1634,15 +1681,15 @@ public class PlayingCardDrawer : MonoBehaviour
         shadowImage.sprite = card.cardSprite;
         shadowImage.color = new Color(0f, 0f, 0f, 0.2f);
         
-        Debug.Log($"Created hotbar card: {card.GetCardName()} at position {xPosition}");
+        Debug.Log($"Created hotbar card: {card.cardName} at position {xPosition}");
     }
     
-    private void OnHotbarCardClicked(PlayingCard card, int index)
+    private void OnHotbarCardClicked(CardInformation card, int index)
     {
         if (isSwapMode)
         {
             // In swap mode, replace this card with the pending card
-            PlayingCard pendingCard = GetPendingSwapCard();
+            CardInformation pendingCard = GetPendingSwapCard();
             if (pendingCard != null)
             {
                 SwapHotbarCard(pendingCard, index);
@@ -1651,19 +1698,19 @@ public class PlayingCardDrawer : MonoBehaviour
         else
         {
             // Normal mode - just log the selection
-            Debug.Log($"Hotbar card selected: {card.GetCardName()}");
+            Debug.Log($"Hotbar card selected: {card.cardName}");
             // Add your game logic here for when a hotbar card is clicked
         }
     }
     
-    private PlayingCard pendingSwapCard = null;
+    private CardInformation pendingSwapCard = null;
     
-    private void SetPendingSwapCard(PlayingCard card)
+    private void SetPendingSwapCard(CardInformation card)
     {
         pendingSwapCard = card;
     }
     
-    private PlayingCard GetPendingSwapCard()
+    private CardInformation GetPendingSwapCard()
     {
         return pendingSwapCard;
     }
@@ -1717,7 +1764,7 @@ public class PlayingCardDrawer : MonoBehaviour
             yield break;
         }
 
-        PlayingCard drawnCard = currentDrawnCards[selectedCardIndex];
+        CardInformation drawnCard = currentDrawnCards[selectedCardIndex];
 
         // Attempt to add selected card to hand or trigger swap mode
         AddCardToHotbar(drawnCard);
@@ -1755,7 +1802,7 @@ public class PlayingCardDrawer : MonoBehaviour
             DeselectAllCards();
         }
 
-            Debug.Log($"Drew selected card: {drawnCard.GetCardName()}. Total cards in hotbar: {playerHand.Count}");
+            Debug.Log($"Drew selected card: {drawnCard.cardName}. Total cards in hotbar: {playerHand.Count}");
         
         // Placeholder behavior - you can customize this
         OnCardDrawn(drawnCard);
@@ -1825,6 +1872,9 @@ public class PlayingCardDrawer : MonoBehaviour
         if (slot.glowEffect != null) slot.glowEffect.sprite = cardBackSprite;
         if (slot.borderEffect != null) slot.borderEffect.sprite = cardBackSprite;
         if (slot.highlightEffect != null) slot.highlightEffect.sprite = cardBackSprite;
+
+        if (slot.cardName != null) slot.cardName.gameObject.SetActive(false);
+        if (slot.cardDesc != null) slot.cardDesc.gameObject.SetActive(false);
         
         // Second half of flip - scale back up
         elapsed = 0;
@@ -1864,9 +1914,9 @@ public class PlayingCardDrawer : MonoBehaviour
         Debug.Log($"Card {cardIndex} turned back to card back and made undrawable");
     }
     
-    private void OnCardDrawn(PlayingCard card)
+    private void OnCardDrawn(CardInformation card)
     {
-        Debug.Log($"Card drawn: {card.GetCardName()}. Add your custom logic here!");
+        Debug.Log($"Card drawn: {card.cardName}. Add your custom logic here!");
         // Placeholder behavior - add your game logic here
         // For example:
         // - Check for specific card combinations
@@ -1875,16 +1925,16 @@ public class PlayingCardDrawer : MonoBehaviour
         // - Check win/lose conditions
     }
     
-    // Utility methods
-    public PlayingCard GetSpecificCard(int value, PlayingCardSuit suit)
-    {
-        return allCards.Find(card => card.value == value && card.suit == suit);
-    }
+    // // Utility methods
+    // public PlayingCard GetSpecificCard(int value, PlayingCardSuit suit)
+    // {
+    //     return allCards.Find(card => card.value == value && card.suit == suit);
+    // }
     
-    public List<PlayingCard> GetCardsBySuit(PlayingCardSuit suit)
-    {
-        return allCards.FindAll(card => card.suit == suit);
-    }
+    // public List<PlayingCard> GetCardsBySuit(PlayingCardSuit suit)
+    // {
+    //     return allCards.FindAll(card => card.suit == suit);
+    // }
     
     // Background management methods
     public void SetBackgroundSprite(Sprite newBackground)
