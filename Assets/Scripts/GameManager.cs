@@ -155,6 +155,7 @@ namespace Game
                     if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("FirstMap"))
                     {
                         yield return TransitionManager.LoadLevel("FirstMap");
+                        TransitionManager.instance.ShowRound("1");
                     }
                     HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform); //This will hold the cards for the player
                     EnemyManager.BuildNavMeshes();
@@ -163,18 +164,22 @@ namespace Game
                     BatteryManager.SpawnBatteries(10);
                     break;
                 case 2:
+                    Debug.Log("In round 2");
+                    TransitionManager.instance.ShowRound("2");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     // EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
                     // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
                     BatteryManager.SpawnBatteries(10);
                     break;
                 case 3:
+                    TransitionManager.instance.ShowRound("3");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     // EnemyManager.SpawnEnemies(EnemyType.Zombie, 35);
                     // EnemyManager.SpawnEnemies(EnemyType.Ghost, 12);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 4:
+                    TransitionManager.instance.ShowRound("Portal Spawning");
                     allowActivation = true;                     //Allow the portal to be active
                     s_instance._portalPrefab.SetActive(true);   //Activate portal when round 3 finishes
                     //Set the player health to unlimited in the dungeon
@@ -185,6 +190,7 @@ namespace Game
                 case 5:
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
+                    TransitionManager.instance.ShowRound("4d");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
                     EnemyManager.BuildNavMeshes();
                     // EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);

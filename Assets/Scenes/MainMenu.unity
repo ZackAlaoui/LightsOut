@@ -2970,6 +2970,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2644441195698528089, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2955588005549955132, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
       propertyPath: m_Alpha
       value: 1
@@ -3013,6 +3017,14 @@ PrefabInstance:
     - target: {fileID: 4085808653143990183, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
       propertyPath: m_SortingOrder
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888480143043122427, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888480143043122427, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5455194067580650966, guid: 9b4fb36367158634dab0d84a5780c288, type: 3}
       propertyPath: m_Layer
@@ -3079,9 +3091,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1607276358027363427}
   - {fileID: 1571064735}
   - {fileID: 932230713}
   - {fileID: 1467188655}
-  - {fileID: 1607276358027363427}
   - {fileID: 1727495480}
   - {fileID: 543345378}

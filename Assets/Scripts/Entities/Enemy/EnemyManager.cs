@@ -245,6 +245,7 @@ namespace Game.Enemy
 			}
 			if (EnemyCount <= 0)
 			{
+				Debug.Log("Killed enemy");
 				s_instance.StartCoroutine(GameManager.NextRound());
 			}
 		}

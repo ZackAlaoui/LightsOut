@@ -2,6 +2,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System;
 
 
 public class TransitionManager : MonoBehaviour
@@ -10,10 +12,11 @@ public class TransitionManager : MonoBehaviour
     public Animator transition;                                             //Animator Component
     public GameObject levelLoader;
     public CanvasGroup loadingCanvasGroup;
-
     public GameObject obj;
-
     public float transitionTime = 1f;                                       //Transition Time
+    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float displayTime = 1.5f;
 
     //Create a singleton so we can only have one instance of the transition manager
     private void Awake()
@@ -21,6 +24,7 @@ public class TransitionManager : MonoBehaviour
         // Check for existing instance
         if (instance != null && instance != this)
         {
+            Debug.Log("Instance");
             Destroy(gameObject); // Prevent duplicates
             return;
         }
@@ -49,7 +53,7 @@ public class TransitionManager : MonoBehaviour
         //Wait     
         yield return new WaitForSeconds(instance.transitionTime);
         loadingOperation.allowSceneActivation = true; // Allow scene activation after the wait
-    
+
         while (!loadingOperation.isDone) yield return null; // wait until scene has loaded
         instance.HideLoadingUI();              // Hide canvas group
         instance.transition.enabled = false;   // Optional: stop animator from doing anything else
@@ -61,4 +65,55 @@ public class TransitionManager : MonoBehaviour
         loadingCanvasGroup.blocksRaycasts = false;
         loadingCanvasGroup.interactable = false;
     }
+
+    public void ShowRound(string roundInfo)
+    {
+        Debug.Log("In show round");
+        if (instance.roundText != null)
+        {
+            instance.roundText.text = $"Round {roundInfo}";
+        }
+        else
+        {
+            Debug.Log("RoundText is NULL!");
+        }
+
+        StartCoroutine(FadeRoundText());
+    }
+
+    private IEnumerator FadeRoundText()
+    {
+        if (roundText != null)
+        {
+
+            Color originalColor = roundText.color;
+
+            //Fade in
+            for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+            {
+                float alpha = t / fadeDuration;
+                roundText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                yield return null;
+            }
+
+            roundText.gameObject.SetActive(true);
+            roundText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+            yield return new WaitForSeconds(displayTime);
+
+            //Fade out
+            for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+            {
+                float alpha = 1 - (t / fadeDuration);
+                roundText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                yield return null;
+            }
+
+            if (roundText != null)
+            {
+                roundText.gameObject.SetActive(false);
+            }
+        }
+    }
+    
+
 }
