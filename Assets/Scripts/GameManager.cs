@@ -110,6 +110,13 @@ namespace Game
             {
                 StartGame();
             }
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
+            {
+                EnemyManager.BuildNavMeshes();
+                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                EnemyManager.SpawnEnemies(EnemyType.Dealer, 1);
+            }
 #if DEBUG
             InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
 #endif
