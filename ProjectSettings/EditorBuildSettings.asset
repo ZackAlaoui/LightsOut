@@ -17,9 +17,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CardUIScene.unity
     guid: e441110b762f1c648bfd65525eb6a8dd
-  - enabled: 0
-    path: Assets/Scenes/BossFight.old.unity
-    guid: 50a3ea234b805f74eaac4a1d6de18693
   - enabled: 1
     path: Assets/Scenes/DrawCard.unity
     guid: 49c034a1ffa04eb4995d34ab5d84a289
@@ -29,9 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Level1GameScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/Scenes/EnemyShowcase.unity
-    guid: 7dd5b044031080943babc2cdc3544fe6
+  - enabled: 1
+    path: Assets/Scenes/BossFight.unity
+    guid: 646a77975c399ad48a6a9db0346fd606
   - enabled: 1
     path: Assets/Scenes/Victory.unity
     guid: 25f69c3dc3420974aa2341d52363bb77

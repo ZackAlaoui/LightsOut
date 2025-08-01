@@ -14,4 +14,5 @@ public class CameraManager : MonoBehaviour
         Vector4 w = new(0, 0, -(Camera.farClipPlane + Camera.nearClipPlane) / (Camera.farClipPlane - Camera.nearClipPlane), 1);
         // Camera.projectionMatrix = new Matrix4x4(x, y, z, w);
     }
+
 }

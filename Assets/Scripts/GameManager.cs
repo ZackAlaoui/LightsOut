@@ -7,6 +7,7 @@ using System.Collections;
 using Game.Player;
 
 using UnityEngine.InputSystem;
+using UnityEditorInternal;
 
 namespace Game
 {
@@ -109,29 +110,6 @@ namespace Game
             {
                 StartGame();
             }
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
-            {
-                EnemyManager.BuildNavMeshes();
-                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
-                EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
-                BatteryManager.SpawnBatteries(10);
-                //EnemyManager.SpawnEnemies(EnemyType.Dealer, 1);
-            }
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("EnemyShowcase"))
-            {
-                EnemyManager.BuildNavMeshes();
-                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
-                EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
-                BatteryManager.SpawnBatteries(7);
-            }
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BossFight"))
-            {
-                EnemyManager.BuildNavMeshes();
-                EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
-                EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
-                BatteryManager.SpawnBatteries(7);
-            }
-
 #if DEBUG
             InputSystem.actions.FindAction("Interact").performed += (InputAction.CallbackContext context) => { Debug.Log("Next Round"); StartCoroutine(GameManager.NextRound()); };
 #endif
@@ -160,23 +138,20 @@ namespace Game
                     HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform); //This will hold the cards for the player
                     EnemyManager.BuildNavMeshes();
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
-                    BatteryManager.SpawnBatteries(10);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(15);
                     break;
                 case 2:
-                    Debug.Log("In round 2");
                     TransitionManager.instance.ShowRound("2");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
-                    BatteryManager.SpawnBatteries(10);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(15);
                     break;
                 case 3:
                     TransitionManager.instance.ShowRound("3");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 35);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 12);
-                    BatteryManager.SpawnBatteries(7);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
+                    BatteryManager.SpawnBatteries(15);
                     break;
                 case 4:
                     TransitionManager.instance.ShowRound("Portal Spawning");
@@ -190,23 +165,22 @@ namespace Game
                 case 5:
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
-                    TransitionManager.instance.ShowRound("4d");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    TransitionManager.instance.ShowRound("4");
                     EnemyManager.BuildNavMeshes();
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
-                    BatteryManager.SpawnBatteries(7);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
+                    BatteryManager.SpawnBatteries(15);
                     break;
                 case 6:
+                    TransitionManager.instance.ShowRound("5");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 7:
+                    TransitionManager.instance.ShowRound("6");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 8:
@@ -222,24 +196,24 @@ namespace Game
                     // FirstMap
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    TransitionManager.instance.ShowRound("7");
                     EnemyManager.BuildNavMeshes();
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 25);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 10:
                     // FirstMap
+                    TransitionManager.instance.ShowRound("8");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 25);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 11:
                     // FirstMap
+                    TransitionManager.instance.ShowRound("9");
                     EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    // EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
-                    // EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 30);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 12:
@@ -253,6 +227,12 @@ namespace Game
                     break;
                 case 13:
                     // BossFight
+                    yield return TransitionManager.LoadLevel("BossFight");
+                    TransitionManager.instance.ShowRound("Final Round");
+                    EnemyManager.BuildNavMeshes();
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
+                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(10);
                     break;
                 default:
                     break;
