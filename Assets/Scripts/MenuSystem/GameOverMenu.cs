@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,17 +17,12 @@ public class GameOverMenu : MonoBehaviour
         Time.timeScale = 0f;
         gameOverUI.SetActive(true);
     }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    
 
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Make sure you have a scene named this
+        SceneManager.LoadScene("MainMenu"); 
     }
 
     public void QuitGame()
