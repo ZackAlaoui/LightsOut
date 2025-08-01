@@ -58,7 +58,7 @@ From the Unity Store.
 🔗 https://lionheart963.itch.io/wizard
 
 **Card Game Assets**  
-- 2D Cards Game Art Pack
+- 2D Cards Game Art Pack (natomarcacini on Unity Store)
 
 ---
 
