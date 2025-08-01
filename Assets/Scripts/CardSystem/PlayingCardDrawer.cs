@@ -71,7 +71,7 @@ public class CardSlot
 public class PlayingCardDrawer : MonoBehaviour
 {
     [Header("Card Display")]
-    public CardSlot[] cardSlots = new CardSlot[3];
+    public CardSlot[] cardSlots = new CardSlot[5];
     public Button drawButton;
     public Sprite cardBackSprite;
     
@@ -111,7 +111,7 @@ public class PlayingCardDrawer : MonoBehaviour
     public float secondaryButtonCornerRadius = 15f;
     
     [Header("UI Layout")]
-    public float cardSpacing = 120f;
+    public float cardSpacing = 90f;
     public float buttonSpacing = 20f;
     public float cardShadowDistance = 8f;
     public float buttonShadowDistance = 4f;
@@ -151,7 +151,8 @@ public class PlayingCardDrawer : MonoBehaviour
     
     [Header("Debug Info")]
     [SerializeField] private int loadedCardsCount = 0;
-    private bool hasDrawnCard = false; // prevents multiple draws per visit
+    private int numCardsChosen = 0;
+    private int maxCardsChosen = 2; // limits number of draws per visit
     
     private List<CardInformation> allCards = new List<CardInformation>();
     private List<CardInformation> currentDrawnCards = new List<CardInformation>();
@@ -304,7 +305,7 @@ public class PlayingCardDrawer : MonoBehaviour
         float cardWidth = 214 * cardScale;
         float containerWidth = (cardSlots.Length - 1) * (cardWidth + cardSpacing) + cardWidth;
         cardContainerRect.sizeDelta = new Vector2(containerWidth, 300);
-        cardContainerRect.anchoredPosition = new Vector2(0, 50);
+        cardContainerRect.anchoredPosition = new Vector2(0, 120);
         
         Debug.Log($"Card container width: {containerWidth}, Card width: {cardWidth}, Spacing: {cardSpacing}, Total cards: {cardSlots.Length}");
         
@@ -474,7 +475,7 @@ public class PlayingCardDrawer : MonoBehaviour
         buttonContainerRect.anchorMin = new Vector2(0.5f, 0f);
         buttonContainerRect.anchorMax = new Vector2(0.5f, 0f);
         buttonContainerRect.sizeDelta = new Vector2(buttonWidth + 20, 150);
-        buttonContainerRect.anchoredPosition = new Vector2(0, hotbarHeight + 180);
+        buttonContainerRect.anchoredPosition = new Vector2(0, hotbarHeight + 120);
         
         // Create primary button (Draw New Hand)
         if (drawButton == null)
@@ -755,7 +756,7 @@ public class PlayingCardDrawer : MonoBehaviour
             return;
         }
         
-        if (hasDrawnCard) return;
+        if (numCardsChosen >= maxCardsChosen) return;
         cardSlots[cardIndex].isHovered = isHovering;
         StartCoroutine(AnimateCardHover(cardIndex, isHovering));
     }
@@ -1500,7 +1501,7 @@ public class PlayingCardDrawer : MonoBehaviour
     
     public void SelectCard(int cardIndex)
     {
-        if (hasDrawnCard) return;
+        if (numCardsChosen >= maxCardsChosen) return;
         if (cardIndex >= 0 && cardIndex < currentDrawnCards.Count)
         {
             // Deselect previous card
@@ -1558,6 +1559,7 @@ public class PlayingCardDrawer : MonoBehaviour
         
         playerHand.Add(card);
         // CreateHotbarCard(card, playerHand.Count - 1);
+        ++numCardsChosen;
         HandManager.AddCardToHand(card);
         Debug.Log($"Added {card.cardName} to hotbar. Total cards: {playerHand.Count}");
     }
@@ -1576,6 +1578,7 @@ public class PlayingCardDrawer : MonoBehaviour
         // Replace the card in the list
         playerHand[hotbarIndex] = newCard;
 
+        ++numCardsChosen;
         HandManager.SwapCardInHand(newCard, hotbarIndex);
         
         // Update the visual representation
@@ -1692,6 +1695,7 @@ public class PlayingCardDrawer : MonoBehaviour
             CardInformation pendingCard = GetPendingSwapCard();
             if (pendingCard != null)
             {
+                StartCoroutine(TurnCardToBack(pendingSwapIndex));
                 SwapHotbarCard(pendingCard, index);
             }
         }
@@ -1703,16 +1707,16 @@ public class PlayingCardDrawer : MonoBehaviour
         }
     }
     
-    private CardInformation pendingSwapCard = null;
+    private int pendingSwapIndex = -1;
     
-    private void SetPendingSwapCard(CardInformation card)
+    private void SetPendingSwapCard(int index)
     {
-        pendingSwapCard = card;
+        pendingSwapIndex = index;
     }
     
     private CardInformation GetPendingSwapCard()
     {
-        return pendingSwapCard;
+        return currentDrawnCards[pendingSwapIndex];
     }
     
     public void ResetCards()
@@ -1772,7 +1776,7 @@ public class PlayingCardDrawer : MonoBehaviour
         // If hand was full, AddCardToHotbar will set isSwapMode. In that case we remember the pending card.
         if (isSwapMode)
         {
-            SetPendingSwapCard(drawnCard);
+            SetPendingSwapCard(selectedCardIndex);
         }
         
         // Only turn card back and deselect if not in swap mode
@@ -1788,19 +1792,21 @@ public class PlayingCardDrawer : MonoBehaviour
             DeselectAllCards();
 
             // Disable further interaction
-            hasDrawnCard = true;
-            if (drawCardButton != null) drawCardButton.interactable = false;
-            // Disable card buttons
-            foreach (var slot in cardSlots)
+            if (numCardsChosen >= maxCardsChosen)
             {
-                if (slot.cardButton != null) slot.cardButton.interactable = false;
+                if (drawCardButton != null) drawCardButton.interactable = false;
+                // Disable card buttons
+                foreach (var slot in cardSlots)
+                {
+                    if (slot.cardButton != null) slot.cardButton.interactable = false;
+                }
             }
         }
-        else
-        {
-            // In swap mode, just deselect the card but keep it available
-            DeselectAllCards();
-        }
+            else
+            {
+                // In swap mode, just deselect the card but keep it available
+                DeselectAllCards();
+            }
 
             Debug.Log($"Drew selected card: {drawnCard.cardName}. Total cards in hotbar: {playerHand.Count}");
         
