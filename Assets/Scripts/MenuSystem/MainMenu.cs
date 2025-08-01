@@ -64,8 +64,7 @@ Matching suits in hand give bonuses:
 • Four of a Kind → +100% Damage
 
 <b>🃘 Dealer's Den</b>
-Every 3 rounds, choose 1 of 5 new cards.  
-Unchosen cards will be used against you by the Dealer!
+Every 3 rounds, choose 2 of 5 new cards.  
 
 <b>✅ Tips</b>
 - Watch your battery!  
