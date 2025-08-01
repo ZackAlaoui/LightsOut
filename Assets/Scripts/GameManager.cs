@@ -7,7 +7,6 @@ using System.Collections;
 using Game.Player;
 
 using UnityEngine.InputSystem;
-using UnityEditorInternal;
 
 namespace Game
 {
