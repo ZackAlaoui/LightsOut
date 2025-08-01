@@ -338,13 +338,13 @@ namespace Game.Player
 
         private void OnRunPerformed(InputAction.CallbackContext context)
         {
-            _baseMovementSpeed *= 2f;
+            _baseMovementSpeed *= 1.5f;
             _isSprinting = true;
         }
 
         private void OnRunCanceled(InputAction.CallbackContext context)
         {
-            _baseMovementSpeed /= 2f;
+            _baseMovementSpeed /= 1.5f;
             _isSprinting = false;
         }
 
