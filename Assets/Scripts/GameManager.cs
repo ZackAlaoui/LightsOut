@@ -142,21 +142,21 @@ namespace Game
                         TransitionManager.instance.ShowRound("1");
                     }
                     HandUI = Instantiate(s_instance._handUIPrefab, s_instance.transform); //This will hold the cards for the player
+                    PlayerController.Instance.IsGunEnabled = true;
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 10);
                     BatteryManager.SpawnBatteries(15);
                     break;
                 case 2:
                     TransitionManager.instance.ShowRound("2");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 15);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
                     BatteryManager.SpawnBatteries(15);
                     break;
                 case 3:
                     TransitionManager.instance.ShowRound("3");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 20);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 5);
                     BatteryManager.SpawnBatteries(15);
                     break;
                 case 4:
@@ -172,22 +172,23 @@ namespace Game
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
                     TransitionManager.instance.ShowRound("4");
+                    PlayerController.Instance.IsGunEnabled = true;
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
-                    BatteryManager.SpawnBatteries(15);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 25);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(10);
                     break;
                 case 6:
                     TransitionManager.instance.ShowRound("5");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
-                    BatteryManager.SpawnBatteries(7);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    BatteryManager.SpawnBatteries(10);
                     break;
                 case 7:
                     TransitionManager.instance.ShowRound("6");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
-                    BatteryManager.SpawnBatteries(7);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 35);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
+                    BatteryManager.SpawnBatteries(10);
                     break;
                 case 8:
                     // Dungeon
@@ -203,23 +204,24 @@ namespace Game
                     PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("FirstMap");
                     TransitionManager.instance.ShowRound("7");
+                    PlayerController.Instance.IsGunEnabled = true;
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 25);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 40);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 10:
                     // FirstMap
                     TransitionManager.instance.ShowRound("8");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 25);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 45);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 11:
                     // FirstMap
                     TransitionManager.instance.ShowRound("9");
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 30);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 50);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 20);
                     BatteryManager.SpawnBatteries(7);
                     break;
                 case 12:
@@ -233,11 +235,13 @@ namespace Game
                     break;
                 case 13:
                     // BossFight
+                    PlayerController.Instance.gameObject.SetActive(true);
                     yield return TransitionManager.LoadLevel("BossFight");
                     TransitionManager.instance.ShowRound("Final Round");
+                    PlayerController.Instance.IsGunEnabled = true;
                     EnemyManager.BuildNavMeshes();
-                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 1);
-                    //EnemyManager.SpawnEnemies(EnemyType.Ghost, 10);
+                    EnemyManager.SpawnEnemies(EnemyType.Zombie, 30);
+                    EnemyManager.SpawnEnemies(EnemyType.Ghost, 15);
                     BatteryManager.SpawnBatteries(10);
                     break;
                 default:

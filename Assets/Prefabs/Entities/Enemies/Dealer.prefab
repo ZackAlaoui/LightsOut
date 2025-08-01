@@ -475,6 +475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5fc72ad03cf1048993a065d2ed510d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 0}
+  _mesh: {fileID: 0}
   _agent: {fileID: 4535822758467189049}
   maxHealth: 500
   _healthSlider: {fileID: 883152170444029204}
@@ -578,6 +580,14 @@ PrefabInstance:
     - target: {fileID: 5069198797158173560, guid: beb394e1f7441f547817913caf215f85, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674441776442094771, guid: beb394e1f7441f547817913caf215f85, type: 3}
+      propertyPath: m_Radius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918849305106564339, guid: beb394e1f7441f547817913caf215f85, type: 3}
+      propertyPath: m_Radius
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 8513902745702726253, guid: beb394e1f7441f547817913caf215f85, type: 3}
       propertyPath: m_LocalPosition.x

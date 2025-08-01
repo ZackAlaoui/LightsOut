@@ -94,6 +94,7 @@ namespace Game.Player
             if (IsInvincible) return;
 
             float finalDamage = damage * DamageResistanceMultiplier;
+
             Flashlight.RemainingBatteryLife -= finalDamage;
 
             OnHit?.Invoke(); // For Fractured Payback
@@ -154,8 +155,9 @@ namespace Game.Player
                 }
             }
 
-            if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard" || (GameManager.CurrentRound % 4) == 0)
+            if (SceneManager.GetActiveScene().name == "CardShopDungeon" || SceneManager.GetActiveScene().name == "DrawCard")
             {
+                IsGunEnabled = false;
                 Health = MaxHealth;                                          // This ensures the player has max health in the Dungeon and Draw card scene
                 Flashlight.RemainingBatteryLife = Flashlight.MaxBatteryLife; // This ensures the player has max battery life in the Dungeon and Draw card scene
                 _healthBarSlider.gameObject.SetActive(false);
