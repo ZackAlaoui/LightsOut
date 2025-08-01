@@ -1,6 +1,4 @@
-# LightsOut
-
-# Project README
+# LightsOut README (Team 5)
 
 ## How to Start the Game
 
