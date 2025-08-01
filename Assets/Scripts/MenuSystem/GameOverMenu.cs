@@ -3,49 +3,33 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMenu : MonoBehaviour
 {
-    [Header("Assign the GameOver panel here")]
-    public GameObject gameOverScreen;
+    public GameObject gameOverUI;
 
     private void Start()
     {
-        // Hide game over screen at the beginning
-        if (gameOverScreen != null)
-            gameOverScreen.SetActive(false);
+        gameOverUI.SetActive(false); // Hide at start
     }
 
-    /// <summary>
-    /// Call this when the player dies to show the Game Over menu
-    /// </summary>
     public void ShowGameOver()
     {
-        Time.timeScale = 0f; // Pause the game
-        gameOverScreen.SetActive(true);
+        Time.timeScale = 0f;
+        gameOverUI.SetActive(true);
     }
 
-    /// <summary>
-    /// Called by Restart button
-    /// </summary>
     public void RestartGame()
     {
-        Time.timeScale = 1f; // Unpause
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    /// <summary>
-    /// Called by Main Menu button
-    /// </summary>
     public void ReturnToMainMenu()
     {
-        Time.timeScale = 1f; // Unpause
-        SceneManager.LoadScene("MainMenu"); // Replace with your main menu scene name
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu"); // Make sure you have a scene named this
     }
 
-    /// <summary>
-    /// Called by Quit button
-    /// </summary>
     public void QuitGame()
     {
-        Debug.Log("Quitting Game...");
         Application.Quit();
     }
 }

@@ -47,6 +47,8 @@ namespace Game.Player
         public bool IsSprinting => _isSprinting;
 
         public bool IsGunEnabled { get; set; } = true;
+        
+        private GameOverMenu _gameOverMenu;
 
 
         public float Health
@@ -121,6 +123,8 @@ namespace Game.Player
             _fireAction.performed += Fire;
 
             Health = _baseMaxHealth;
+            
+            _gameOverMenu = FindObjectOfType<GameOverMenu>();
         }
 
         // Update is called once per frame
@@ -128,11 +132,17 @@ namespace Game.Player
         {
             if (Health <= 0)
             {
-                //Here have a UI pop up saying you lost the game, and have two buttons 
-                //that either take you to the main menu or a button that restarts the game.
-                GameManager.Unload();
+                if (_gameOverMenu != null)
+                {
+                    _gameOverMenu.ShowGameOver();
+                }
+                else
+                {
+                    Debug.LogWarning("GameOverMenu not found.");
+                }
                 return;
             }
+
             if (_spookyTextObject != null && _spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 if (_spookyTextObject.activeInHierarchy && Keyboard.current.spaceKey.wasPressedThisFrame)
